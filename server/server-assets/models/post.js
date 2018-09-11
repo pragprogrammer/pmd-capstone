@@ -34,7 +34,18 @@ let schema = new Schema({
         ref: 'User',
         required: true
     },
+    coordinates: {
+        lat: {
+            type: Number,
+            required: true
+        },
+        long: {
+            type: Number,
+            required: true
+        }
+    },
     votes: [voteSchema]
+
 })
 
 module.exports = mongoose.model('Post', schema)
