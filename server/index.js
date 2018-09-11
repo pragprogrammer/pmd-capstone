@@ -12,7 +12,7 @@ server.use(bp.urlencoded({
 
 let whitelist = ['http://localhost:8080']
 let corsOptions = {
-    origin: function (origin, callback){
+    origin: function (origin, callback) {
         let originIsWhitelisted = whitelist.indexOf(origin) !== -1
         callback(null, originIsWhitelisted)
     },
@@ -20,18 +20,22 @@ let corsOptions = {
 }
 server.use(cors(corsOptions))
 
-//DON, auth here
-// can use below or replace with whatever you need to link up
+//USER AUTH
 
-// let auth = require('./server-assets/auth/routes')
-// server.use(auth.session)
-// server.use(auth.router)
+let auth = require('./server-assets/auth/routes')
+server.use(auth.session)
+server.use(auth.router)
 
-//auth stop
+//GATEKEEPER
+server.use((req, res, next) => {
+    if (!req.session.uid) {
+        return res.status(401).send({
+            error: 'please login to continue'
+        })
+    }
+    next()
+})
 
-//gatekeeper route here
-//
-//
 
 //other routes here
 //

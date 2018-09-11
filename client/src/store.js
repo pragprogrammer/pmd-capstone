@@ -6,13 +6,13 @@ import router from './router'
 Vue.use(Vuex)
 
 let auth = Axios.create({
-  baseURL: 'localhost:3000/auth/',
+  baseURL: '//localhost:3000/auth/',
   timeout: 3000,
   withCredentials: true
 })
 
 let api = Axios.create({
-  baseURL: 'localhost:3000/api/',
+  baseURL: '//localhost:3000/api/',
   timeout: 3000,
   withCredentials: true
 })
@@ -44,6 +44,7 @@ export default new Vuex.Store({
     },
 
     registerUser({ commit, dispatch }, newUser) {
+      newUser['created'] = Date.now()
       auth.post('register', newUser)
         .then(res => {
           console.log("register user return: ", res.data)
@@ -60,6 +61,15 @@ export default new Vuex.Store({
           router.push({ name: 'home' })
         })
         .catch(err => console.error(err))
+    },
+
+    userExists({ }, name) {
+      auth.get('exists', name)
+        .then(res => {
+          if (res.data) {
+            return alert('USERNAME TAKEN:\nPlease select a different username')
+          }
+        })
     }
 
 
