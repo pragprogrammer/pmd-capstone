@@ -16,7 +16,7 @@
         <input class="form-control" type="password" name="password2" placeholder="Re-enter Password" required v-model="newUser.password2">
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
-      <h5><span @click="newUser = true" class="clickable">Login to existing account</span></h5>
+      <h5><span @click="newUser = false" class="clickable">Login to existing account</span></h5>
     </div>
   </div>
 </template>
