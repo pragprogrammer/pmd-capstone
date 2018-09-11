@@ -1,7 +1,7 @@
 let express = require("express")
 let bp = require('body-parser')
 let server = express()
-let cors = require(cors())
+let cors = require('cors')
 let port = 3000
 require('./server-assets/db/db-config')
 
