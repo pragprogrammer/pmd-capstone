@@ -6,19 +6,21 @@ let session = require('./session')
 let loginError = new Error('Bad Email or Password')
 
 //CHECK FOR USERNAME ALREADY IN USE
-router.get('/auth/exists', (req, res) => {
+router.get('/auth/exists/:name', (req, res, next) => {
   Users.find({
-    username: req.body.name
+    username: req.params.name
   })
-    .then(users => {
-      console.log("users ", users)
-      return res.send(users.length)
-    })
-    .catch(err => res.status(400).send(err))
+  //cant send user.length because throws an error and prohibits new users from successfully registering
+  //may need to look into .findOne ...
+    .then(user => res.send(user))
+    .catch(err => {
+      console.log(err)
+      next()
+    }) 
 })
 
 //CREATE A NEW USER
-router.post('/auth/register', (req, res) => {
+router.post('/auth/register', (req, res, next) => {
   //VALIDATE PASSWORD LENGTH
   if (req.body.password.length < 5) {
     return res.status(400).send({
@@ -37,7 +39,8 @@ router.post('/auth/register', (req, res) => {
       res.send(user)
     })
     .catch(err => {
-      res.status(400).send(err)
+      console.log(err)
+      next()
     })
 })
 
