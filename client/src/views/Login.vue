@@ -1,12 +1,12 @@
 <template>
   <div class="login">
-    <div class="login-form" v-if="newUser">
+    <div class="login-form" v-if="prevUser">
       <form @submit.prevent="loginUser" class="form-group">
         <input class="form-control" type="text" name="username" placeholder="User Name" required v-model="creds.username">
         <input class="form-control" type="password" name="password" placeholder="Password" required v-model="creds.password">
         <button type="submit" class="btn btn-primary">Login</button>
       </form>
-      <h5><span @click="newUser = !newUser" class="clickable">Register for an account</span></h5>
+      <h5><span @click="prevUser = !prevUser" class="clickable">Register for an account</span></h5>
     </div>
     <div class="register-form" v-else>
       <form @submit.prevent="registerUser" class="form-group">
@@ -16,7 +16,7 @@
         <input class="form-control" type="password" name="password2" placeholder="Re-enter Password" required v-model="newUser.password2">
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
-      <h5><span @click="newUser = !newUser" class="clickable">Login to existing account</span></h5>
+      <h5><span @click="prevUser = !prevUser" class="clickable">Login to existing account</span></h5>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@
     name: 'login',
     data() {
       return {
-        newUser: false,
+        prevUser: false,
         newUser: {
           username: '',
           password: '',
@@ -58,7 +58,7 @@
           }
         }
         else {
-          return alert('Passwords do not match')
+          alert('Passwords do not match')
         }
       }
     }
