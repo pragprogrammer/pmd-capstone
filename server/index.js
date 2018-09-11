@@ -22,9 +22,11 @@ server.use(cors(corsOptions))
 
 //DON, auth here
 // can use below or replace with whatever you need to link up
-let auth = require('./server-assets/auth/routes')
-server.use(auth.session)
-server.use(auth.router)
+
+// let auth = require('./server-assets/auth/routes')
+// server.use(auth.session)
+// server.use(auth.router)
+
 //auth stop
 
 //gatekeeper route here
