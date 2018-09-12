@@ -44,7 +44,18 @@ router.delete('/:id', (req, res, next) => {
     }))
 })
 
-//put specific vote
+//put specific vote?????
+
+
 //post specific vote
+router.post('/:id', (req, res, next) => {
+  Post.findById(req.params.id)
+    .then(post => {
+      post.votes.push(req.body)
+      post.save(post)
+      res.send(post)
+    })
+    .catch(next)
+})
 
 module.exports = router
