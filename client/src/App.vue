@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="bg-secondary">
+  <div id="app" class="bg-secondary container-fluid">
     <div id="nav" class="text-info">
-      <router-link to="/">Home |</router-link>
+      <router-link to="/">Home </router-link>|
       <router-link to="/about"> About</router-link>
     </div>
     <router-view />
