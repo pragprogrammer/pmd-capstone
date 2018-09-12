@@ -17,7 +17,7 @@ function haversine(lat1, lng1, lat2, lng2) {
   return (earthRadius * c) / 1000
 }
 
-//get all posts (possibly change)
+//get all posts within given radius of user coords
 router.get('/:lat/:lng/:radius', (req, res, next) => {
   Post.find({})
     .then(posts => {
@@ -36,18 +36,18 @@ router.get('/:lat/:lng/:radius', (req, res, next) => {
     })
 })
 
-//get specific posts(users posts?)
-router.get('/:id', (req, res, next) => {
-  Post.findById(req.params.id)
-    .then(post => {
-      return res.send(post)
+//get all posts for specific posts
+router.get('/:userId', (req, res, next) => {
+  Post.find({ userId: req.params.userId })
+    .then(posts => {
+      return res.send(posts)
     })
     .catch(next)
 })
 
 //edit a post
-router.put('/:id', (req, res, next) => {
-  Post.findByIdAndUpdate(req.params.id, req.body)
+router.put('/:postId', (req, res, next) => {
+  Post.findByIdAndUpdate(req.params.postId, req.body)
     .then(() => res.send({
       message: 'Edited'
     }))
@@ -63,8 +63,8 @@ router.post('/', (req, res, next) => {
 })
 
 //delete
-router.delete('/:id', (req, res, next) => {
-  Post.findByIdAndRemove(req.params.id)
+router.delete('/:postId', (req, res, next) => {
+  Post.findByIdAndRemove(req.params.postId)
     .then(() => res.send({
       message: 'Deleted'
     }))

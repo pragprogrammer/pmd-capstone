@@ -49,13 +49,31 @@
         }
       }
     },
-
+    mounted: function getLocation() {
+      if (confirm("may we use your location?")) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.captureCoords);
+        }
+        else {
+          alert("your browser doens't support HTML5 Geolocation")
+        }
+      }
+      else {
+        alert('bullUtin works better with location access')
+      }
+    },
     methods: {
+      captureCoords(here) {
+        let obj = {
+          lat: here.coords.latitude,
+          lng: here.coords.longitude
+        }
+        this.$store.dispatch("captureCoords", obj)
+      },
       loginUser() {
         this.$store.dispatch('loginUser', this.creds);
         this.creds = { username: '', password: '' }
       },
-
       registerUser() {
         if (this.newUser.password === this.newUser.password2) {
           this.$store.dispatch('registerUser', this.newUser)
@@ -70,14 +88,11 @@
           alert('Passwords do not match')
         }
       },
-
       userExists() {
         this.$store.dispatch('userExists', this.newUser.username)
       }
-
     }
-  };
-
+  }
 </script>
 
 <style>
