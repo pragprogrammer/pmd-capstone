@@ -1,10 +1,11 @@
 <template>
   <div class="login">
+    <h1 class="title">bullUtin</h1>
     <div class="login-form" v-if="prevUser">
       <form @submit.prevent="loginUser" class="form-group">
         <input class="form-control" type="username" name="username" placeholder="username" required v-model="creds.username">
         <input class="form-control" type="password" name="password" placeholder="Password" required v-model="creds.password">
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary mt-2">Login</button>
       </form>
       <h5><span @click="prevUser = !prevUser" class="clickable">Register for an account</span></h5>
     </div>
@@ -15,7 +16,7 @@
           @focusout="userExists">
         <input class="form-control" type="password" name="password" placeholder="Password" required v-model="newUser.password">
         <input class="form-control" type="password" name="password2" placeholder="Re-enter Password" required v-model="newUser.password2">
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary mt-2">Register</button>
       </form>
       <h5><span @click="prevUser = !prevUser" class="clickable">Login to existing account</span></h5>
     </div>
@@ -75,5 +76,14 @@
 <style>
   .clickable:hover {
     cursor: pointer;
+  }
+
+  .login {
+    height: 100vh;
+  }
+
+  .title {
+    color: white;
+    font-family: 'Lobster', cursive;
   }
 </style>
