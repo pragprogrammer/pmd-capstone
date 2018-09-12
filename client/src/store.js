@@ -54,6 +54,14 @@ export default new Vuex.Store({
         postObj[post.category] = arr.push(post)
       })
       state.posts = postObj
+    },
+
+    setSearchRadius(state, radius) {
+      state.searchRadius = radius
+    },
+
+    setCategory(state, category) {
+
     }
   },
   actions: {
@@ -113,11 +121,22 @@ export default new Vuex.Store({
     //POST ACTIONS
     //
     getPosts({ dispatch, commit, state }, radius) {
+      console.log(state.coords.lat)
+      console.log(state.coords.lng)
+      console.log(radius)
       api.get(`posts/${state.coords.lat}/${state.coords.lng}/${radius}`)
         .then(res => {
+          console.log(res)
           commit("setPosts", res.data)
         })
         .catch(err => console.error(err))
+    },
+
+    applyFilters({ dispatch, commit }, filters) {
+      commit('setSearchRadius', filters.searchRadius)
+      commit('setCategory', filters.category)
     }
+
+    //TO-DO  WRITE LOGIC FOR POSTING VOTES
   }
 })

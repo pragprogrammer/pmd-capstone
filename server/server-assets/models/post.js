@@ -44,7 +44,7 @@ let schema = new Schema({
             required: true
         }
     },
-    votes: [voteSchema]
+    votes: {}
 
 })
 

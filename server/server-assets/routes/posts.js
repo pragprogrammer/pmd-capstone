@@ -24,6 +24,7 @@ router.get('/:lat/:lng/:radius', (req, res, next) => {
       let inRangePosts = posts.filter(post => {
         let distanceKm = haversine(req.params.lat, req.params.lng, post.coordinates.lat, post.coordinates.lng)
         let distanceMiles = distanceKm * .6213
+        post.distance = distanceMiles
         if (distanceMiles <= req.params.radius) {
           return post
         }
@@ -73,34 +74,48 @@ router.delete('/:postId', (req, res, next) => {
 //put specific vote?????
 
 // vote on specific post
-// router.post('/:postId/vote', (req, res, next) => {
+router.post('/:postId/vote', (req, res, next) => {
+  Post.findById(req.params.postId)
+    .then(post => {
+      if (!post.votes) { post.votes = {} }
+      post.votes[req.session.uid] = req.body.vote
+      post.markModified('votes')
+      post.save((err) => {
+        if (err) {
+          console.log(err)
+          return res.status(500).send(err)
+        }
+        return res.send(post)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      next()
+    })
+})
+
+// router.post('/:postId/upvote', (req, res, next) => {
 //   Post.findById(req.params.postId)
-//     .then(post => {
-//       post.votes = post.votes.concat(req.body)
-//       post.save((err) => {
-//         if (err) {
-//           console.log(err)
-//           return res.status(500).send(err)
-//         }
-//         return res.send(post)
-//       })
+//     .then((post) => {
+//       post.votes[0].value++
+//       return post.save()
 //     })
-//     .catch(err => {
-//       console.log(err)
-//       next()
-//     })
+//     .then(() => res.send({
+//       message: "Upvoted"
+//     }))
+//     .catch(next)
 // })
 
-router.post('/:postId/upvote', (req, res, next) => {
-  Post.findById(req.params.postId)
-    .then((post) => {
-      post.votes[0].value++
-      return post.save()
-    })
-    .then(() => res.send({
-      message: "Upvoted"
-    }))
-    .catch(next)
-})
+// router.post('/:postId/downvote', (req, res, next) => {
+//   Post.findById(req.params.postId)
+//     .then((post) => {
+//       post.votes[0].value--
+//       return post.save()
+//     })
+//     .then(() => res.send({
+//       message: "DownVoted"
+//     }))
+//     .catch(next)
+// })
 
 module.exports = router

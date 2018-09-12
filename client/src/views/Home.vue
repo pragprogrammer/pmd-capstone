@@ -28,6 +28,7 @@
         </form>
       </FilterModal>
     </div>
+    {{posts}}
   </div>
 </template>
 
@@ -43,9 +44,9 @@
       }
     },
 
-    mounted: function getPosts() {
-      this.$store.dispatch('getPosts', this.searchRadius)
-    },
+    // mounted: function getPosts() {
+
+    // },
 
     components: {
       FilterModal
@@ -65,7 +66,11 @@
       },
 
       applyFilters() {
-
+        let filters = {
+          searchRadius: this.searchRadius,
+          category: this.postCategory
+        }
+        this.$store.dispatch('applyFilters', filters)
       }
 
     },
@@ -73,6 +78,9 @@
     computed: {
       user() {
         return this.$store.state.user
+      },
+      posts() {
+        return this.$store.state.posts
       }
 
 
