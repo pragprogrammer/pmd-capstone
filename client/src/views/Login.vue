@@ -5,7 +5,7 @@
     </div>
     <div class="user-input col-sm-8 offset-sm-2 col-md-4 offset-md-4">
       <div class="form-group" v-if="prevUser">
-        <form @submit.prevent="loginUser" class="form-group">
+        <form @submit.prevent="loginUser" class="form-group" autocomplete="off">
           <input class="form-control" type="username" name="username" placeholder="username" required v-model="creds.username">
           <input class="form-control" type="password" name="password" placeholder="Password" required v-model="creds.password">
           <button type="submit" class="btn btn-primary mt-2">Login</button>
@@ -13,7 +13,7 @@
         <h5><span @click="prevUser = !prevUser" class="clickable">Register for an account</span></h5>
       </div>
       <div class="register-form" v-else>
-        <form @submit.prevent="registerUser" class="form-group">
+        <form @submit.prevent="registerUser" class="form-group" autocomplete="off">
           <input class="form-control" type="email" name="email" placeholder="email address" required v-model="newUser.email">
           <input class="form-control" type="text" name="username" placeholder="User Name" required v-model="newUser.username"
             @focusout="userExists">

@@ -28,6 +28,15 @@ export default new Vuex.Store({
 
     setUser(state, user) {
       state.user = user;
+    },
+
+    logout(state) {
+      state.user = {}
+      state.posts = {}
+      state.searchRadius = 0
+      router.push({ name: 'login' })
+
+
     }
 
   },
@@ -74,6 +83,15 @@ export default new Vuex.Store({
             return alert('USERNAME TAKEN:\nPlease select a different username')
           }
         })
+    },
+
+    logout({ commit, dispatch }) {
+      auth.delete('logout')
+        .then(res => {
+          console.log("logging out: ", res.data)
+          commit('logout')
+        })
+        .catch(err => console.error(err))
     }
 
 
