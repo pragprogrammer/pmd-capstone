@@ -46,7 +46,6 @@ router.delete('/:id', (req, res, next) => {
 
 //put specific vote?????
 
-
 //post specific vote
 router.post('/:id', (req, res, next) => {
   Post.findById(req.params.id)
