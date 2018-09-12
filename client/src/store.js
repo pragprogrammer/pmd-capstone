@@ -25,11 +25,13 @@ export default new Vuex.Store({
     posts: {}
   },
   mutations: {
+    //
+    //USER MUTATIONS
+    //
     //set user coords at app mount
     captureCoords(state, coords) {
       state.coords = coords
     },
-
     setUser(state, user) {
       state.user = user;
     },
@@ -38,14 +40,30 @@ export default new Vuex.Store({
       state.posts = {}
       state.searchRadius = 0
       router.push({ name: 'login' })
+    },
+    //
+    //POST MUTATIONS
+    //
+    setPosts(state, postArr) {
+      let postObj = {}
+      postArr.forEach(post => {
+        if (postObj[post.category]) {
+          postObj[post.category].push(post)
+        }
+        let arr = []
+        postObj[post.category] = arr.push(post)
+      })
+      state.posts = postObj
     }
   },
   actions: {
+    //
+    //USER ACTIONS
+    //
     //get user coords at app mount
     captureCoords({ dispatch, commit }, coords) {
       commit('captureCoords', coords)
     },
-
     //USER AUTH METHODS
     loginUser({ commit, dispatch }, creds) {
       auth.post('login', creds)
@@ -88,6 +106,16 @@ export default new Vuex.Store({
         .then(res => {
           console.log("logging out: ", res.data)
           commit('logout')
+        })
+        .catch(err => console.error(err))
+    },
+    //
+    //POST ACTIONS
+    //
+    getPosts({ dispatch, commit, state }, radius) {
+      api.get(`posts/${state.coords.lat}/${state.coords.lng}/${radius}`)
+        .then(res => {
+          commit("setPosts", res.data)
         })
         .catch(err => console.error(err))
     }
