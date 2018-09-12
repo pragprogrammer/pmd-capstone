@@ -48,5 +48,5 @@ server.get('*', (req, res, next) => {
 })
 
 server.listen(port, () => {
-    console.log('connected to db')
+    console.log('connected to port: ', port)
 })

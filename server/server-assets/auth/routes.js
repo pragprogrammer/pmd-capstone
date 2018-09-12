@@ -7,16 +7,14 @@ let loginError = new Error('Bad Email or Password')
 
 //CHECK FOR USERNAME ALREADY IN USE
 router.get('/auth/exists/:name', (req, res, next) => {
-  Users.find({
-    username: req.params.name
-  })
-  //cant send user.length because throws an error and prohibits new users from successfully registering
-  //may need to look into .findOne ...
-    .then(user => res.send(user))
+  Users.findOne({ username: req.params.name }, 'username')
+    //cant send user.length because throws an error and prohibits new users from successfully registering
+    //may need to look into .findOne ...
+    .then(username => res.send(username))
     .catch(err => {
       console.log(err)
       next()
-    }) 
+    })
 })
 
 //CREATE A NEW USER
@@ -44,6 +42,7 @@ router.post('/auth/register', (req, res, next) => {
     })
 })
 
+//LOGIN AN EXISTING USER
 router.post('/auth/login', (req, res) => {
   //FIND A USER BASED ON PROVIDED EMAIL
   Users.findOne({

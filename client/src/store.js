@@ -66,7 +66,8 @@ export default new Vuex.Store({
     userExists({ }, name) {
       auth.get(`exists/${name}`)
         .then(res => {
-          if (res.data.length) {
+          if (res.data) {
+            console.log('existing username: ', res.data)
             return alert('USERNAME TAKEN:\nPlease select a different username')
           }
         })
