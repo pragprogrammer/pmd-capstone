@@ -75,6 +75,7 @@ router.delete('/:postId', (req, res, next) => {
 
 // vote on specific post
 router.post('/:postId/vote', (req, res, next) => {
+
   Post.findById(req.params.postId)
     .then(post => {
       if (!post.votes) { post.votes = {} }
