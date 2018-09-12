@@ -72,14 +72,34 @@ router.delete('/:postId', (req, res, next) => {
 
 //put specific vote?????
 
-//post specific vote
-router.post('/:id', (req, res, next) => {
-  Post.findById(req.params.id)
-    .then(post => {
-      post.votes.push(req.body)
-      post.save(post)
-      res.send(post)
+// vote on specific post
+// router.post('/:postId/vote', (req, res, next) => {
+//   Post.findById(req.params.postId)
+//     .then(post => {
+//       post.votes = post.votes.concat(req.body)
+//       post.save((err) => {
+//         if (err) {
+//           console.log(err)
+//           return res.status(500).send(err)
+//         }
+//         return res.send(post)
+//       })
+//     })
+//     .catch(err => {
+//       console.log(err)
+//       next()
+//     })
+// })
+
+router.post('/:postId/upvote', (req, res, next) => {
+  Post.findById(req.params.postId)
+    .then((post) => {
+      post.votes[0].value++
+      return post.save()
     })
+    .then(() => res.send({
+      message: "Upvoted"
+    }))
     .catch(next)
 })
 

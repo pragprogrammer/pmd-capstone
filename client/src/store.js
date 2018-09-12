@@ -39,7 +39,7 @@ export default new Vuex.Store({
       state.user = {}
       state.posts = {}
       state.searchRadius = 0
-      router.push({ name: 'login' })
+      router.push({ name: 'about' })
     },
     //
     //POST MUTATIONS
