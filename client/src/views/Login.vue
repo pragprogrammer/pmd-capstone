@@ -36,7 +36,7 @@
     name: 'login',
     data() {
       return {
-        prevUser: false,
+        prevUser: true,
         newUser: {
           username: '',
           password: '',
