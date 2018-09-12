@@ -36,11 +36,11 @@ router.get('/:lat/:lng/:radius', (req, res, next) => {
     })
 })
 
-//get specific posts(users posts?)
+//get all posts for specific posts
 router.get('/:userId', (req, res, next) => {
-  Post.findById(req.params.userId)
-    .then(post => {
-      return res.send(post)
+  Post.find({ userId: req.params.userId })
+    .then(posts => {
+      return res.send(posts)
     })
     .catch(next)
 })
@@ -63,8 +63,8 @@ router.post('/', (req, res, next) => {
 })
 
 //delete
-router.delete('/:id', (req, res, next) => {
-  Post.findByIdAndRemove(req.params.id)
+router.delete('/:postId', (req, res, next) => {
+  Post.findByIdAndRemove(req.params.postId)
     .then(() => res.send({
       message: 'Deleted'
     }))

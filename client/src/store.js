@@ -19,31 +19,34 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
+    coords: {},
     user: {},
     searchRadius: 0,
     posts: {}
   },
-
   mutations: {
+    //set user coords at app mount
+    captureCoords(state, coords) {
+      state.coords = coords
+    },
 
     setUser(state, user) {
       state.user = user;
     },
-
     logout(state) {
       state.user = {}
       state.posts = {}
       state.searchRadius = 0
       router.push({ name: 'login' })
-
-
     }
-
   },
   actions: {
+    //get user coords at app mount
+    captureCoords({ dispatch, commit }, coords) {
+      commit('captureCoords', coords)
+    },
 
     //USER AUTH METHODS
-
     loginUser({ commit, dispatch }, creds) {
       auth.post('login', creds)
         .then(res => {
@@ -52,9 +55,7 @@ export default new Vuex.Store({
           router.push({ name: 'home' })
         })
         .catch(err => console.error(err))
-
     },
-
     registerUser({ commit, dispatch }, newUser) {
       newUser['created'] = Date.now()
       auth.post('register', newUser)
@@ -65,7 +66,6 @@ export default new Vuex.Store({
         })
         .catch(err => console.error(err))
     },
-
     authenticate({ commit, dispatch }) {
       auth.get('authenticate')
         .then(res => {
@@ -74,7 +74,6 @@ export default new Vuex.Store({
         })
         .catch(err => console.error(err))
     },
-
     userExists({ }, name) {
       auth.get(`exists/${name}`)
         .then(res => {
@@ -84,7 +83,6 @@ export default new Vuex.Store({
           }
         })
     },
-
     logout({ commit, dispatch }) {
       auth.delete('logout')
         .then(res => {
@@ -93,9 +91,5 @@ export default new Vuex.Store({
         })
         .catch(err => console.error(err))
     }
-
-
-
-
   }
 })
