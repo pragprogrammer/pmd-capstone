@@ -20,6 +20,9 @@
       </form>
       <h5><span @click="prevUser = !prevUser" class="clickable">Login to existing account</span></h5>
     </div>
+    <div class="image mt-4">
+      <img src="../assets/Bulletin-Boards.png" width="100%" height="auto" alt="Bulletin Board">
+    </div>
   </div>
 </template>
 
