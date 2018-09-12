@@ -1,9 +1,37 @@
 let express = require("express")
 let bp = require('body-parser')
 let server = express()
+//let app = express()
 let cors = require('cors')
 let port = 3000
 require('./server-assets/db/db-config')
+
+//need to npm i socket.io!!!
+
+//var server = require("http").createServer(app);
+//var io = require("socket.io")(server);
+
+// server.listen(port, function() {
+//     console.log("Server listening at port:" port);
+// })
+
+//let connectedUsers = {} (probably going to be referencing our users id's)
+//let rooms = {} (not going to be rooms, but referencing the radius of viewable posts?)
+
+// io.on("connection", socket => {
+//     console.log("User Connected")        (tells server when a user connects)
+
+
+// socket.emit("CONNECTED", {                    (notifys connector of successful connection)
+//     socket: socket.id,                       (socket is a connection by individual user)
+//     message: "Successfully Connected"            (client emits to server, server emits to server. direct communication.)
+// })
+
+//joins viewable radius of other users?
+socket.on("join", data => {
+
+})
+
 
 server.use(bp.json())
 server.use(bp.urlencoded({
