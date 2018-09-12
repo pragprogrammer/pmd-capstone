@@ -66,8 +66,8 @@ server.use((req, res, next) => {
 
 
 //other routes here
-//
-//
+let postRoutes = require('./server-assets/routes/posts')
+server.use('/api/posts', postRoutes)
 
 server.get('*', (req, res, next) => {
     res.status(404).send({
