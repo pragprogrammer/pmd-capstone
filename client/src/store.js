@@ -19,8 +19,11 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    searchRadius: 0,
+    posts: {}
   },
+
   mutations: {
 
     setUser(state, user) {
