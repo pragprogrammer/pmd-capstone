@@ -27,10 +27,10 @@ require('./server-assets/db/db-config')
 //     message: "Successfully Connected"            (client emits to server, server emits to server. direct communication.)
 // })
 
-//joins viewable radius of other users?
-socket.on("join", data => {
+// joins viewable radius of other users?
+// socket.on("join", data => {
 
-})
+// })
 
 
 server.use(bp.json())
