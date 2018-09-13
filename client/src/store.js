@@ -80,7 +80,7 @@ export default new Vuex.Store({
     //USER ACTIONS
     //
     //get user coords at app mount
-    captureCoords({ dispatch, commit }, coords) {
+    captureCoords({ dispatch, commit, state }, coords) {
       commit('captureCoords', coords)
     },
     //USER AUTH METHODS
