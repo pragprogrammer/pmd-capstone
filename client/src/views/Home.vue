@@ -22,7 +22,7 @@
             <select name="category" v-model="postCategory" class="ml-1">
               <option value='All'>All</option>
               <option value='event'>event</option>
-              <option value='lost&found'>lost & found</option>
+              <option value='lost and found'>lost and found</option>
               <option value='traffic-update'>traffic update</option>
               <option value='neighborhood-watch'>neighborhood watch</option>
             </select><br>
