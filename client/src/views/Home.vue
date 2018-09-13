@@ -29,7 +29,8 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
-        {{posts}}
+        <!-- {{posts}} -->
+        <Post />
       </div>
     </div>
     <v-footer fixed color="#7cbce8" height="fit-content" dark>
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+  import Post from '../components/Post'
   import FilterModal from '../components/FilterModal'
   export default {
     name: 'home',
@@ -53,6 +55,7 @@
 
     components: {
       FilterModal,
+      Post
     },
 
     data() {
@@ -61,7 +64,7 @@
         searchRadius: 25
       }
     },
-    mounted: function getPosts(){
+    mounted: function getPosts() {
       this.$store.dispatch('getPosts', 25)
     },
 
@@ -85,9 +88,9 @@
       user() {
         return this.$store.state.user
       },
-      posts() {
-        return this.$store.state.activePosts
-      }
+      // posts() {
+      //   return this.$store.state.activePosts
+      // }
 
 
     }
