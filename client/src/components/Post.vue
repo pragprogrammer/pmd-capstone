@@ -2,6 +2,7 @@
   <div class="posts">
     <div class="post" v-for="post in posts" :key="post._id">
       <h1>{{post.category}}</h1>
+      <p>{{post.userName}}</p>
       <p>{{post.content}}</p>
       <p>Within {{post.distance}} miles</p>
     </div>
