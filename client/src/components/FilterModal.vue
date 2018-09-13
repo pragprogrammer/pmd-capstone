@@ -1,10 +1,8 @@
 <template>
   <div class="filter-modal">
-    <div class="col-6 offset-1">
-      <button class="btn btn-secondary" data-toggle="modal" data-target="#filterMenuModal">
-        {{searchRadius}}mi | #{{postCategory}}
-      </button>
-    </div>
+    <button class="btn btn-secondary" data-toggle="modal" data-target="#filterMenuModal">
+      {{searchRadius}}mi | #{{postCategory}}
+    </button>
     <div id="filterMenuModal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -36,3 +34,8 @@
   };
 
 </script>
+<style>
+.filter-modal {
+  width: 100%;
+}
+</style>
