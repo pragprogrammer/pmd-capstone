@@ -68,10 +68,9 @@ export default new Vuex.Store({
       }
       else {
         postArr = state.posts.filter(post => {
-          return (post.category === filters.category && post.distance <= filters.radius)
+          return (post.category == filters.category && post.distance <= filters.radius)
         })
       }
-      console.log("updating active posts")
       state.activePosts = postArr
     }
 
@@ -134,9 +133,6 @@ export default new Vuex.Store({
     //POST ACTIONS
     //
     getPosts({ dispatch, commit, state }, radius) {
-      console.log(state.coords.lat)
-      console.log(state.coords.lng)
-      console.log(radius)
       api.get(`posts/${state.coords.lat}/${state.coords.lng}/${radius}`)
         .then(res => {
           console.log(res)
