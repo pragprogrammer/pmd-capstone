@@ -77,25 +77,27 @@ router.delete('/:postId', (req, res, next) => {
 
 // vote on specific post
 router.post('/:postId/vote', (req, res, next) => {
-  if (req.body > -2 && req.body < 2) {
-    Post.findById(req.params.postId)
-      .then(post => {
-        if (!post.votes) { post.votes = {} }
-        post.votes[req.session.uid] = req.body.vote
-        post.markModified('votes')
-        post.save((err) => {
-          if (err) {
-            console.log(err)
-            return res.status(500).send(err)
-          }
-          return res.send(post)
-        })
-      })
-      .catch(err => {
-        console.log(err)
-        next()
-      })
+  if (req.body.vote < -1 || req.body.vote > 1) {
+    return res.status(403).send("FORBIDDEN")
   }
+  Post.findById(req.params.postId)
+    .then(post => {
+      if (!post.votes) { post.votes = {} }
+      post.votes[req.session.uid] = req.body.vote
+      post.markModified('votes')
+      post.save((err) => {
+        if (err) {
+          console.log(err)
+          return res.status(500).send(err)
+        }
+        return res.send(post)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      next()
+    })
+
 })
 
 // router.post('/:postId/upvote', (req, res, next) => {
