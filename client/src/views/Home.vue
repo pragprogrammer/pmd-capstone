@@ -27,23 +27,24 @@
         </form>
       </FilterModal>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <!-- {{posts}} -->
-        <Post />
+    <div class="post-bod mb-3">
+      <div class="row">
+        <div class="col-sm-12">
+          <Post />
+        </div>
       </div>
     </div>
-    <v-footer fixed color="#7cbce8" height="fit-content" dark>
-      <v-layout>
-        <button class="btn btn-danger mb-3" @click="logout">Logout</button>
+    <v-footer fixed color="#7cbce8" height="5vh" dark>
+      <v-layout flex justify-content-start>
+        <button class="btn btn-danger ml-3" @click="logout">Logout</button>
       </v-layout>
     </v-footer>
   </div>
 </template>
 
 <script>
-  import Post from '../components/Post'
-  import FilterModal from '../components/FilterModal'
+  import Post from '@/components/Post'
+  import FilterModal from '@/components/FilterModal'
   export default {
     name: 'home',
     created() {
@@ -102,6 +103,13 @@
   .home {
     min-height: 100vh;
   }
+  .post-bod {
+    height: 85vh;
+    overflow-y: scroll;
+  }
+  .post-bod::-webkit-scrollbar {
+  display: none;
+}
   .underline {
     border-bottom: 2px solid #2C3E50;
   }

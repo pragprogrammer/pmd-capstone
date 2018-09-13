@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class="bg-light">
-    <router-view />
+  <div id="app">
+    <router-view class="our-app" />
   </div>
 </template>
 
@@ -12,6 +12,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    background-color: #ecf0f1;
   }
 
   #nav {
