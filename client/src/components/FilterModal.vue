@@ -1,9 +1,9 @@
 <template>
   <div class="filter-modal">
     <div class="col-6 offset-1">
-      <button class="btn btn-success mt-4" data-toggle="modal" data-target="#filterMenuModal">Radius: {{searchRadius}}
-        View:
-        {{postCategory}}</button>
+      <button class="btn btn-secondary" data-toggle="modal" data-target="#filterMenuModal">
+        Radius: {{searchRadius}} View: {{postCategory}}
+      </button>
     </div>
     <div id="filterMenuModal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">

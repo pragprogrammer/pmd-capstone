@@ -1,8 +1,8 @@
 <template>
-  <div id="app" class="bg-secondary container-fluid">
+  <div id="app" class="bg-light">
     <div id="nav" class="text-info">
       <router-link to="/">Home </router-link>|
-      <router-link to="/about"> About </router-link>|
+      <router-link to="/about"> About </router-link>
     </div>
     <router-view />
   </div>
@@ -10,7 +10,8 @@
 
 <style>
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */
+    font-family: 'Fira Sans Condensed', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -29,4 +30,12 @@
   #nav a.router-link-exact-active {
     color: #18BC9C;
   }
+
+  /* h3,
+  h4,
+  h5,
+  h6,
+  p {
+    
+  } */
 </style>
