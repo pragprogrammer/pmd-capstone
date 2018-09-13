@@ -2,6 +2,9 @@
   <div class="login container-fluid">
     <div class="row">
       <div class="col-12 text-center">
+        <div id="nav" class="text-success">
+          <router-link to="/about"> About </router-link>
+        </div>
         <h1 class="title">bullUtin</h1>
       </div>
       <div class="user-input col-sm-8 offset-sm-2 col-md-4 offset-md-4">

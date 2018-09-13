@@ -2,7 +2,7 @@
   <div class="home container-fluid">
     <div class="row underline">
       <div class="col-12">
-        <h4 class="text-primary">Welcome {{user.username}}!</h4>
+        <h4 class="text-primary mt-3">Welcome {{user.username}}!</h4>
       </div>
       <div class="col-5">
         <button class="btn btn-danger mb-3" @click="logout">Logout</button>

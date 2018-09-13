@@ -1,9 +1,5 @@
 <template>
   <div id="app" class="bg-light">
-    <div id="nav" class="text-info">
-      <router-link to="/">Home </router-link>|
-      <router-link to="/about"> About </router-link>
-    </div>
     <router-view />
   </div>
 </template>
@@ -24,7 +20,7 @@
 
   #nav a {
     font-weight: bold;
-    color: #2C3E50;
+    color: #3498DB;
   }
 
   #nav a.router-link-exact-active {
