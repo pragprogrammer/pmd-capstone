@@ -5,11 +5,11 @@
       <p @click="showUser(post.userId)">{{post.userName}}</p>
       <p>{{post.content}}</p>
       <p>Within {{post.distance}} miles</p>
-      <div class="vote">
-      <i class="fas fa-arrow-alt-circle-up"></i>
-      <i class="far fa-arrow-alt-circle-up"></i>
-      <i class="fas fa-arrow-alt-circle-down"></i>
-      <i class="far fa-arrow-alt-circle-down"></i>
+      <div class="votes">
+      <i @click="upvoted = !upvoted" v-if="upvoted" class="fas fa-arrow-alt-circle-up"></i>
+      <i @click="upvoted = !upvoted" v-else class="far fa-arrow-alt-circle-up"></i>
+      <i @click="downvoted = !downvoted" v-if="downvoted" class="fas fa-arrow-alt-circle-down"></i>
+      <i @click="downvoted = !downvoted" v-else class="far fa-arrow-alt-circle-down"></i>
       </div>
     </div>
   </div>
@@ -18,7 +18,14 @@
 <script>
 export default {
   name: "post",
-  // data() {},
+  data() {
+    return {
+      upvoted: false,
+      uVote: 1,
+      downvoted: false,
+      dVote: -1
+    };
+  },
   methods: {
     showUser() {
       //some stuff
@@ -33,4 +40,7 @@ export default {
 </script>
 
 <style scoped>
+/* * {
+  outline: 1px solid red;
+} */
 </style>
