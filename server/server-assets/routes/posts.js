@@ -1,6 +1,7 @@
 let router = require('express').Router()
 let Post = require('../models/post')
 
+//THANKS A TON https://www.movable-type.co.uk/scripts/latlong.html for the help with this math by supplying this function template!!
 function haversine(lat1, lng1, lat2, lng2) {
   const earthRadius = 6371000
   let yourLat = lat1 * (Math.PI / 180)

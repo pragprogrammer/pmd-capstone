@@ -8,6 +8,9 @@ let voteSchema = new Schema({
         ref: 'User',
         required: true
     },
+    distance: {
+        type: Number
+    },
     value: {
         type: Number,
         min: -1,
