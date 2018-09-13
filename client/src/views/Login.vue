@@ -37,21 +37,19 @@
   export default {
     name: 'login',
     mounted() {
-      //check for existing user session      
-      this.$store.dispatch('authenticate')
-      function getLocation() {
-        if (confirm("may we use your location?")) {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.captureCoords);
-          }
-          else {
-            alert("your browser doens't support HTML5 Geolocation")
-          }
+      if (confirm("may we use your location?")) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.captureCoords);
         }
         else {
-          alert('bullUtin works better with location access')
+          alert("your browser doens't support HTML5 Geolocation")
         }
       }
+      else {
+        alert('bullUtin works better with location access')
+      }
+
+      this.$store.dispatch('authenticate')
     },
 
     data() {
