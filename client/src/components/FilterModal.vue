@@ -2,7 +2,7 @@
   <div class="filter-modal">
     <div class="col-6 offset-1">
       <button class="btn btn-secondary" data-toggle="modal" data-target="#filterMenuModal">
-        Radius: {{searchRadius}} View: {{postCategory}}
+        {{searchRadius}}mi | #{{postCategory}}
       </button>
     </div>
     <div id="filterMenuModal" class="modal fade" tabindex="-1" role="dialog">
