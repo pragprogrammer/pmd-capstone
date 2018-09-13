@@ -30,13 +30,9 @@
 
     name: "FilterModal",
 
-    props: ['postCategory'],
+    props: ['postCategory', 'searchRadius']
 
-    computed: {
-      searchRadius() {
-        return this.$store.state.searchRadius
-      }
-    }
+
   };
 
 </script>

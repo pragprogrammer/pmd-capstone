@@ -5,7 +5,7 @@
       <button class="btn btn-danger mb-3" @click="logout">Logout</button>
     </div>
     <div class="col-6 offset-1">
-      <FilterModal :postCategory="postCategory">
+      <FilterModal :postCategory="postCategory" :searchRadius="searchRadius">
         <form @submit.prevent="filterPosts" class="form-group">
           <label for="search-radius">Search Radius(mi)</label>
           <select name="search-radius" v-model="searchRadius" class="mr-2 ml-1">
@@ -54,7 +54,6 @@
 
     data() {
       return {
-        menusVisible: false,
         postCategory: 'All',
         searchRadius: 25
       }
@@ -65,12 +64,12 @@
         this.$store.dispatch('logout')
       },
 
-      applyFilters() {
+      filterPosts() {
         let filters = {
-          searchRadius: this.searchRadius,
+          radius: this.searchRadius,
           category: this.postCategory
         }
-        this.$store.dispatch('applyFilters', filters)
+        this.$store.dispatch('filterPosts', filters)
       }
 
     },
@@ -80,7 +79,7 @@
         return this.$store.state.user
       },
       posts() {
-        return this.$store.state.posts
+        return this.$store.state.activePosts
       }
 
 

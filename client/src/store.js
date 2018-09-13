@@ -21,8 +21,9 @@ export default new Vuex.Store({
   state: {
     coords: {},
     user: {},
-    searchRadius: 0,
-    posts: {}
+    //searchRadius: 25,
+    posts: [],
+    activePosts: []
   },
   mutations: {
     //
@@ -37,8 +38,9 @@ export default new Vuex.Store({
     },
     logout(state) {
       state.user = {}
-      state.posts = {}
-      state.searchRadius = 0
+      state.posts = []
+      state.activePosts = []
+      //state.searchRadius = 0
       router.push({ name: 'about' })
     },
     //
@@ -46,23 +48,33 @@ export default new Vuex.Store({
     //
     setPosts(state, postArr) {
       let postObj = {}
-      postArr.forEach(post => {
-        if (postObj[post.category]) {
-          postObj[post.category].push(post)
-        }
-        let arr = []
-        postObj[post.category] = arr.push(post)
-      })
-      state.posts = postObj
+      // postArr.forEach(post => {
+      //   if (postObj[post.category]) {
+      //     postObj[post.category].push(post)
+      //   }
+      //   let arr = []
+      //   postObj[post.category] = arr.push(post)
+      //})
+      state.posts = postArr
+      state.activePosts = postArr
     },
 
-    setSearchRadius(state, radius) {
-      state.searchRadius = radius
-    },
-
-    setCategory(state, category) {
-
+    filterPosts(state, filters) {
+      let postArr = []
+      if (filters.category == 'All') {
+        postArr = state.posts.filter(post => {
+          return (post.distance <= filters.radius)
+        })
+      }
+      else {
+        postArr = state.posts.filter(post => {
+          return (post.category === filters.category && post.distance <= filters.radius)
+        })
+      }
+      console.log("updating active posts")
+      state.activePosts = postArr
     }
+
   },
   actions: {
     //
@@ -132,9 +144,8 @@ export default new Vuex.Store({
         .catch(err => console.error(err))
     },
 
-    applyFilters({ dispatch, commit }, filters) {
-      commit('setSearchRadius', filters.searchRadius)
-      commit('setCategory', filters.category)
+    filterPosts({ dispatch, commit }, filters) {
+      commit('filterPosts', filters)
     }
 
     //TO-DO  WRITE LOGIC FOR POSTING VOTES
