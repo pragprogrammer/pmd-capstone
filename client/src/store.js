@@ -47,7 +47,7 @@ export default new Vuex.Store({
     //POST MUTATIONS
     //
     setPosts(state, postArr) {
-      let postObj = {}
+      //let postObj = {}
       // postArr.forEach(post => {
       //   if (postObj[post.category]) {
       //     postObj[post.category].push(post)
@@ -112,6 +112,7 @@ export default new Vuex.Store({
         })
         .catch(err => console.error(err))
     },
+
     userExists({ }, name) {
       auth.get(`exists/${name}`)
         .then(res => {

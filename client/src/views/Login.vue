@@ -34,12 +34,23 @@
 </template>
 
 <script>
-
   export default {
     name: 'login',
-    created() {
-      if (this.$store.state.user._id) {
-        this.$router.push({ name: 'home' })
+    mounted() {
+      //check for existing user session      
+      this.$store.dispatch('authenticate')
+      function getLocation() {
+        if (confirm("may we use your location?")) {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.captureCoords);
+          }
+          else {
+            alert("your browser doens't support HTML5 Geolocation")
+          }
+        }
+        else {
+          alert('bullUtin works better with location access')
+        }
       }
     },
 
@@ -58,19 +69,7 @@
         }
       }
     },
-    mounted: function getLocation() {
-      if (confirm("may we use your location?")) {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(this.captureCoords);
-        }
-        else {
-          alert("your browser doens't support HTML5 Geolocation")
-        }
-      }
-      else {
-        alert('bullUtin works better with location access')
-      }
-    },
+
     methods: {
       captureCoords(here) {
         let obj = {
@@ -103,7 +102,7 @@
         this.$store.dispatch('userExists', this.newUser.username)
       }
     }
-  }
+  };
 </script>
 
 <style>
