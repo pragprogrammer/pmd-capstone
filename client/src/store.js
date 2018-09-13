@@ -90,7 +90,9 @@ export default new Vuex.Store({
           console.log('login user return: ', res.data)
           commit('setUser', res.data)
           router.push({ name: 'home' })
+          dispatch('getPosts', 25)
         })
+
         .catch(err => console.error(err))
     },
     registerUser({ commit, dispatch }, newUser) {
@@ -100,6 +102,7 @@ export default new Vuex.Store({
           console.log("register user return: ", res.data)
           commit('setUser', res.data)
           router.push({ name: 'home' })
+          dispatch('getPosts', 25)
         })
         .catch(err => console.error(err))
     },

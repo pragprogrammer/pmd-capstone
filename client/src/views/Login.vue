@@ -77,13 +77,11 @@
         this.$store.dispatch("captureCoords", obj)
       },
       loginUser() {
-        this.$store.dispatch('getPosts', 25)
         this.$store.dispatch('loginUser', this.creds);
         this.creds = { username: '', password: '' }
       },
       registerUser() {
         if (this.newUser.password === this.newUser.password2) {
-          this.$store.dispatch('getPosts', 25)
           this.$store.dispatch('registerUser', this.newUser)
           this.newUser = {
             username: '',
