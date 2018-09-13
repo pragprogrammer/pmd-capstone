@@ -66,6 +66,9 @@
         searchRadius: 25
       }
     },
+    mounted: function getPosts(){
+      this.$store.dispatch('getPosts', 25)
+    },
 
     methods: {
       logout() {

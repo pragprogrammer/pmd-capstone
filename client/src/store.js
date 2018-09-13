@@ -91,6 +91,7 @@ export default new Vuex.Store({
           commit('setUser', res.data)
           router.push({ name: 'home' })
         })
+
         .catch(err => console.error(err))
     },
     registerUser({ commit, dispatch }, newUser) {
