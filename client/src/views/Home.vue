@@ -41,7 +41,7 @@
           <button class="btn btn-outline-danger">delete account</button>
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
-        <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v ml-3 mt-1"></i>
+        <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1"></i>
       </v-layout>
     </v-footer>
   </div>
@@ -61,6 +61,7 @@
       }
     },
 
+<<<<<<< HEAD
     components: {
       FilterModal,
       Post
@@ -71,6 +72,20 @@
         postCategory: "All",
         searchRadius: 25,
         showSettings: false
+=======
+  data() {
+    return {
+      postCategory: "All",
+      searchRadius: 25,
+      showSettings: false
+    };
+  },
+  methods: {
+    captureCoords(here) {
+      let obj = {
+        lat: here.coords.latitude,
+        lng: here.coords.longitude
+>>>>>>> af88acbee8dff9616b54e293f92872b734b67a5f
       };
     },
     mounted: function getPosts() {
@@ -106,7 +121,12 @@
       //   return this.$store.state.activePosts
       // }
     }
+<<<<<<< HEAD
   };
+=======
+  }
+};
+>>>>>>> af88acbee8dff9616b54e293f92872b734b67a5f
 </script>
 
 <style>
