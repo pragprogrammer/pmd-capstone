@@ -2,9 +2,11 @@
   <div class="posts">
     <div class="post" v-for="post in posts" :key="post._id">
       <div class="category">{{post.category}}</div>
-      <div class="userName" @click="showUser(post.userId)">{{post.userName}}</div>
+      <div class="userName" @click="showUser(post.userId)"><strong>{{post.userName}}</strong></div>
       <div class="distance">{{Math.round(post.distance)}} miles away</div>
-      <div class="content">{{post.content}}</div>
+      <div class="content-holder">
+        <div class="content">{{post.content}}</div>
+      </div>
       <div class="time">{{post.timestamp}}</div>
       <div class="votes">
         <i @click="upvoted = !upvoted" v-if="upvoted" class="fas fa-arrow-alt-circle-up"></i>
@@ -70,8 +72,15 @@
     width: 25%;
   }
 
+  .content-holder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .content {
-    width: 70%;
+    width: 80%;
     border: 1px solid grey;
     background-color: rgba(128, 128, 128, 0.466);
   }
