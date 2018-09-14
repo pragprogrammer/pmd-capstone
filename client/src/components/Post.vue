@@ -1,9 +1,11 @@
 <template>
   <div class="posts">
     <div class="post" v-for="post in posts" :key="post._id">
-      <div class="category">{{post.category}}</div>
+      <div class="category">{{post.title}}</div>
       <div class="userName" @click="showUser(post.userId)"><strong>{{post.userName}}</strong></div>
-      <div class="distance">{{Math.round(post.distance)}} miles away</div>
+      <div class="distance" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</div>
+      <div class="distance" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</div>
+      <div class="distance" v-else>{{post.distance.toFixed(2)}} miles away</div>
       <div class="content-holder">
         <div class="content">{{post.content}}</div>
       </div>
