@@ -41,8 +41,8 @@ export default new Vuex.Store({
       state.coords = {}
       state.posts = []
       state.activePosts = []
-      state.category = 'All'
-      state.searchRadius = 25
+      //state.category = 'All'
+      //state.searchRadius = 25
       router.push({ name: 'login' })
     },
     //
@@ -55,20 +55,12 @@ export default new Vuex.Store({
 
     addPost(state, post) {
       state.posts.push(post)
-      if (state.category == 'All') {
-        state.activePosts.push(post)
-      }
-      else {
-        if (state.category == post.category) {
-          state.activePosts.push(post)
-        }
-      }
     },
 
     filterPosts(state, filters) {
       let postArr = []
-      state.category = filters.catagory
-      state.searchRadius = filters.radius
+      //state.category = filters.catagory
+      //state.searchRadius = filters.radius
       if (filters.category == 'All') {
         postArr = state.posts.filter(post => {
           console.log(post.distance, filters.radius)
@@ -159,8 +151,11 @@ export default new Vuex.Store({
       post.userId = state.user._id
       post.userName = state.user.username
       post.coordinates = state.coords
+      post.timestamp = Date.now()
+      post.distance = 0;
       api.post('posts', post)
         .then(res => {
+          console.log(res.data)
           commit('addPost', res.data)
         })
         .catch(err => console.error(err.message))
