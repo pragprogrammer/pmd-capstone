@@ -42,111 +42,110 @@
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
         <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1"></i>
-        <i class="btn btn-info fas fa-plus add-post-btn"></i>
+        <post-form />
       </v-layout>
     </v-footer>
   </div>
 </template>
 
 <script>
-  import Post from "@/components/Post";
-  import FilterModal from "@/components/FilterModal";
-  export default {
-    name: "home",
-    created() {
-      //block users not logged in
-      if (!this.$store.state.user._id) {
-        this.$router.push({ name: "login" });
-      } else {
-        navigator.geolocation.getCurrentPosition(this.captureCoords);
-      }
-    },
-    data() {
-      return {
-        postCategory: "All",
-        searchRadius: 25,
-        showSettings: false
+import Post from "@/components/Post";
+import PostForm from "@/components/PostForm";
+import FilterModal from "@/components/FilterModal";
+export default {
+  name: "home",
+  created() {
+    //block users not logged in
+    if (!this.$store.state.user._id) {
+      this.$router.push({ name: "login" });
+    } else {
+      navigator.geolocation.getCurrentPosition(this.captureCoords);
+    }
+  },
+  data() {
+    return {
+      postCategory: "All",
+      searchRadius: 25,
+      showSettings: false
+    };
+  },
+  components: {
+    FilterModal,
+    Post,
+    PostForm
+  },
+  methods: {
+    captureCoords(here) {
+      let obj = {
+        lat: here.coords.latitude,
+        lng: here.coords.longitude
       };
+      this.$store.dispatch("captureCoords", obj);
     },
-    components: {
-      FilterModal,
-      Post
+    logout() {
+      this.$store.dispatch("logout");
     },
-    methods: {
-      captureCoords(here) {
-        let obj = {
-          lat: here.coords.latitude,
-          lng: here.coords.longitude
-        };
-        this.$store.dispatch("captureCoords", obj);
-      },
-      logout() {
-        this.$store.dispatch("logout");
-      },
-      filterPosts() {
-        let filters = {
-          radius: this.searchRadius,
-          category: this.postCategory
-        };
-        this.$store.dispatch("filterPosts", filters);
-        $("#filterMenuModal").modal("hide");
-      }
-    },
+    filterPosts() {
+      let filters = {
+        radius: this.searchRadius,
+        category: this.postCategory
+      };
+      this.$store.dispatch("filterPosts", filters);
+      $("#filterMenuModal").modal("hide");
+    }
+  },
 
-    computed: {
-      user() {
-        return this.$store.state.user;
-      }
-      // posts() {
-      //   return this.$store.state.activePosts
-      // }
+  computed: {
+    user() {
+      return this.$store.state.user;
     }
   }
+};
 </script>
 
 <style>
-  .home {
-    min-height: 100vh;
-  }
+.home {
+  min-height: 100vh;
+}
 
-  .post-bod {
-    height: 85vh;
-    overflow-y: scroll;
-  }
+.post-bod {
+  height: 85vh;
+  overflow-y: scroll;
+}
 
-  .post-bod::-webkit-scrollbar {
-    display: none;
-  }
+.post-bod::-webkit-scrollbar {
+  display: none;
+}
 
-  .center-post {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.center-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .underline {
-    border-bottom: 2px solid #2c3e50;
-  }
+.underline {
+  border-bottom: 2px solid #2c3e50;
+}
 
-  .form-group select {
-    border: 1px solid #2c3e50;
-    min-width: 2rem;
-    text-align-last: center;
-  }
+.form-group select {
+  border: 1px solid #2c3e50;
+  min-width: 2rem;
+  text-align-last: center;
+}
 
-  .settings {
-    display: flex;
-    width: fit-content;
-    position: absolute;
-    bottom: 6vh;
-  }
+.settings {
+  display: flex;
+  width: fit-content;
+  position: absolute;
+  bottom: 6vh;
+}
 
-  .add-post-btn {
-    position: fixed;
-    right: 5vw;
-    bottom: 3vh;
-    font-size: 2rem;
-    border-radius: 50%;
-    box-shadow: 1px 0 3px #ecf0f1;
-  }
+.add-post-btn {
+  position: fixed;
+  right: 5vw;
+  bottom: 3vh;
+  font-size: 2rem;
+  border-radius: 50%;
+  box-shadow: 1px 0 3px #ecf0f1;
+}
 </style>

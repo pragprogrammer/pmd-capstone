@@ -17,6 +17,10 @@ let ObjectId = Schema.Types.ObjectId
 // })
 
 let schema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
     category: {
         type: String,
         required: true
