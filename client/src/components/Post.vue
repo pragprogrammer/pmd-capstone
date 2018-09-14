@@ -46,7 +46,7 @@
 } */
 
   .posts {
-    /* width: 50%; */
+    width: 75%;
     height: auto;
     display: flex;
     flex-wrap: wrap;

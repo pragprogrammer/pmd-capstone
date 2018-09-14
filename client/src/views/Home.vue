@@ -27,13 +27,13 @@
         </form>
       </FilterModal>
     </div>
-    <div class="post-bod mb-3">
-      <div class="row">
-        <div class="col-sm-12">
-          <Post />
-        </div>
+    <!-- <div class="post-bod"> -->
+    <div class="row display-flex">
+      <div class="col-sm-12 center-post">
+        <Post />
       </div>
     </div>
+    <!-- </div> -->
     <v-footer fixed color="#7cbce8" height="5vh" dark>
       <v-layout flex justify-content-start>
         <div v-if="showSettings" class="settings card">
@@ -49,58 +49,63 @@
 </template>
 
 <script>
-import Post from "@/components/Post";
-import FilterModal from "@/components/FilterModal";
-export default {
-  name: "home",
-  created() {
-    //block users not logged in
-    if (!this.$store.state.user._id) {
-      this.$router.push({ name: "login" });
-    } else {
-      navigator.geolocation.getCurrentPosition(this.captureCoords);
-    }
-  },
-
-  components: {
-    FilterModal,
-    Post
-  },
-
-  data() {
-    return {
-      postCategory: "All",
-      searchRadius: 25,
-      showSettings: false
-    };
-  },
-  methods: {
-    captureCoords(here) {
-      let obj = {
-        lat: here.coords.latitude,
-        lng: here.coords.longitude
-      };
-      this.$store.dispatch("captureCoords", obj);
+  import Post from "@/components/Post";
+  import FilterModal from "@/components/FilterModal";
+  export default {
+    name: "home",
+    created() {
+      //block users not logged in
+      if (!this.$store.state.user._id) {
+        this.$router.push({ name: "login" });
+      } else {
+        navigator.geolocation.getCurrentPosition(this.captureCoords);
+      }
     },
-    logout() {
-      this.$store.dispatch("logout");
-    },
-    filterPosts() {
-      let filters = {
-        radius: this.searchRadius,
-        category: this.postCategory
+    data() {
+      return {
+        postCategory: "All",
+        searchRadius: 25,
+        showSettings: false
       };
-      this.$store.dispatch("filterPosts", filters);
-      $("#filterMenuModal").modal("hide");
-    }
-  },
+    },
+    components: {
+      FilterModal,
+      Post
+    },
+    mounted: function getPosts() {
+      this.$store.dispatch("getPosts", 25);
+    },
 
-  computed: {
-    user() {
-      return this.$store.state.user;
+    methods: {
+      captureCoords(here) {
+        let obj = {
+          lat: here.coords.latitude,
+          lng: here.coords.longitude
+        };
+        this.$store.dispatch("captureCoords", obj);
+      },
+      logout() {
+        this.$store.dispatch("logout");
+      },
+      filterPosts() {
+        let filters = {
+          radius: this.searchRadius,
+          category: this.postCategory
+        };
+        this.$store.dispatch("filterPosts", filters);
+        $("#filterMenuModal").modal("hide");
+      }
+    },
+
+    computed: {
+      user() {
+        return this.$store.state.user;
+      }
+      // posts() {
+      //   return this.$store.state.activePosts
+      // }
     }
   }
-};
 </script>
 
 <style>
