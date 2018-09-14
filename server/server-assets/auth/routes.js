@@ -44,7 +44,7 @@ router.post('/auth/register', (req, res, next) => {
 
 //LOGIN AN EXISTING USER
 router.post('/auth/login', (req, res) => {
-  //FIND A USER BASED ON PROVIDED EMAIL
+  //FIND A USER BASED ON UNIQUE USERNAME
   Users.findOne({
     username: req.body.username
   })
@@ -75,7 +75,14 @@ router.delete('/auth/logout', (req, res) => {
       message: 'Logout Successful'
     })
   })
-})
+}),
+
+  //DELETE A USER ACCOUNT
+  router.delete('/auth/delete', (req, res, next) => {
+    Users.findByIdAndRemove(req.session.uid, function (err) { })
+      .then(() => res.send({ message: 'User Account Deleted' }))
+      .catch(next)
+  })
 
 
 //Validates req.session.uid

@@ -36,7 +36,7 @@
       <v-layout flex justify-content-start>
         <div v-if="showSettings" class="settings card">
           <button class="btn btn-outline-secondary">disable location sharing</button>
-          <button class="btn btn-outline-danger">delete account</button>
+          <button class="btn btn-outline-danger" @click="deleteAccount">delete account</button>
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
         <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1"></i>
@@ -80,8 +80,39 @@ export default {
       };
       this.$store.dispatch("captureCoords", obj);
     },
+<<<<<<< HEAD
+    components: {
+      FilterModal,
+      Post,
+      PostForm
+    },
+    methods: {
+      captureCoords(here) {
+        let obj = {
+          lat: here.coords.latitude,
+          lng: here.coords.longitude
+        };
+        this.$store.dispatch("captureCoords", obj);
+      },
+      logout() {
+        this.$store.dispatch("logout");
+      },
+      filterPosts() {
+        let filters = {
+          radius: this.searchRadius,
+          category: this.postCategory
+        };
+        this.$store.dispatch("filterPosts", filters);
+        $("#filterMenuModal").modal("hide");
+      },
+
+      deleteAccount() {
+        this.$store.dispatch('deleteUser')
+      }
+=======
     logout() {
       this.$store.dispatch("logout");
+>>>>>>> ad0b4408bfe1653644e7242e291a0e51599660eb
     },
     filterPosts() {
       let filters = {
