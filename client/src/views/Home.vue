@@ -72,6 +72,19 @@ export default {
     Post,
     PostForm
   },
+  // methods: {
+  //   captureCoords(here) {
+  //     let obj = {
+  //       lat: here.coords.latitude,
+  //       lng: here.coords.longitude
+  //     };
+  //     this.$store.dispatch("captureCoords", obj);
+  //   },
+  //   components: {
+  //     FilterModal,
+  //     Post,
+  //     PostForm
+  //   },
   methods: {
     captureCoords(here) {
       let obj = {
@@ -80,51 +93,37 @@ export default {
       };
       this.$store.dispatch("captureCoords", obj);
     },
-    components: {
-      FilterModal,
-      Post,
-      PostForm
+    logout() {
+      this.$store.dispatch("logout");
     },
-    methods: {
-      captureCoords(here) {
-        let obj = {
-          lat: here.coords.latitude,
-          lng: here.coords.longitude
-        };
-        this.$store.dispatch("captureCoords", obj);
-      },
-      logout() {
-        this.$store.dispatch("logout");
-      },
-      filterPosts() {
-        let filters = {
-          radius: this.searchRadius,
-          category: this.postCategory
-        };
-        this.$store.dispatch("filterPosts", filters);
-        $("#filterMenuModal").modal("hide");
-      },
-
-      deleteAccount() {
-        this.$store.dispatch("deleteUser");
-      },
-      logout() {
-        this.$store.dispatch("logout");
-      },
-      filterPosts() {
-        let filters = {
-          radius: this.searchRadius,
-          category: this.postCategory
-        };
-        this.$store.dispatch("filterPosts", filters);
-        $("#filterMenuModal").modal("hide");
-      }
+    filterPosts() {
+      let filters = {
+        radius: this.searchRadius,
+        category: this.postCategory
+      };
+      this.$store.dispatch("filterPosts", filters);
+      $("#filterMenuModal").modal("hide");
     },
 
-    computed: {
-      user() {
-        return this.$store.state.user;
-      }
+    deleteAccount() {
+      this.$store.dispatch("deleteUser");
+    },
+    logout() {
+      this.$store.dispatch("logout");
+    },
+    filterPosts() {
+      let filters = {
+        radius: this.searchRadius,
+        category: this.postCategory
+      };
+      this.$store.dispatch("filterPosts", filters);
+      $("#filterMenuModal").modal("hide");
+    }
+  },
+
+  computed: {
+    user() {
+      return this.$store.state.user;
     }
   }
 };
