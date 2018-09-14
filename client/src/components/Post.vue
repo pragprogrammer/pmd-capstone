@@ -40,9 +40,9 @@ export default {
 </script>
 
 <style scoped>
-* {
+/* * {
   outline: 1px solid red;
-}
+} */
 
 .posts {
   /* width: 50%; */
@@ -58,6 +58,7 @@ export default {
   border: 1px solid black;
   flex-wrap: wrap;
   flex-direction: row;
+  margin: 0.5rem;
 }
 
 .category {
@@ -69,7 +70,12 @@ export default {
 }
 
 .content {
-  width: 100%;
+  display: flex;
+  width: 70%;
+  border: 1px solid grey;
+  background-color: rgba(128, 128, 128, 0.466);
+  justify-self: center;
+  align-self: center;
 }
 
 .distance {
