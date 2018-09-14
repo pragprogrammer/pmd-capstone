@@ -44,10 +44,6 @@ export default new Vuex.Store({
     //POST MUTATIONS
     //
     setPosts(state, postArr) {
-      postArr.forEach(post => {
-        post.timestamp = new Date(post.timestamp).toLocaleString()
-        post.distance = post.distance // .toFixed() here broke our filterPosts method
-      })
       state.posts = postArr
       state.activePosts = postArr
     },
@@ -131,7 +127,6 @@ export default new Vuex.Store({
     getPosts({ dispatch, commit, state }, radius) {
       api.get(`posts/${state.coords.lat}/${state.coords.lng}/${radius}`)
         .then(res => {
-          console.log(res.data)
           commit("setPosts", res.data)
         })
         .catch(err => console.error(err))

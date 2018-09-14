@@ -7,7 +7,7 @@
       <div class="content-holder">
         <div class="content">{{post.content}}</div>
       </div>
-      <div class="time">{{post.timestamp}}</div>
+      <div class="time">{{post.timestamp | moment("from", "now")}}</div>
       <div class="votes">
         <i @click="upVote(post._id)"  v-if="!datavote.upvoted" class="fas fa-arrow-alt-circle-up"></i>
         <i v-else class="far fa-arrow-alt-circle-up"></i>
@@ -20,11 +20,20 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 export default {
   name: "post",
   data() {
     return {
       datavote: {
+=======
+  let moment = require('moment')
+
+  export default {
+    name: "post",
+    data() {
+      return {
+>>>>>>> 739c4f197755826923be435e82ea6132ad91e2e6
         upvoted: false,
         downvoted: false
       },
@@ -44,6 +53,7 @@ export default {
     showUser() {
       //some stuff
     },
+<<<<<<< HEAD
     upVote(id) {
       // debugger;
       this.$store.dispatch("vote", { postId: id, vote: this.voted });
@@ -56,6 +66,14 @@ export default {
       let postVotes = Object.values(obj);
       const getSum = (sum, value) => sum + value;
       return postVotes.reduce(getSum);
+=======
+
+
+    computed: {
+      posts() {
+        return this.$store.state.activePosts;
+      }
+>>>>>>> 739c4f197755826923be435e82ea6132ad91e2e6
     }
   },
   computed: {
