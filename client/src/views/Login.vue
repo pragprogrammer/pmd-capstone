@@ -40,19 +40,18 @@
   export default {
     name: 'login',
     mounted() {
-      // if (confirm("may we use your location?")) {
-      //  
-      //   if (navigator.geolocation) {
-      //     navigator.geolocation.getCurrentPosition(this.captureCoords);
-      //   }
-      //   else {
-      //     alert("your browser doesn't support HTML5 Geolocation")
-      //   }
-      // }
-      // else {
-      //   alert('bullUtin works better with location access')
-      // }
+      if (confirm("may we use your location?")) {
 
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.captureCoords);
+        }
+        else {
+          alert("your browser doesn't support HTML5 Geolocation")
+        }
+      }
+      else {
+        alert('bullUtin works better with location access')
+      }
       this.$store.dispatch('authenticate')
     },
 
@@ -81,23 +80,23 @@
         this.$store.dispatch("captureCoords", obj)
       },
 
-      geolocation() {
-        if (confirm("may we use your location?")) {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.captureCoords);
-          }
-          else {
-            alert("your browser doesn't support HTML5 Geolocation")
-          }
-        }
-        else {
-          alert('bullUtin works better with location access')
-        }
-      },
+      // geolocation() {
+      //   if (confirm("may we use your location?")) {
+      //     if (navigator.geolocation) {
+      //       navigator.geolocation.getCurrentPosition(this.captureCoords);
+      //     }
+      //     else {
+      //       alert("your browser doesn't support HTML5 Geolocation")
+      //     }
+      //   }
+      //   else {
+      //     alert('bullUtin works better with location access')
+      //   }
+      // },
 
       loginUser() {
         this.$store.dispatch('loginUser', this.creds);
-        this.geolocation()
+        //this.geolocation()
         this.creds = { username: '', password: '' }
       },
       registerUser() {
