@@ -1,5 +1,5 @@
 <template>
-<v-layout class="post-form">
+  <v-layout class="post-form">
     <v-dialog v-model="addPost" transition="dialog-bottom-transition">
         <i v-if="!addPost" slot="activator" @click="addPost = !addPost" class="btn btn-info fas fa-plus add-post-btn"></i>
         <i v-else slot="activator" @click="addPost = !addPost" id="minus-form" class="btn btn-danger fas fa-plus add-post-btn"></i>
@@ -54,7 +54,7 @@ export default {
             max: "Content cannot be longer than 140 characters"
           },
           category: {
-            required: () => "Every post needs a category",
+            required: () => "Every post needs a category"
           }
         }
       }
@@ -67,12 +67,23 @@ export default {
   methods: {
     submit() {
       this.$validator.validateAll().then(res => {
-        if(!res){
-          return 
+        if (!res) {
+          return;
         }
-        this.post.category = this.catOptions[this.post.category]
-        this.createPost()
-      })
+        this.post.category = this.catOptions[this.post.category];
+        this.createPost();
+      });
+    },
+    verifyPost() {
+      console.log(this.post.content);
+    },
+    createPost() {
+      this.$store.dispatch("addPost", this.post);
+      this.post = {
+        title: "",
+        content: "",
+        category: ""
+      };
     }
   }
 };
@@ -82,9 +93,11 @@ export default {
 #form-title {
   background-color: #3498db;
 }
+
 #form-body {
   background-color: #7cbce8;
 }
+
 #minus-form {
   transform: rotate(45deg);
 }
