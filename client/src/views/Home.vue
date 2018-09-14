@@ -42,6 +42,7 @@
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
         <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1"></i>
+        <i class="btn btn-info fas fa-plus add-post-btn"></i>
       </v-layout>
     </v-footer>
   </div>
@@ -108,40 +109,36 @@
 </script>
 
 <style>
-  .home {
-    min-height: 100vh;
-  }
-
-  .center-post {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* .post-bod {
-    height: 100%;
-    width: 50%;
-    overflow-y: scroll;
-  } */
-
-  .post-bod::-webkit-scrollbar {
-    display: none;
-  }
-
-  .underline {
-    border-bottom: 2px solid #2c3e50;
-  }
-
-  .form-group select {
-    border: 1px solid #2c3e50;
-    min-width: 2rem;
-    text-align-last: center;
-  }
-
-  .settings {
-    display: flex;
-    width: fit-content;
-    position: absolute;
-    bottom: 6vh;
-  }
+.home {
+  min-height: 100vh;
+}
+.post-bod {
+  height: 85vh;
+  overflow-y: scroll;
+}
+.post-bod::-webkit-scrollbar {
+  display: none;
+}
+.underline {
+  border-bottom: 2px solid #2c3e50;
+}
+.form-group select {
+  border: 1px solid #2c3e50;
+  min-width: 2rem;
+  text-align-last: center;
+}
+.settings {
+  display: flex;
+  width: fit-content;
+  position: absolute;
+  bottom: 6vh;
+}
+.add-post-btn {
+  position: fixed;
+  right: 5vw;
+  bottom: 3vh;
+  font-size: 2rem;
+  border-radius: 50%;
+  box-shadow: 1px 0 3px #ecf0f1;
+}
 </style>

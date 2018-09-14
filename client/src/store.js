@@ -21,7 +21,6 @@ export default new Vuex.Store({
   state: {
     coords: {},
     user: {},
-    //searchRadius: 25,
     posts: [],
     activePosts: []
   },
@@ -29,7 +28,6 @@ export default new Vuex.Store({
     //
     //USER MUTATIONS
     //
-    //set user coords at app mount
     captureCoords(state, coords) {
       state.coords = coords
     },
@@ -40,7 +38,6 @@ export default new Vuex.Store({
       state.user = {}
       state.posts = []
       state.activePosts = []
-      //state.searchRadius = 0
       router.push({ name: 'login' })
     },
     //
