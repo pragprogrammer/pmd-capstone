@@ -27,13 +27,13 @@
         </form>
       </FilterModal>
     </div>
-    <!-- <div class="post-bod"> -->
-    <div class="row display-flex">
-      <div class="col-sm-12 center-post">
-        <Post />
+    <div class="post-bod">
+      <div class="row display-flex">
+        <div class="col-sm-12 center-post">
+          <Post />
+        </div>
       </div>
     </div>
-    <!-- </div> -->
     <v-footer fixed color="#7cbce8" height="5vh" dark>
       <v-layout flex justify-content-start>
         <div v-if="showSettings" class="settings card">
@@ -109,13 +109,14 @@
     min-height: 100vh;
   }
 
-  /* .post-bod {
-  height: 85vh;
-  overflow-y: scroll;
-}
-.post-bod::-webkit-scrollbar {
-  display: none;
-} */
+  .post-bod {
+    height: 85vh;
+    overflow-y: scroll;
+  }
+
+  .post-bod::-webkit-scrollbar {
+    display: none;
+  }
 
   .center-post {
     display: flex;
