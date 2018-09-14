@@ -36,86 +36,102 @@
     </div>
     <v-footer fixed color="#7cbce8" height="5vh" dark>
       <v-layout flex justify-content-start>
-        <button class="btn btn-danger ml-3" @click="logout">Logout</button>
+        <div v-if="showSettings" class="settings card">
+          <button class="btn btn-outline-secondary">disable location sharing</button>
+          <button class="btn btn-outline-danger">delete account</button>
+          <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
+        </div>
+        <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v ml-3 mt-1"></i>
       </v-layout>
     </v-footer>
   </div>
 </template>
 
 <script>
-  import Post from '@/components/Post'
-  import FilterModal from '@/components/FilterModal'
-  export default {
-    name: 'home',
-    created() {
-      //block users not logged in
-      if (!this.$store.state.user._id) {
-        this.$router.push({ name: 'login' })
-      }
-    },
-
-    components: {
-      FilterModal,
-      Post
-    },
-
-    data() {
-      return {
-        postCategory: 'All',
-        searchRadius: 25
-      }
-    },
-    mounted: function getPosts() {
-      this.$store.dispatch('getPosts', 25)
-    },
-
-    methods: {
-      logout() {
-        this.$store.dispatch('logout')
-      },
-
-      filterPosts() {
-        let filters = {
-          radius: this.searchRadius,
-          category: this.postCategory
-        }
-        this.$store.dispatch('filterPosts', filters)
-        $('#filterMenuModal').modal('hide')
-      }
-
-    },
-
-    computed: {
-      user() {
-        return this.$store.state.user
-      },
-      // posts() {
-      //   return this.$store.state.activePosts
-      // }
-
-
+import Post from "@/components/Post";
+import FilterModal from "@/components/FilterModal";
+export default {
+  name: "home",
+  created() {
+    //block users not logged in
+    if (!this.$store.state.user._id) {
+      this.$router.push({ name: "login" });
+    } else {
+      navigator.geolocation.getCurrentPosition(this.captureCoords);
     }
+  },
 
+  components: {
+    FilterModal,
+    Post
+  },
+
+  data() {
+    return {
+      postCategory: "All",
+      searchRadius: 25,
+      showSettings: false
+    };
+  },
+  mounted: function getPosts() {
+    this.$store.dispatch("getPosts", 25);
+  },
+
+  methods: {
+    captureCoords(here) {
+      let obj = {
+        lat: here.coords.latitude,
+        lng: here.coords.longitude
+      };
+      this.$store.dispatch("captureCoords", obj);
+    },
+    logout() {
+      this.$store.dispatch("logout");
+    },
+    filterPosts() {
+      let filters = {
+        radius: this.searchRadius,
+        category: this.postCategory
+      };
+      this.$store.dispatch("filterPosts", filters);
+      $("#filterMenuModal").modal("hide");
+    }
+  },
+
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
+    // posts() {
+    //   return this.$store.state.activePosts
+    // }
   }
+};
 </script>
 
 <style>
-  .home {
-    min-height: 100vh;
-  }
-  .post-bod {
-    height: 85vh;
-    overflow-y: scroll;
-  }
-  .post-bod::-webkit-scrollbar {
+.home {
+  min-height: 100vh;
+}
+.post-bod {
+  height: 85vh;
+  overflow-y: scroll;
+}
+.post-bod::-webkit-scrollbar {
   display: none;
 }
-  .underline {
-    border-bottom: 2px solid #2C3E50;
-  }
-  .form-group select {
-    border: 1px solid #2c3e50;
-    min-width: 2rem;
-    text-align-last: center;
-  }
+.underline {
+  border-bottom: 2px solid #2c3e50;
+}
+.form-group select {
+  border: 1px solid #2c3e50;
+  min-width: 2rem;
+  text-align-last: center;
+}
+.settings {
+  display: flex;
+  width: fit-content;
+  position: absolute;
+  bottom: 6vh;
+}
 </style>

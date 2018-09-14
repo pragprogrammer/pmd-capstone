@@ -1,5 +1,6 @@
 <template>
-  <div class="login container-fluid">
+<div class="login container-fluid">
+  <div v-if="permission">
     <div class="row">
       <div class="col-12 text-center">
         <div id="nav" class="text-success">
@@ -34,101 +35,93 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <h1>bullUtin only works with location access</h1>
+    <h3>press the button to grant bullUtin permission to access your location</h3>
+    <button @click="permission = !permission" class="btn btn-info">allow geolocation access</button>
+  </div>
+</div>
 </template>
 
 <script>
-  export default {
-    name: 'login',
-    mounted() {
-      if (confirm("may we use your location?")) {
-
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(this.captureCoords);
-        }
-        else {
-          alert("your browser doesn't support HTML5 Geolocation")
-        }
-      }
-      else {
-        alert('bullUtin works better with location access')
-      }
-      this.$store.dispatch('authenticate')
-    },
-
-    data() {
-      return {
-        prevUser: true,
-        newUser: {
-          username: '',
-          password: '',
-          password2: '',
-          email: ''
-        },
-        creds: {
-          username: '',
-          password: ''
-        }
-      }
-    },
-
-    methods: {
-      captureCoords(here) {
-        let obj = {
-          lat: here.coords.latitude,
-          lng: here.coords.longitude
-        }
-        this.$store.dispatch("captureCoords", obj)
-      },
-
-      loginUser() {
-        this.$store.dispatch('loginUser', this.creds);
-        this.creds = { username: '', password: '' }
-      },
-
-      registerUser() {
-        if (this.newUser.password === this.newUser.password2) {
-          this.$store.dispatch('registerUser', this.newUser)
-          this.geolocation()
-          this.newUser = {
-            username: '',
-            password: '',
-            password2: '',
-            email: ''
-          }
-        }
-        else {
-          alert('Passwords do not match')
-        }
-      },
-
-      userExists() {
-        this.$store.dispatch('userExists', this.newUser.username)
-      }
+export default {
+  name: "login",
+  mounted() {
+     if (navigator.geolocation) {
+       console.log("welcome to bullUtin");
+    } 
+    else {
+      this.permission = false;
     }
-  };
+    this.$store.dispatch("authenticate");
+  },
+
+  data() {
+    return {
+      prevUser: true,
+      newUser: {
+        username: "",
+        password: "",
+        password2: "",
+        email: ""
+      },
+      creds: {
+        username: "",
+        password: ""
+      },
+      permission: true
+    };
+  },
+
+  methods: {
+    loginUser() {
+      this.$store.dispatch("loginUser", this.creds);
+      this.creds = { username: "", password: "" };
+    },
+
+    registerUser() {
+      if (this.newUser.password === this.newUser.password2) {
+        this.$store.dispatch("registerUser", this.newUser);
+        this.geolocation(); //what is this line doing?? -porter
+        this.newUser = {
+          username: "",
+          password: "",
+          password2: "",
+          email: ""
+        };
+      } else {
+        alert("Passwords do not match");
+      }
+    },
+
+    userExists() {
+      this.$store.dispatch("userExists", this.newUser.username);
+    }
+  }
+};
 </script>
 
 <style>
-  .clickable:hover {
-    cursor: pointer;
-  }
+.clickable:hover {
+  cursor: pointer;
+}
 
-  .login {
-    min-height: 100vh;
-  }
+.login {
+  min-height: 100vh;
+}
 
-  .title {
-    color: #2C3E50;
-    font-family: 'Lobster', cursive;
-  }
+.title {
+  color: #2c3e50;
+  font-family: "Lobster", cursive;
+}
 
-  .user-input {
-    margin-bottom: -10;
-  }
+.user-input {
+  margin-bottom: -10;
+}
 
-  @media only screen and (min-width: 768px) {
-    h1 {
-      font-size: 5rem;
-    }
+@media only screen and (min-width: 768px) {
+  h1 {
+    font-size: 5rem;
   }
+}
 </style>

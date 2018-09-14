@@ -78,6 +78,7 @@ export default new Vuex.Store({
     //get user coords at app mount
     captureCoords({ dispatch, commit, state }, coords) {
       commit('captureCoords', coords)
+      dispatch("getPosts", 25);
     },
     //USER AUTH METHODS
     loginUser({ commit, dispatch }, creds) {
