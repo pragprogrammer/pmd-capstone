@@ -80,7 +80,6 @@ export default {
       };
       this.$store.dispatch("captureCoords", obj);
     },
-<<<<<<< HEAD
     components: {
       FilterModal,
       Post,
@@ -107,26 +106,25 @@ export default {
       },
 
       deleteAccount() {
-        this.$store.dispatch('deleteUser')
+        this.$store.dispatch("deleteUser");
+      },
+      logout() {
+        this.$store.dispatch("logout");
+      },
+      filterPosts() {
+        let filters = {
+          radius: this.searchRadius,
+          category: this.postCategory
+        };
+        this.$store.dispatch("filterPosts", filters);
+        $("#filterMenuModal").modal("hide");
       }
-=======
-    logout() {
-      this.$store.dispatch("logout");
->>>>>>> ad0b4408bfe1653644e7242e291a0e51599660eb
     },
-    filterPosts() {
-      let filters = {
-        radius: this.searchRadius,
-        category: this.postCategory
-      };
-      this.$store.dispatch("filterPosts", filters);
-      $("#filterMenuModal").modal("hide");
-    }
-  },
 
-  computed: {
-    user() {
-      return this.$store.state.user;
+    computed: {
+      user() {
+        return this.$store.state.user;
+      }
     }
   }
 };
@@ -137,13 +135,13 @@ export default {
   min-height: 100vh;
 }
 
-  .post-bod {
-    height: 90vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-  }
+.post-bod {
+  height: 90vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 
-  /* .home::-webkit-scrollbar {
+/* .home::-webkit-scrollbar {
     display: none;
   } */
 
