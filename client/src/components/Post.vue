@@ -11,9 +11,9 @@
       </div>
       <div class="time">{{post.timestamp | moment("from", "now")}}</div>
       <div class="votes">
-        <i @click="upVote(post._id)"  v-if="!datavote.upvoted" class="fas fa-arrow-alt-circle-up"></i>
+        <i @click="upVote(post._id)" v-if="!datavote.upvoted" class="fas fa-arrow-alt-circle-up"></i>
         <i v-else class="far fa-arrow-alt-circle-up"></i>
-        <i @click="downVote(post._id)"  v-if="!datavote.downvoted" class="fas fa-arrow-alt-circle-down"></i>
+        <i @click="downVote(post._id)" v-if="!datavote.downvoted" class="fas fa-arrow-alt-circle-down"></i>
         <i v-else class="far fa-arrow-alt-circle-down"></i>
       </div>
       <div v-if="post.votes" class="vote-value">{{calculateVotes(post.votes)}}</div>
@@ -23,113 +23,115 @@
 </template>
 
 <script>
-let moment = require("moment");
+  let moment = require("moment");
 
-export default {
-  name: "post",
-  data() {
-    return {
-      datavote: {
-        upvoted: false,
-        downvoted: false
+  export default {
+    name: "post",
+    data() {
+      return {
+        datavote: {
+          upvoted: false,
+          downvoted: false
+        },
+        voted: {
+          vote: 1
+        },
+        dVoted: {
+          vote: -1
+        }
+        // upvoted: false,
+        // uVote: 1,
+        // downvoted: false,
+        // dVote: -1
+      };
+    },
+    methods: {
+      showUser() {
+        //some stuff
       },
-      voted: {
-        vote: 1
+      upVote(id) {
+        // debugger;
+        this.$store.dispatch("vote", { postId: id, vote: this.voted });
+        // debugger;
       },
-      dVoted: {
-        vote: -1
+      downVote(id) {
+        this.$store.dispatch("vote", { postId: id, vote: this.dVoted });
+      },
+      calculateVotes(obj) {
+        if (!obj) {
+          return 0;
+        }
+        let postVotes = Object.values(obj);
+        const getSum = (sum, value) => sum + value;
+        return postVotes.reduce(getSum);
       }
-      // upvoted: false,
-      // uVote: 1,
-      // downvoted: false,
-      // dVote: -1
-    };
-  },
-  methods: {
-    showUser() {
-      //some stuff
     },
-    upVote(id) {
-      // debugger;
-      this.$store.dispatch("vote", { postId: id, vote: this.voted });
-      // debugger;
-    },
-    downVote(id) {
-      this.$store.dispatch("vote", { postId: id, vote: this.dVoted });
-    },
-    calculateVotes(obj) {
-      if (!obj) {
-        return 0;
+
+    computed: {
+      posts() {
+        return this.$store.state.activePosts;
       }
-      let postVotes = Object.values(obj);
-      const getSum = (sum, value) => sum + value;
-      return postVotes.reduce(getSum);
     }
-  },
-  computed: {
-    posts() {
-      return this.$store.state.activePosts;
-    }
-  }
-};
+  };
 </script>
 
 <style scoped>
-/* * {
+  /* * {
   outline: 1px solid red;
 } */
-.spacer {
-  height: 25vh;
-  color: transparent;
-  pointer-events: none;
-}
-.posts {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
+  .spacer {
+    height: 25vh;
+    color: transparent;
+    pointer-events: none;
+  }
 
-.post {
-  width: 100%;
-  display: flex;
-  height: 10rem;
-  border: 1px solid black;
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin: 0.5rem;
-}
+  .posts {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-.category {
-  width: 50%;
-}
+  .post {
+    width: 100%;
+    display: flex;
+    height: 10rem;
+    border: 1px solid black;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 0.5rem;
+  }
 
-.username {
-  width: 25%;
-}
+  .category {
+    width: 50%;
+  }
 
-.content-holder {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .username {
+    width: 25%;
+  }
 
-.content {
-  width: 90%;
-  border: 1px solid grey;
-  background-color: rgba(128, 128, 128, 0.466);
-}
+  .content-holder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.distance {
-  width: 25%;
-}
+  .content {
+    width: 90%;
+    border: 1px solid grey;
+    background-color: rgba(128, 128, 128, 0.466);
+  }
 
-.votes {
-  width: 50%;
-}
+  .distance {
+    width: 25%;
+  }
 
-.time {
-  width: 50%;
-}
+  .votes {
+    width: 50%;
+  }
+
+  .time {
+    width: 50%;
+  }
 </style>
