@@ -41,7 +41,7 @@
           <button class="btn btn-outline-danger">delete account</button>
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
-        <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v ml-3 mt-1"></i>
+        <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1"></i>
       </v-layout>
     </v-footer>
   </div>
@@ -73,10 +73,6 @@ export default {
       showSettings: false
     };
   },
-  mounted: function getPosts() {
-    this.$store.dispatch("getPosts", 25);
-  },
-
   methods: {
     captureCoords(here) {
       let obj = {
@@ -102,9 +98,6 @@ export default {
     user() {
       return this.$store.state.user;
     }
-    // posts() {
-    //   return this.$store.state.activePosts
-    // }
   }
 };
 </script>
