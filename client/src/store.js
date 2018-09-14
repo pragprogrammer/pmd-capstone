@@ -124,6 +124,7 @@ export default new Vuex.Store({
           }
         })
     },
+
     logout({ commit, dispatch }) {
       auth.delete('logout')
         .then(res => {
@@ -132,6 +133,23 @@ export default new Vuex.Store({
         })
         .catch(err => console.error(err))
     },
+
+    deleteUser({ commit, dispatch, state }) {
+      console.log('deleting user: ', state.user.username)
+      //delete the user's posts
+      api.delete(`posts/by-user/${state.user._id}`)
+        .then(res => {
+          console.log(res.data)
+          //delete user account
+          auth.delete('delete')
+            .then(res => {
+              console.log(res.data)
+              dispatch('logout')
+            })
+        })
+        .catch(err => console.log(err))
+    },
+
     //
     //POST ACTIONS
     //
@@ -158,7 +176,7 @@ export default new Vuex.Store({
           console.log(res.data)
           commit('addPost', res.data)
         })
-        .catch(err => console.error(err.message))
+        .catch(err => console.error(err))
     },
 
     //TO-DO  WRITE LOGIC FOR POSTING VOTES

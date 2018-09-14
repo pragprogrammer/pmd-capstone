@@ -36,7 +36,7 @@
       <v-layout flex justify-content-start>
         <div v-if="showSettings" class="settings card">
           <button class="btn btn-outline-secondary">disable location sharing</button>
-          <button class="btn btn-outline-danger">delete account</button>
+          <button class="btn btn-outline-danger" @click="deleteAccount">delete account</button>
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
         <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1"></i>
@@ -90,6 +90,10 @@
         };
         this.$store.dispatch("filterPosts", filters);
         $("#filterMenuModal").modal("hide");
+      },
+
+      deleteAccount() {
+        this.$store.dispatch('deleteUser')
       }
     },
 
