@@ -72,10 +72,6 @@
       FilterModal,
       Post
     },
-    mounted: function getPosts() {
-      this.$store.dispatch("getPosts", 25);
-    },
-
     methods: {
       captureCoords(here) {
         let obj = {
