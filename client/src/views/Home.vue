@@ -42,6 +42,7 @@
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
         <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1"></i>
+        <i class="btn btn-info fas fa-plus add-post-btn"></i>
       </v-layout>
     </v-footer>
   </div>
@@ -126,5 +127,13 @@ export default {
   width: fit-content;
   position: absolute;
   bottom: 6vh;
+}
+.add-post-btn {
+  position: fixed;
+  right: 5vw;
+  bottom: 3vh;
+  font-size: 2rem;
+  border-radius: 50%;
+  box-shadow: 1px 0 3px #ecf0f1;
 }
 </style>
