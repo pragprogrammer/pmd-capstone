@@ -5,6 +5,7 @@
       <div class="userName" @click="showUser(post.userId)">{{post.userName}}</div>
       <div class="distance">{{Math.round(post.distance)}} miles away</div>
       <div class="content">{{post.content}}</div>
+      <div class="time">{{post.timestamp}}</div>
       <div class="votes">
         <i @click="upvoted = !upvoted" v-if="upvoted" class="fas fa-arrow-alt-circle-up"></i>
         <i @click="upvoted = !upvoted" v-else class="far fa-arrow-alt-circle-up"></i>
@@ -16,73 +17,74 @@
 </template>
 
 <script>
-export default {
-  name: "post",
-  data() {
-    return {
-      upvoted: false,
-      uVote: 1,
-      downvoted: false,
-      dVote: -1
-    };
-  },
-  methods: {
-    showUser() {
-      //some stuff
+  export default {
+    name: "post",
+    data() {
+      return {
+        upvoted: false,
+        uVote: 1,
+        downvoted: false,
+        dVote: -1
+      };
+    },
+    methods: {
+      showUser() {
+        //some stuff
+      }
+    },
+    computed: {
+      posts() {
+        return this.$store.state.activePosts;
+      }
     }
-  },
-  computed: {
-    posts() {
-      return this.$store.state.activePosts;
-    }
-  }
-};
+  };
 </script>
 
 <style scoped>
-/* * {
+  /* * {
   outline: 1px solid red;
 } */
 
-.posts {
-  /* width: 50%; */
-  height: auto;
-  display: flex;
-  flex-wrap: wrap;
-}
+  .posts {
+    /* width: 50%; */
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-.post {
-  width: 100%;
-  display: flex;
-  height: auto;
-  border: 1px solid black;
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin: 0.5rem;
-}
+  .post {
+    width: 100%;
+    display: flex;
+    height: auto;
+    border: 1px solid black;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 0.5rem;
+  }
 
-.category {
-  width: 50%;
-}
+  .category {
+    width: 50%;
+  }
 
-.username {
-  width: 25%;
-}
+  .username {
+    width: 25%;
+  }
 
-.content {
-  display: flex;
-  width: 70%;
-  border: 1px solid grey;
-  background-color: rgba(128, 128, 128, 0.466);
-  justify-self: center;
-  align-self: center;
-}
+  .content {
+    width: 70%;
+    border: 1px solid grey;
+    background-color: rgba(128, 128, 128, 0.466);
+  }
 
-.distance {
-  width: 25%;
-}
+  .distance {
+    width: 25%;
+  }
 
-.votes {
-  width: 100%;
-}
+  .votes {
+    width: 50%;
+  }
+
+  .time {
+    width: 50%
+  }
 </style>
