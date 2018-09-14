@@ -80,7 +80,7 @@
   }
 
   .content {
-    width: 80%;
+    width: 90%;
     border: 1px solid grey;
     background-color: rgba(128, 128, 128, 0.466);
   }
