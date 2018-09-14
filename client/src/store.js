@@ -31,6 +31,7 @@ export default new Vuex.Store({
     //
     //set user coords at app mount
     captureCoords(state, coords) {
+      console.log("my coords: ", coords)
       state.coords = coords
     },
     setUser(state, user) {
@@ -41,20 +42,12 @@ export default new Vuex.Store({
       state.posts = []
       state.activePosts = []
       //state.searchRadius = 0
-      router.push({ name: 'about' })
+      router.push({ name: 'login' })
     },
     //
     //POST MUTATIONS
     //
     setPosts(state, postArr) {
-      //let postObj = {}
-      // postArr.forEach(post => {
-      //   if (postObj[post.category]) {
-      //     postObj[post.category].push(post)
-      //   }
-      //   let arr = []
-      //   postObj[post.category] = arr.push(post)
-      //})
       state.posts = postArr
       state.activePosts = postArr
     },
