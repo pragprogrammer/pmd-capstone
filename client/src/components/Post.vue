@@ -16,6 +16,7 @@
       </div>
       <div v-if="post.votes" class="vote-value">{{calculateVotes(post.votes)}}</div>
     </div>
+    <div class="spacer">spacer</div>
   </div>
 </template>
 
@@ -75,7 +76,11 @@ export default {
 /* * {
   outline: 1px solid red;
 } */
-
+.spacer {
+  height: 25vh;
+  color: transparent;
+  pointer-events: none;
+}
 .posts {
   width: 100%;
   height: 100%;

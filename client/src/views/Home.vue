@@ -107,14 +107,14 @@
   }
 
   .post-bod {
-    height: 85vh;
+    height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;
   }
 
-  .post-bod::-webkit-scrollbar {
+  /* .home::-webkit-scrollbar {
     display: none;
-  }
+  } */
 
   .center-post {
     display: flex;
