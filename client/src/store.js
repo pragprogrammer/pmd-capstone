@@ -46,7 +46,7 @@ export default new Vuex.Store({
     setPosts(state, postArr) {
       postArr.forEach(post => {
         post.timestamp = new Date(post.timestamp).toLocaleString()
-        post.distance = post.distance.toFixed(2)
+        post.distance = post.distance // .toFixed() here broke our filterPosts method
       })
       state.posts = postArr
       state.activePosts = postArr
