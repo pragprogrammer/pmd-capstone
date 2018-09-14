@@ -73,6 +73,12 @@ export default new Vuex.Store({
         })
       }
       state.activePosts = postArr
+    },
+    updateVotes(state, post) {
+      let target = state.activePosts.find(p => p._id == post._id)
+      let index = state.activePosts.indexOf(target)
+      state.activePosts.splice(index, 1, post)
+      // state.activePosts.splice(index, 0, post)
     }
 
   },
@@ -165,7 +171,7 @@ export default new Vuex.Store({
     vote({ dispatch, commit, state }, payload) {
       api.post('posts/' + payload.postId + '/vote', payload.vote)
         .then(res => {
-          commit('changeVote', res.data)
+          commit('updateVotes', res.data)
         })
         .catch(err => console.log(err))
     }
