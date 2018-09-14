@@ -53,7 +53,8 @@ let schema = new Schema({
         }
     },
     distance: {
-        type: Number
+        type: Number,
+        default: 0
     },
     votes: {}
 

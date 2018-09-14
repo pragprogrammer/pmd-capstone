@@ -64,7 +64,7 @@
         console.log(this.post.content)
       },
 
-      addPost() {
+      createPost() {
         this.$store.dispatch('addPost', this.post)
         this.post = {
           title: "",

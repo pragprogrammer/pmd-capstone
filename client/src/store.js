@@ -22,7 +22,9 @@ export default new Vuex.Store({
     coords: {},
     user: {},
     posts: [],
-    activePosts: []
+    activePosts: [],
+    category: 'All',
+    searchRadius: 25
   },
   mutations: {
     //
@@ -36,8 +38,11 @@ export default new Vuex.Store({
     },
     logout(state) {
       state.user = {}
+      state.coords = {}
       state.posts = []
       state.activePosts = []
+      state.category = 'All'
+      state.searchRadius = 25
       router.push({ name: 'login' })
     },
     //
@@ -48,8 +53,22 @@ export default new Vuex.Store({
       state.activePosts = postArr
     },
 
+    addPost(state, post) {
+      state.posts.push(post)
+      if (state.category == 'All') {
+        state.activePosts.push(post)
+      }
+      else {
+        if (state.category == post.category) {
+          state.activePosts.push(post)
+        }
+      }
+    },
+
     filterPosts(state, filters) {
       let postArr = []
+      state.category = filters.catagory
+      state.searchRadius = filters.radius
       if (filters.category == 'All') {
         postArr = state.posts.filter(post => {
           console.log(post.distance, filters.radius)
@@ -134,6 +153,17 @@ export default new Vuex.Store({
 
     filterPosts({ dispatch, commit }, filters) {
       commit('filterPosts', filters)
+    },
+
+    addPost({ commit, dispatch, state }, post) {
+      post.userId = state.user._id
+      post.userName = state.user.username
+      post.coordinates = state.coords
+      api.post('posts', post)
+        .then(res => {
+          commit('addPost', res.data)
+        })
+        .catch(err => console.error(err.message))
     }
 
     //TO-DO  WRITE LOGIC FOR POSTING VOTES
