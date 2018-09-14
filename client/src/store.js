@@ -75,10 +75,17 @@ export default new Vuex.Store({
       state.activePosts = postArr
     },
     updateVotes(state, post) {
-      let target = state.activePosts.find(p => p._id == post._id)
-      let index = state.activePosts.indexOf(target)
-      state.activePosts.splice(index, 1, post)
-      // state.activePosts.splice(index, 0, post)
+      let i = 0
+      for (i; i < state.activePosts.length; i++) {
+        let p = state.activePosts[i];
+        if (p._id == post._id) {
+          p = post
+          break
+        }
+      }
+      // let target = state.activePosts.find(p => p._id == post._id)
+      // let index = state.activePosts.indexOf(target)
+      state.activePosts.splice(i, 1, post)
     }
 
   },
