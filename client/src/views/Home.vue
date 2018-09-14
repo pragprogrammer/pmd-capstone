@@ -60,33 +60,16 @@
         navigator.geolocation.getCurrentPosition(this.captureCoords);
       }
     },
-
-<<<<<<< HEAD
-    components: {
-      FilterModal,
-      Post
-    },
-
     data() {
       return {
         postCategory: "All",
         searchRadius: 25,
         showSettings: false
-=======
-  data() {
-    return {
-      postCategory: "All",
-      searchRadius: 25,
-      showSettings: false
-    };
-  },
-  methods: {
-    captureCoords(here) {
-      let obj = {
-        lat: here.coords.latitude,
-        lng: here.coords.longitude
->>>>>>> af88acbee8dff9616b54e293f92872b734b67a5f
       };
+    },
+    components: {
+      FilterModal,
+      Post
     },
     mounted: function getPosts() {
       this.$store.dispatch("getPosts", 25);
@@ -121,12 +104,7 @@
       //   return this.$store.state.activePosts
       // }
     }
-<<<<<<< HEAD
-  };
-=======
   }
-};
->>>>>>> af88acbee8dff9616b54e293f92872b734b67a5f
 </script>
 
 <style>
