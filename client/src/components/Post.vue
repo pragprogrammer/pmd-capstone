@@ -14,7 +14,7 @@
         <i @click="downVote(post._id)"  v-if="!datavote.downvoted" class="fas fa-arrow-alt-circle-down"></i>
         <i v-else class="far fa-arrow-alt-circle-down"></i>
       </div>
-      <div class="vote-value">{{calculateVotes(post.votes)}}</div>
+      <div v-if="post.votes" class="vote-value">{{calculateVotes(post.votes)}}</div>
     </div>
   </div>
 </template>
@@ -26,8 +26,10 @@ export default {
   name: "post",
   data() {
     return {
-      upvoted: false,
-      downvoted: false,
+      datavote: {
+        upvoted: false,
+        downvoted: false
+      },
       voted: {
         vote: 1
       },
@@ -53,6 +55,9 @@ export default {
       this.$store.dispatch("vote", { postId: id, vote: this.dVoted });
     },
     calculateVotes(obj) {
+      if (!obj) {
+        return 0;
+      }
       let postVotes = Object.values(obj);
       const getSum = (sum, value) => sum + value;
       return postVotes.reduce(getSum);
@@ -67,9 +72,9 @@ export default {
 </script>
 
 <style scoped>
-* {
+/* * {
   outline: 1px solid red;
-}
+} */
 
 .posts {
   width: 100%;
