@@ -27,11 +27,9 @@
         </form>
       </FilterModal>
     </div>
-    <div class="post-bod">
-      <div class="row display-flex">
-        <div class="col-sm-12 center-post">
-          <Post />
-        </div>
+    <div class="row display-flex post-bod">
+      <div class="col-sm-12 center-post">
+        <Post />
       </div>
     </div>
     <v-footer fixed color="#7cbce8" height="5vh" dark>
@@ -49,103 +47,105 @@
 </template>
 
 <script>
-import Post from "@/components/Post";
-import PostForm from "@/components/PostForm";
-import FilterModal from "@/components/FilterModal";
-export default {
-  name: "home",
-  created() {
-    //block users not logged in
-    if (!this.$store.state.user._id) {
-      this.$router.push({ name: "login" });
-    } else {
-      navigator.geolocation.getCurrentPosition(this.captureCoords);
-    }
-  },
-  data() {
-    return {
-      postCategory: "All",
-      searchRadius: 25,
-      showSettings: false
-    };
-  },
-  components: {
-    FilterModal,
-    Post,
-    PostForm
-  },
-  methods: {
-    captureCoords(here) {
-      let obj = {
-        lat: here.coords.latitude,
-        lng: here.coords.longitude
-      };
-      this.$store.dispatch("captureCoords", obj);
+  import Post from "@/components/Post";
+  import PostForm from "@/components/PostForm";
+  import FilterModal from "@/components/FilterModal";
+  export default {
+    name: "home",
+    created() {
+      //block users not logged in
+      if (!this.$store.state.user._id) {
+        this.$router.push({ name: "login" });
+      } else {
+        navigator.geolocation.getCurrentPosition(this.captureCoords);
+      }
     },
-    logout() {
-      this.$store.dispatch("logout");
-    },
-    filterPosts() {
-      let filters = {
-        radius: this.searchRadius,
-        category: this.postCategory
+    data() {
+      return {
+        postCategory: "All",
+        searchRadius: 25,
+        showSettings: false
       };
-      this.$store.dispatch("filterPosts", filters);
-      $("#filterMenuModal").modal("hide");
-    }
-  },
+    },
+    components: {
+      FilterModal,
+      Post,
+      PostForm
+    },
+    methods: {
+      captureCoords(here) {
+        let obj = {
+          lat: here.coords.latitude,
+          lng: here.coords.longitude
+        };
+        this.$store.dispatch("captureCoords", obj);
+      },
+      logout() {
+        this.$store.dispatch("logout");
+      },
+      filterPosts() {
+        let filters = {
+          radius: this.searchRadius,
+          category: this.postCategory
+        };
+        this.$store.dispatch("filterPosts", filters);
+        $("#filterMenuModal").modal("hide");
+      }
+    },
 
-  computed: {
-    user() {
-      return this.$store.state.user;
+    computed: {
+      user() {
+        return this.$store.state.user;
+      }
     }
-  }
-};
+  };
 </script>
 
 <style>
-.home {
-  min-height: 100vh;
-}
+  .home {
+    min-height: 100vh;
+  }
 
-.post-bod {
-  height: 85vh;
-  overflow-y: scroll;
-}
+  .post-bod {
+    height: 85vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 
-.post-bod::-webkit-scrollbar {
-  display: none;
-}
+  .post-bod::-webkit-scrollbar {
+    display: none;
+  }
 
-.center-post {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .center-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.underline {
-  border-bottom: 2px solid #2c3e50;
-}
+  .underline {
+    border-bottom: 2px solid #2c3e50;
+  }
 
-.form-group select {
-  border: 1px solid #2c3e50;
-  min-width: 2rem;
-  text-align-last: center;
-}
+  .form-group select {
+    border: 1px solid #2c3e50;
+    min-width: 2rem;
+    text-align-last: center;
+  }
 
-.settings {
-  display: flex;
-  width: fit-content;
-  position: absolute;
-  bottom: 6vh;
-}
+  .settings {
+    display: flex;
+    width: fit-content;
+    position: absolute;
+    bottom: 6vh;
+  }
 
-.add-post-btn {
-  position: fixed;
-  right: 5vw;
-  bottom: 3vh;
-  font-size: 2rem;
-  border-radius: 50%;
-  box-shadow: 1px 0 3px #ecf0f1;
-}
+  .add-post-btn {
+    position: fixed;
+    right: 5vw;
+    bottom: 3vh;
+    padding-bottom: .25rem;
+    font-size: 2rem;
+    border-radius: 50%;
+    box-shadow: 1px 0 3px #ecf0f1;
+  }
 </style>

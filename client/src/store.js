@@ -139,8 +139,15 @@ export default new Vuex.Store({
 
     filterPosts({ dispatch, commit }, filters) {
       commit('filterPosts', filters)
-    }
+    },
 
     //TO-DO  WRITE LOGIC FOR POSTING VOTES
+    vote({ dispatch, commit, state }, payload) {
+      api.post('posts/' + payload.postId + '/vote', payload.vote)
+        .then(res => {
+          commit('changeVote', res.data)
+        })
+        .catch(err => console.log(err))
+    }
   }
 })
