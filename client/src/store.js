@@ -146,6 +146,7 @@ export default new Vuex.Store({
     filterPosts({ dispatch, commit }, filters) {
       commit('filterPosts', filters)
     },
+<<<<<<< HEAD
 
     addPost({ commit, dispatch, state }, post) {
       post.userId = state.user._id
@@ -160,7 +161,16 @@ export default new Vuex.Store({
         })
         .catch(err => console.error(err.message))
     }
+=======
+>>>>>>> 37dff84a83493ac68b01470f9278365258f3bedf
 
     //TO-DO  WRITE LOGIC FOR POSTING VOTES
+    vote({ dispatch, commit, state }, payload) {
+      api.post('posts/' + payload.postId + '/vote', payload.vote)
+        .then(res => {
+          commit('changeVote', res.data)
+        })
+        .catch(err => console.log(err))
+    }
   }
 })
