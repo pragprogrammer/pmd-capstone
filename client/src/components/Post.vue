@@ -7,7 +7,7 @@
       <div class="content-holder">
         <div class="content">{{post.content}}</div>
       </div>
-      <div class="time">{{post.timestamp}}</div>
+      <div class="time">{{post.timestamp | moment("from", "now")}}</div>
       <div class="votes">
         <i @click="upvoted = !upvoted" v-if="upvoted" class="fas fa-arrow-alt-circle-up"></i>
         <i @click="upvoted = !upvoted" v-else class="far fa-arrow-alt-circle-up"></i>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+  let moment = require('moment')
+
   export default {
     name: "post",
     data() {
@@ -34,6 +36,8 @@
         //some stuff
       }
     },
+
+
     computed: {
       posts() {
         return this.$store.state.activePosts;
