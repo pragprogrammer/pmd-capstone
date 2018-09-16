@@ -50,7 +50,7 @@ export default new Vuex.Store({
     //
     setPosts(state, postArr) {
       state.posts = postArr
-      state.activePosts = postArr
+      state.activePosts = postArr.reverse()
     },
 
     addPost(state, post) {
