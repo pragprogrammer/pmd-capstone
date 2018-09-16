@@ -61,12 +61,10 @@
         }
       };
     },
+
     mounted() {
       this.$validator.localize("en", this.valForm);
     },
-
-
-
 
     methods: {
       submit() {
@@ -76,6 +74,7 @@
           }
           this.post.category = this.catOptions[this.post.category];
           this.createPost();
+          this.addPost = false;
         });
       },
       verifyPost() {
@@ -84,11 +83,12 @@
 
       createPost() {
         this.$store.dispatch("addPost", this.post);
+        this.$emit('hidePostFormModal()')
         this.post = {
           title: "",
           content: "",
           category: ""
-        };
+        }
       }
     }
   };

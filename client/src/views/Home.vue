@@ -94,7 +94,10 @@
       },
 
       deleteAccount() {
-        this.$store.dispatch('deleteUser')
+        if (window.confirm("Do you really want to delete your account?")) {
+          this.$store.dispatch('deleteUser')
+        }
+        this.showSettings = false
       },
 
       filterPosts() {
@@ -105,6 +108,7 @@
         this.$store.dispatch("filterPosts", filters);
         $("#filterMenuModal").modal("hide");
       }
+
     },
 
     computed: {
