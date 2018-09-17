@@ -47,10 +47,11 @@
 export default {
   name: "login",
   mounted() {
-    if(this.disable){
+    console.log(this.disabled)
+    if(this.disabled == 'disable'){
       this.permission = false
     }
-     if (navigator.geolocation) {
+    else if (navigator.geolocation) {
        console.log("welcome to bullUtin");
     } 
     else {
@@ -58,7 +59,7 @@ export default {
     }
     this.$store.dispatch("authenticate");
   },
-  props: ['disable'],
+  props: ['disabled'],
   data() {
     return {
       prevUser: true,
