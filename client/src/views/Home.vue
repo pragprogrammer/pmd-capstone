@@ -119,20 +119,12 @@ export default {
 </script>
 
 <style>
-.home {
-  min-height: 100vh;
-}
-
 .post-bod {
   height: 90vh;
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: #2c3e50;
 }
-
-/* .home::-webkit-scrollbar {
-    display: none;
-  } */
 
 .center-post {
   display: flex;

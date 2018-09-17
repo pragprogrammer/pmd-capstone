@@ -5,6 +5,9 @@
 </template>
 
 <style>
+body::-webkit-scrollbar {
+  display: none;
+}
 #app {
   /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */
   font-family: "Fira Sans Condensed", sans-serif;
@@ -15,9 +18,6 @@
   background-color: #ecf0f1;
   width: 100%;
   height: 100%;
-}
-#app::-webkit-scrollbar {
-  display: none;
 }
 
 #nav {
