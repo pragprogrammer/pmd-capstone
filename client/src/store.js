@@ -36,17 +36,18 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
     },
-    logout(state, disable) {
+    logout(state, disabled) {
+      console.log(disabled)
       state.user = {}
       state.coords = {}
       state.posts = []
       state.activePosts = []
       //state.category = 'All'
       //state.searchRadius = 25
-      if(!disable){
-       return router.push({ name: 'login' })
+      if(disabled == 'disable'){
+        return router.push({ name: 'login', params: {disabled: 'disable'} })
       }
-      router.push({ name: 'login', params: {disable} })
+      router.push({ name: 'login'})
     },
     //
     //POST MUTATIONS
@@ -141,11 +142,11 @@ export default new Vuex.Store({
         })
     },
 
-    logout({ commit, dispatch }, disable) {
+    logout({ commit, dispatch }, disabled) {
       auth.delete('logout')
         .then(res => {
           console.log("logging out: ", res.data)
-          commit('logout', disable)
+          commit('logout', disabled)
         })
         .catch(err => console.error(err))
     },

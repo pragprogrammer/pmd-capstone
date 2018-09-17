@@ -1,8 +1,8 @@
 <template>
   <div class="home container-fluid">
     <div class="row underline">
-      <div class="col-12">
-        <h4 class="text-primary mt-3">Welcome {{user.username}}!</h4>
+      <div class="col-6">
+        <h4 class="text-primary mt-4">Welcome {{user.username}}!</h4>
       </div>
       <FilterModal :postCategory="postCategory" :searchRadius="searchRadius">
         <form @submit.prevent="filterPosts" class="form-group">
@@ -35,7 +35,7 @@
     <v-footer fixed color="#7cbce8" height="5vh" dark>
       <v-layout flex justify-content-start>
         <div v-if="showSettings" class="settings card">
-          <button class="btn btn-outline-secondary" @click="disableLocation">disable location sharing</button>
+          <button class="btn btn-outline-secondary" @click="logout('disable')">disable location sharing</button>
           <button class="btn btn-outline-danger" @click="deleteAccount">delete account</button>
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
@@ -81,8 +81,8 @@ export default {
       };
       this.$store.dispatch("captureCoords", obj);
     },
-    logout() {
-      this.$store.dispatch("logout");
+    logout(disabled) {
+      this.$store.dispatch("logout", disabled);
     },
     filterPosts() {
       let filters = {
