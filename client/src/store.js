@@ -24,7 +24,8 @@ export default new Vuex.Store({
     posts: [],
     activePosts: [],
     category: 'All',
-    searchRadius: 25
+    searchRadius: 25,
+    targetUser: {}
   },
   mutations: {
     //
@@ -47,6 +48,9 @@ export default new Vuex.Store({
         return router.push({ name: 'login', params: { disabled: 'disable' } })
       }
       router.push({ name: 'login' })
+    },
+    setTargetUser(state, targetUser){
+      state.targetUser = targetUser
     },
     //
     //POST MUTATIONS
@@ -180,6 +184,13 @@ export default new Vuex.Store({
             })
         })
         .catch(err => console.log(err))
+    },
+    getTargetUser({dispatch, commit}, userId){
+      auth.get(`find/byUserId/${userId}`)
+        .then(res => {
+          commit('setTargetUser', res.data)
+        })
+        .catch(err => console.error(err))
     },
 
     //
