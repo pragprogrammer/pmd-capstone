@@ -24,86 +24,82 @@
 </template>
 
 <script>
-  export default {
-    name: "postForm",
-    $_veeValidate: {
-      validator: "new"
-    },
+export default {
+  name: "postForm",
+  $_veeValidate: {
+    validator: "new"
+  },
 
-    data() {
-      return {
-        addPost: false,
-        post: {
-          title: "",
-          content: "",
-          category: ""
-        },
-        catOptions: [
-          "event",
-          "lost and found",
-          "traffic update",
-          "neighborhood watch"
-        ],
-        valForm: {
-          val: {
-            title: {
-              required: () => "Every post needs a title",
-              max: "Title cannot be longer than 30 characters"
-            },
-            content: {
-              required: () => "Every post needs a content body",
-              max: "Content cannot be longer than 140 characters"
-            },
-            category: {
-              required: () => "Every post needs a category"
-            }
-          }
-        }
-      };
-    },
-
-    mounted() {
-      this.$validator.localize("en", this.valForm);
-    },
-
-    methods: {
-      submit() {
-        this.$validator.validateAll().then(res => {
-          if (!res) {
-            return;
-          }
-          this.post.category = this.catOptions[this.post.category];
-          this.createPost();
-          this.addPost = false;
-        });
+  data() {
+    return {
+      addPost: false,
+      post: {
+        title: "",
+        content: "",
+        category: ""
       },
-      verifyPost() {
-        console.log(this.post.content);
-      },
-
-      createPost() {
-        this.$store.dispatch("addPost", this.post);
-        this.$emit('hidePostFormModal()')
-        this.post = {
-          title: "",
-          content: "",
-          category: ""
+      catOptions: [
+        "event",
+        "lost and found",
+        "traffic update",
+        "neighborhood watch"
+      ],
+      valForm: {
+        val: {
+          title: {
+            required: () => "Every post needs a title",
+            max: "Title cannot be longer than 30 characters"
+          },
+          content: {
+            required: () => "Every post needs a content body",
+            max: "Content cannot be longer than 140 characters"
+          },
+          category: {
+            required: () => "Every post needs a category"
+          }
         }
       }
+    };
+  },
+
+  mounted() {
+    this.$validator.localize("en", this.valForm);
+  },
+
+  methods: {
+    submit() {
+      this.$validator.validateAll().then(res => {
+        if (!res) {
+          return;
+        }
+        this.post.category = this.catOptions[this.post.category];
+        this.createPost();
+        this.addPost = false;
+      });
+    },
+    createPost() {
+      this.$store.dispatch("addPost", this.post);
+      this.$emit("hidePostFormModal()");
+      this.post = {
+        title: "",
+        content: "",
+        category: ""
+      };
     }
-  };
+  }
+};
 </script>
 
 <style>
-  #form-title {
-    background-color: #3498db;
-  }
+#form-title {
+  background-color: #3498db;
+}
 
-  #form-body {
-    background-color: #7cbce8;
-  }
+#form-body {
+  background-color: #7cbce8;
+}
 
-  #minus-form {
-    transform: rotate(45deg);
-  }
+#minus-form {
+  transform: rotate(45deg);
+}
 </style>

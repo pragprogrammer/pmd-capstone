@@ -1,137 +1,191 @@
 <template>
   <div class="posts">
     <div class="post" v-for="post in posts" :key="post._id">
-      <div class="category">{{post.title}}</div>
-      <div class="userName" @click="showUser(post.userId)"><strong>{{post.userName}}</strong></div>
-      <div class="distance" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</div>
-      <div class="distance" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</div>
-      <div class="distance" v-else>{{post.distance.toFixed(2)}} miles away</div>
+      <div class="category">
+        <p>
+          <strong>{{post.title}}</strong>
+          </p>
+        <p class="distance" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
+        <p class="distance" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
+        <p class="distance" v-else>{{post.distance.toFixed(2)}} miles away</p>
+      </div>
+      <div class="userName" @click="showUser(post.userId)">
+        <p><strong>{{post.userName}}</strong></p>
+        <p>{{post.timestamp | moment("from", "now")}}</p>
+      </div>
       <div class="content-holder">
         <div class="content">{{post.content}}</div>
       </div>
-      <div class="time">{{post.timestamp | moment("from", "now")}}</div>
       <div class="votes">
-        <i @click="upVote(post._id)" v-if="!datavote.upvoted" class="fas fa-arrow-alt-circle-up"></i>
-        <i v-else class="far fa-arrow-alt-circle-up"></i>
-        <i @click="downVote(post._id)" v-if="!datavote.downvoted" class="fas fa-arrow-alt-circle-down"></i>
-        <i v-else class="far fa-arrow-alt-circle-down"></i>
+        <i @click="upVote(post._id)" class="far fa-check-circle"></i>
+        <i @click="downVote(post._id)" class="far fa-times-circle"></i>
+        <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
       </div>
-      <div v-if="post.votes" class="vote-value">{{calculateVotes(post.votes)}}</div>
     </div>
     <div class="spacer">spacer</div>
   </div>
 </template>
 
 <script>
-  let moment = require("moment");
+let moment = require("moment");
 
-  export default {
-    name: "post",
-    data() {
-      return {
-        datavote: {
-          upvoted: false,
-          downvoted: false
-        },
-        voted: {
-          vote: 1
-        },
-        dVoted: {
-          vote: -1
-        }
-        // upvoted: false,
-        // uVote: 1,
-        // downvoted: false,
-        // dVote: -1
-      };
-    },
-    methods: {
-      showUser() {
-        //some stuff
+export default {
+  name: "post",
+  data() {
+    return {
+      datavote: {
+        upvoted: false,
+        downvoted: false
       },
-      upVote(id) {
-        // debugger;
-        this.$store.dispatch("vote", { postId: id, vote: this.voted });
-        // debugger;
+      voted: {
+        vote: 1
       },
-      downVote(id) {
-        this.$store.dispatch("vote", { postId: id, vote: this.dVoted });
-      },
-      calculateVotes(obj) {
-        if (!obj) {
-          return 0;
-        }
-        let postVotes = Object.values(obj);
-        const getSum = (sum, value) => sum + value;
-        return postVotes.reduce(getSum);
+      dVoted: {
+        vote: -1
       }
+    };
+  },
+  methods: {
+    showUser() {
+      //some stuff
     },
-
-    computed: {
-      posts() {
-        return this.$store.state.activePosts;
+    upVote(id) {
+      // debugger;
+      this.$store.dispatch("vote", { postId: id, vote: this.voted });
+      // debugger;
+    },
+    downVote(id) {
+      this.$store.dispatch("vote", { postId: id, vote: this.dVoted });
+    },
+    calculateVotes(obj) {
+      if (!obj) {
+        return 0;
       }
+      let out = "";
+      let postVotes = Object.values(obj);
+      const getSum = (sum, value) => sum + value;
+      let totalVotes = postVotes.reduce(getSum);
+      if (totalVotes < 1) {
+        return (out = "TROLL");
+      } else if (totalVotes >= 2) {
+        return (out = "VERIFIED");
+      } else return (out = "UNVERIFIED");
     }
-  };
+  },
+
+  computed: {
+    posts() {
+      return this.$store.state.activePosts;
+    }
+  }
+};
 </script>
 
 <style scoped>
-  /* * {
+/* * {
   outline: 1px solid red;
 } */
-  .spacer {
-    height: 25vh;
-    color: transparent;
-    pointer-events: none;
-  }
 
-  .posts {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-  }
+.spacer {
+  height: 25vh;
+  color: transparent;
+  pointer-events: none;
+}
 
-  .post {
-    width: 100%;
-    display: flex;
-    height: 10rem;
-    border: 1px solid black;
-    flex-wrap: wrap;
-    flex-direction: row;
-    margin: 0.5rem;
-  }
+.posts {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  .category {
-    width: 50%;
-  }
+p {
+  margin-bottom: 0;
+}
 
-  .username {
-    width: 25%;
-  }
+.post {
+  width: 100%;
+  display: flex;
+  height: auto;
+  border: 1px solid black;
+  border-radius: 1rem;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0.5rem;
+  background-color: #18bc9c;
+  transition: 0.2s;
+}
 
-  .content-holder {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.post:hover {
+  box-shadow: -4px 5px 24px 1px white;
+}
 
-  .content {
-    width: 90%;
-    border: 1px solid grey;
-    background-color: rgba(128, 128, 128, 0.466);
-  }
+.category {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #76828e;
+  margin-bottom: 1rem;
+  border-top-left-radius: 1rem;
+  border-bottom: 1px solid black;
+}
 
-  .distance {
-    width: 25%;
-  }
+.distance {
+  padding-left: 1rem;
+}
 
-  .votes {
-    width: 50%;
-  }
+.userName {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #76828e;
+  margin-bottom: 1rem;
+  border-top-right-radius: 1rem;
+  border-bottom: 1px solid black;
+}
 
-  .time {
-    width: 50%;
-  }
+.userName p {
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.content-holder {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  width: 95%;
+  height: auto;
+  text-align: left;
+  padding: 0.5rem;
+  border: 1px solid grey;
+  text-transform: uppercase;
+  /* border-radius: 0.5rem; */
+  background-color: #ecf0f1;
+}
+
+/* .distance {
+  width: 25%;
+} */
+
+.votes {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.votes i {
+  padding: 0 0.5rem 0 0;
+  cursor: pointer;
+}
+
+/* .time {
+  width: 50%;
+} */
 </style>
