@@ -148,6 +148,13 @@ export default {
   text-align-last: center;
 }
 
+.settings {
+  display: flex;
+  width: fit-content;
+  position: absolute;
+  bottom: 5vh;
+}
+
 .add-post-btn {
   position: fixed;
   right: 5vw;
