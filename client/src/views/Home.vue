@@ -1,8 +1,8 @@
 <template>
   <div class="home container-fluid">
     <div class="row underline">
-      <div class="col-12">
-        <h4 class="text-primary mt-3">Welcome {{user.username}}!</h4>
+      <div class="col-6">
+        <h4 class="text-primary mt-4">Welcome {{user.username}}!</h4>
       </div>
       <FilterModal :postCategory="postCategory" :searchRadius="searchRadius">
         <form @submit.prevent="filterPosts" class="form-group">
