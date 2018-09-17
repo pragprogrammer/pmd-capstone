@@ -158,11 +158,18 @@
     text-align-last: center;
   }
 
-  .settings {
+  .add-post-btn {
+    position: fixed;
+    right: 5vw;
+    bottom: 2vh;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    /* border: 1px solid black; */
     display: flex;
-    width: fit-content;
-    position: absolute;
-    bottom: 6vh;
+    justify-content: center;
+    /* background-color: black; */
+    font-size: 2rem;
   }
 
   .add-post-btn {

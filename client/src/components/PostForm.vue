@@ -1,9 +1,11 @@
 <template>
   <v-layout class="post-form">
     <v-dialog v-model="addPost" transition="dialog-bottom-transition">
-      <button slot="activator" class="add-post-btn">
-        <i v-if="!addPost" slot="activator" @click="addPost = !addPost" class="fas fa-plus"></i>
-        <i v-else slot="activator" @click="addPost = !addPost" id="minus-form" class="fas fa-plus"></i>
+      <button v-if="!addPost" slot="activator" @click="addPost = !addPost" class="btn-info add-post-btn">
+        <i class="fas fa-plus"></i>
+        </button>
+        <button v-else slot="activator" @click="addPost = !addPost" id="minus-form" class="btn-danger add-post-btn">
+        <i class="fas fa-plus"></i>
         </button>
       <v-card>
         <v-card-title id="form-title">create a post</v-card-title>
