@@ -160,15 +160,20 @@ export default {
 .add-post-btn {
   position: fixed;
   right: 5vw;
-  bottom: 5vh;
+  bottom: 2vh;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
   border: 1px solid black;
   display: flex;
   justify-content: center;
-  align-items: center;
   background-color: black;
   font-size: 2rem;
+}
+
+.add-post-btn i {
+  display: flex;
+  justify-content: center;
+  align-self: center;
 }
 </style>
