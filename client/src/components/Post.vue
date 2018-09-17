@@ -27,62 +27,62 @@
 </template>
 
 <script>
-  let moment = require("moment");
+let moment = require("moment");
 
-  export default {
-    name: "post",
-    data() {
-      return {
-        datavote: {
-          upvoted: false,
-          downvoted: false
-        },
-        voted: {
-          vote: 1
-        },
-        dVoted: {
-          vote: -1
-        }
-      };
-    },
-    methods: {
-      showUser() {
-        //some stuff
+export default {
+  name: "post",
+  data() {
+    return {
+      datavote: {
+        upvoted: false,
+        downvoted: false
       },
-      upVote(id) {
-        // debugger;
-        this.$store.dispatch("vote", { postId: id, vote: this.voted });
-        // debugger;
+      voted: {
+        vote: 1
       },
-      downVote(id) {
-        this.$store.dispatch("vote", { postId: id, vote: this.dVoted });
-      },
-      calculateVotes(obj) {
-        if (!obj) {
-          return 0;
-        }
-        let out = "";
-        let postVotes = Object.values(obj);
-        const getSum = (sum, value) => sum + value;
-        let totalVotes = postVotes.reduce(getSum);
-        if (totalVotes < 0) {
-          return (out = "SUSPECT");
-        } else if (totalVotes >= 2) {
-          return (out = "VERIFIED");
-        } else return (out = "UNVERIFIED");
+      dVoted: {
+        vote: -1
       }
+    };
+  },
+  methods: {
+    showUser() {
+      //some stuff
     },
-
-    computed: {
-      posts() {
-        return this.$store.state.activePosts;
+    upVote(id) {
+      // debugger;
+      this.$store.dispatch("vote", { postId: id, vote: this.voted });
+      // debugger;
+    },
+    downVote(id) {
+      this.$store.dispatch("vote", { postId: id, vote: this.dVoted });
+    },
+    calculateVotes(obj) {
+      if (!obj) {
+        return 0;
       }
+      let out = "";
+      let postVotes = Object.values(obj);
+      const getSum = (sum, value) => sum + value;
+      let totalVotes = postVotes.reduce(getSum);
+      if (totalVotes < 0) {
+        return (out = "SUSPECT");
+      } else if (totalVotes >= 2) {
+        return (out = "VERIFIED");
+      } else return (out = "UNVERIFIED");
     }
-  };
+  },
+
+  computed: {
+    posts() {
+      return this.$store.state.activePosts;
+    }
+  }
+};
 </script>
 
 <style scoped>
-  /* * {
+/* * {
   outline: 1px solid red;
 } */
 
@@ -93,7 +93,7 @@
 }
 
 .posts {
-  width: 100%;
+  width: 70%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -188,22 +188,22 @@ p {
   width: 25%;
 } */
 
-  .votes {
-    width: 50%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 1rem;
-    font-size: 1rem;
-    color: white;
-  }
+.votes {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1rem;
+  color: white;
+}
 
-  .votes i {
-    padding: 0 0.5rem 0 0;
-    cursor: pointer;
-  }
+.votes i {
+  padding: 0 0.5rem 0 0;
+  cursor: pointer;
+}
 
-  /* .time {
+/* .time {
   width: 50%;
 } */
 </style>
