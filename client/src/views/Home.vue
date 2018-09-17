@@ -168,4 +168,18 @@ export default {
   justify-content: center;
   align-self: center;
 }
+
+.post-bod::-webkit-scrollbar {
+  width: 0.5rem;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: grey;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
 </style>
