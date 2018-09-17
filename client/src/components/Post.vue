@@ -1,40 +1,29 @@
 <template>
-  <div class="posts">
-    <div class="post" v-for="post in posts" :key="post._id">
-      <div class="category">
-        <p>
-          <strong class="p-title">{{post.title}}</strong>
-        </p>
-        <p class="distance" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
-        <p class="distance" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
-        <p class="distance" v-else>{{post.distance.toFixed(2)}} miles away</p>
-      </div>
-      <div class="content-holder">
-        <div class="content">{{post.content}}</div>
-        <<<<<<< HEAD <div class="userName" @click="showUser(post.userId)">
-          <p class="u-nme"><strong>{{post.userName}}</strong></p>
-          <p>{{post.timestamp | moment("from", "now")}}</p>
-      </div>
-      <div class="votes">
-        <i @click="upVote(post._id)" class="far fa-check-circle"></i>
-        <i @click="downVote(post._id)" class="far fa-times-circle"></i>
-        <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
-      </div>
-      =======
-      <div class="userName" @click="showUser(post.userId)">
-        <p class="u-nme"><strong>{{post.userName}}</strong></p>
-        <p>{{post.timestamp | moment("from", "now")}}</p>
-      </div>
-      <div class="votes">
-        <i @click="upVote(post._id)" class="far fa-check-circle"></i>
-        <i @click="downVote(post._id)" class="far fa-times-circle"></i>
-        <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
-      </div>
-      >>>>>>> 0ba543e6da22283c7abdcd7143d71cd24d445819
-    </div>
-  </div>
-  <div class="spacer">spacer</div>
-  </div>
+ <div class="posts">
+   <div class="post" v-for="post in posts" :key="post._id">
+     <div class="category">
+       <p>
+         <strong class="p-title">{{post.title}}</strong>
+         </p>
+       <p class="distance" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
+       <p class="distance" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
+       <p class="distance" v-else>{{post.distance.toFixed(2)}} miles away</p>
+     </div>
+     <div class="content-holder">
+       <div class="content">{{post.content}}</div>
+     <div class="username" @click="showUser(post.userId)">
+       <p class="u-nme"><strong>{{post.userName}}</strong></p>
+       <p>{{post.timestamp | moment("from", "now")}}</p>
+     </div>
+     <div class="votes">
+       <i @click="upVote(post._id)" class="far fa-check-circle"></i>
+       <i @click="downVote(post._id)" class="far fa-times-circle"></i>
+       <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
+     </div>
+     </div>
+   </div>
+   <div class="spacer">spacer</div>
+ </div>
 </template>
 
 <script>
@@ -152,11 +141,12 @@
     padding-left: 1rem;
   }
 
-  .userName {
+  .username {
     width: 50%;
     display: flex;
+    flex-flow: wrap column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     padding: 1rem;
     font-size: 1rem;
     color: white;
