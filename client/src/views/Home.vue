@@ -2,7 +2,7 @@
   <div class="home container-fluid">
     <div class="row underline">
       <div class="col-6">
-        <h4 class="text-primary mt-4">{{activePosts.length}} bullUtins near you</h4>
+        <h4 class="text-primary mt-4">{{activePosts.length}} bullUtins nearby</h4>
       </div>
       <FilterModal :postCategory="postCategory" :searchRadius="searchRadius">
         <form @submit.prevent="filterPosts" class="form-group">
@@ -35,7 +35,7 @@
     <v-footer fixed color="#7cbce8" height="5vh" dark>
       <v-layout flex justify-content-start>
         <div v-if="showSettings" class="settings card">
-          <button class="btn btn-outline-secondary" @click="logout('disable')">disable location sharing</button>
+          <button class="btn btn-outline-secondary" @click="disableLocation">disable location sharing</button>
           <button class="btn btn-outline-danger" @click="deleteAccount">delete account</button>
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
@@ -81,8 +81,8 @@ export default {
       };
       this.$store.dispatch("captureCoords", obj);
     },
-    logout(disabled) {
-      this.$store.dispatch("logout", disabled);
+    logout() {
+      this.$store.dispatch("logout");
     },
     filterPosts() {
       let filters = {
@@ -109,13 +109,12 @@ export default {
       $("#filterMenuModal").modal("hide");
     }
   },
-
   computed: {
     user() {
       return this.$store.state.user;
     },
-    activePosts(){
-      return this.$store.state.activePosts
+    activePosts() {
+      return this.$store.state.activePosts;
     }
   }
 };
@@ -139,17 +138,14 @@ export default {
   border-bottom: 2px solid #2c3e50;
 }
 
+.underline {
+  border-bottom: 2px solid #2c3e50;
+}
+
 .form-group select {
   border: 1px solid #2c3e50;
   min-width: 2rem;
   text-align-last: center;
-}
-
-.settings {
-  display: flex;
-  width: fit-content;
-  position: absolute;
-  bottom: 6vh;
 }
 
 .add-post-btn {
