@@ -1,8 +1,8 @@
 <template>
   <div class="home container-fluid">
-    <div class="row underline">
-      <div class="col-6">
-        <h4 class="text-primary mt-4">Welcome {{user.username}}!</h4>
+    <div class="row underline header">
+      <div class="col-6 welcome">
+        <h4 class="text-primary mt-4 welcome">Welcome {{user.username}}!</h4>
       </div>
       <FilterModal :postCategory="postCategory" :searchRadius="searchRadius">
         <form @submit.prevent="filterPosts" class="form-group">
@@ -47,123 +47,131 @@
 </template>
 
 <script>
-import Post from "@/components/Post";
-import PostForm from "@/components/PostForm";
-import FilterModal from "@/components/FilterModal";
-export default {
-  name: "home",
-  created() {
-    //block users not logged in
-    if (!this.$store.state.user._id) {
-      this.$router.push({ name: "login" });
-    } else {
-      navigator.geolocation.getCurrentPosition(this.captureCoords);
-    }
-  },
-  data() {
-    return {
-      postCategory: "All",
-      searchRadius: 25,
-      showSettings: false
-    };
-  },
-  components: {
-    FilterModal,
-    Post,
-    PostForm
-  },
-
-  methods: {
-    captureCoords(here) {
-      let obj = {
-        lat: here.coords.latitude,
-        lng: here.coords.longitude
-      };
-      this.$store.dispatch("captureCoords", obj);
-    },
-    logout() {
-      this.$store.dispatch("logout");
-    },
-    filterPosts() {
-      let filters = {
-        radius: this.searchRadius,
-        category: this.postCategory
-      };
-      this.$store.dispatch("filterPosts", filters);
-      $("#filterMenuModal").modal("hide");
-    },
-
-    deleteAccount() {
-      if (window.confirm("Do you really want to delete your account?")) {
-        this.$store.dispatch("deleteUser");
+  import Post from "@/components/Post";
+  import PostForm from "@/components/PostForm";
+  import FilterModal from "@/components/FilterModal";
+  export default {
+    name: "home",
+    created() {
+      //block users not logged in
+      if (!this.$store.state.user._id) {
+        this.$router.push({ name: "login" });
+      } else {
+        navigator.geolocation.getCurrentPosition(this.captureCoords);
       }
-      this.showSettings = false;
+    },
+    data() {
+      return {
+        postCategory: "All",
+        searchRadius: 25,
+        showSettings: false
+      };
+    },
+    components: {
+      FilterModal,
+      Post,
+      PostForm
     },
 
-    filterPosts() {
-      let filters = {
-        radius: this.searchRadius,
-        category: this.postCategory
-      };
-      this.$store.dispatch("filterPosts", filters);
-      $("#filterMenuModal").modal("hide");
-    }
-  },
+    methods: {
+      captureCoords(here) {
+        let obj = {
+          lat: here.coords.latitude,
+          lng: here.coords.longitude
+        };
+        this.$store.dispatch("captureCoords", obj);
+      },
+      logout() {
+        this.$store.dispatch("logout");
+      },
+      filterPosts() {
+        let filters = {
+          radius: this.searchRadius,
+          category: this.postCategory
+        };
+        this.$store.dispatch("filterPosts", filters);
+        $("#filterMenuModal").modal("hide");
+      },
 
-  computed: {
-    user() {
-      return this.$store.state.user;
+      deleteAccount() {
+        if (window.confirm("Do you really want to delete your account?")) {
+          this.$store.dispatch("deleteUser");
+        }
+        this.showSettings = false;
+      },
+
+      filterPosts() {
+        let filters = {
+          radius: this.searchRadius,
+          category: this.postCategory
+        };
+        this.$store.dispatch("filterPosts", filters);
+        $("#filterMenuModal").modal("hide");
+      }
+    },
+
+    computed: {
+      user() {
+        return this.$store.state.user;
+      }
     }
-  }
-};
+  };
 </script>
 
 <style>
-.home {
-  min-height: 100vh;
-}
+  .home {
+    min-height: 100vh;
+  }
 
-.post-bod {
-  height: 90vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  background-color: #2c3e50;
-}
+  .header {
+    background: #7cbce8;
+  }
 
-/* .home::-webkit-scrollbar {
+  .welcome {
+    font-weight: bolder;
+  }
+
+  .post-bod {
+    height: 90vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #2c3e50;
+  }
+
+  /* .home::-webkit-scrollbar {
     display: none;
   } */
 
-.center-post {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .center-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.underline {
-  border-bottom: 2px solid #2c3e50;
-}
+  .underline {
+    border-bottom: 2px solid #2c3e50;
+  }
 
-.form-group select {
-  border: 1px solid #2c3e50;
-  min-width: 2rem;
-  text-align-last: center;
-}
+  .form-group select {
+    border: 1px solid #2c3e50;
+    min-width: 2rem;
+    text-align-last: center;
+  }
 
-.settings {
-  display: flex;
-  width: fit-content;
-  position: absolute;
-  bottom: 6vh;
-}
+  .settings {
+    display: flex;
+    width: fit-content;
+    position: absolute;
+    bottom: 6vh;
+  }
 
-.add-post-btn {
-  position: fixed;
-  right: 5vw;
-  bottom: 3vh;
-  padding-bottom: 0.25rem;
-  font-size: 2rem;
-  border-radius: 50%;
-  box-shadow: 1px 0 3px #ecf0f1;
-}
+  .add-post-btn {
+    position: fixed;
+    right: 5vw;
+    bottom: 3vh;
+    padding-bottom: 0.25rem;
+    font-size: 2rem;
+    border-radius: 50%;
+    box-shadow: 1px 0 3px #ecf0f1;
+  }
 </style>
