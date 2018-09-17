@@ -11,21 +11,20 @@
       </div>
       <div class="content-holder">
         <div class="content">{{post.content}}</div>
-      <div class="userName" @click="showUser(post.userId)">
-        <p class="u-nme"><strong>{{post.userName}}</strong></p>
-        <p>{{post.timestamp | moment("from", "now")}}</p>
-      </div>
-      <div class="votes">
-        <i @click="upVote(post._id)" class="far fa-check-circle"></i>
-        <i @click="downVote(post._id)" class="far fa-times-circle"></i>
-        <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
-      </div>
+        <div class="userName" @click="showUser(post.userId)">
+          <p class="u-nme"><strong>{{post.userName}}</strong></p>
+          <p>{{post.timestamp | moment("from", "now")}}</p>
+        </div>
+        <div class="votes">
+          <i @click="upVote(post._id)" class="far fa-check-circle"></i>
+          <i @click="downVote(post._id)" class="far fa-times-circle"></i>
+          <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
+        </div>
       </div>
     </div>
     <div class="spacer">spacer</div>
   </div>
 </template>
-
 <script>
 let moment = require("moment");
 
