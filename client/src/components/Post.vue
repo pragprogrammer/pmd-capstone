@@ -17,7 +17,7 @@
       <div class="content-holder">
         <div class="content">{{post.content}}</div>
         <div class="userName" @click="showUser(post.userId)">
-          <p class="u-nme"><strong>{{post.userName}}</strong></p>
+          <user-profile v-bind:post="post" />
           <p>{{post.timestamp | moment("from", "now")}}</p>
         </div>
         <div class="votes">
