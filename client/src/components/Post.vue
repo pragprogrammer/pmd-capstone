@@ -2,12 +2,17 @@
   <div class="posts">
     <div class="post" v-for="post in posts" :key="post._id">
       <div class="category">
-        <p>
-          <strong class="p-title">{{post.title}}</strong>
-        </p>
-        <p class="distance" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
-        <p class="distance" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
-        <p class="distance" v-else>{{post.distance.toFixed(2)}} miles away</p>
+        <div class="inline">
+          <p class="inline">
+            <strong class="p-title ml-3">{{post.title}}</strong>
+          </p>
+          <p class="distance inline" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
+          <p class="distance inline" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
+          <p class="distance inline" v-else>{{post.distance.toFixed(2)}} miles away</p>
+        </div>
+        <div class="inline">
+          <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt mr-3 clickable"></i>
+        </div>
       </div>
       <div class="content-holder">
         <div class="content">{{post.content}}</div>
@@ -69,12 +74,20 @@
         } else if (totalVotes >= 2) {
           return (out = "VERIFIED");
         } else return (out = "UNVERIFIED");
+      },
+
+      deletePost(postId) {
+        this.$store.dispatch('deletePost', postId)
       }
     },
 
     computed: {
       posts() {
         return this.$store.state.activePosts;
+      },
+
+      userId() {
+        return this.$store.state.user._id
       }
     }
   };
@@ -92,7 +105,7 @@
   }
 
   .posts {
-    width: 70%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -105,6 +118,16 @@
   .p-title {
     text-transform: uppercase;
     font-size: 2rem;
+  }
+
+
+
+  .inline {
+    display: inline;
+  }
+
+  .deleted {
+    display: inline-block;
   }
 
   .post {
@@ -126,7 +149,7 @@
   .category {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     /* padding: 1rem; */
     background-color: #76828e;
@@ -200,6 +223,11 @@
   .votes i {
     padding: 0 0.5rem 0 0;
     cursor: pointer;
+  }
+
+  .clickable:hover {
+    cursor: pointer;
+    color: white;
   }
 
   /* .time {
