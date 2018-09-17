@@ -35,7 +35,7 @@
     <v-footer fixed color="#7cbce8" height="5vh" dark>
       <v-layout flex justify-content-start>
         <div v-if="showSettings" class="settings card">
-          <button class="btn btn-outline-secondary">disable location sharing</button>
+          <button class="btn btn-outline-secondary" @click="disableLocation">disable location sharing</button>
           <button class="btn btn-outline-danger" @click="deleteAccount">delete account</button>
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
