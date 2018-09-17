@@ -18,7 +18,13 @@
                     <p class="created">Member since: {{user.created | moment("MMMM Do, YYYY")}}</p>
                     <hr>
                     <h2>RELIABILITY</h2>
-                    <v-progress-linear color="#4caf50" height="15" :value="user.reliability"></v-progress-linear>
+                    <div class="progresses">
+                        <v-progress-circular v-if="user.reliability <= 10" color="#ff5252" size="150" width="20" :value="user.reliability" rotate="90">{{user.reliability}}</v-progress-circular>
+                        <v-progress-circular v-if="user.reliability <= 25 && user.reliability > 10" color="#ffc107" size="150" width="20" :value="user.reliability" rotate="90">{{user.reliability}}</v-progress-circular>
+                        <v-progress-circular v-if="user.reliability <= 60 && user.reliability > 25" color="#2196f3" size="150" width="20" :value="user.reliability" rotate="90">{{user.reliability}}</v-progress-circular>
+                        <v-progress-circular v-if="user.reliability <= 100 && user.reliability > 60" color="#4caf50" size="150" width="20" :value="user.reliability" rotate="90">{{user.reliability}}</v-progress-circular>
+                    </div>
+                    <hr>
                 </div>
             </v-card>
         </v-dialog>
@@ -79,5 +85,11 @@ export default {
 }
 .created {
     font-size: 1.5rem;
+}
+.progresses {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-left: -5%;
 }
 </style>
