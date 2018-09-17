@@ -9,17 +9,17 @@
         </button>
       <v-card>
         <v-card-title id="form-title">create a post</v-card-title>
-        <form id="form-body">
+        <form class="vue-form" id="form-body">
           <v-text-field v-model="post.title" :counter="30" placeholder="title" type="string" required v-validate="'required|max:30'"
             data-vv-name="title" :error-messages="errors.collect('title')"></v-text-field>
-          <v-textarea v-model="post.content" outline :counter="140" placeholder="post content" clearable clear-icon="X"
+          <v-textarea class="text-area-vue" v-model="post.content" outline :counter="140" placeholder="post content" no-resize clearable clear-icon="X"
             type="string" required v-validate="'required|max:140'" data-vv-name="content" :error-messages="errors.collect('content')"></v-textarea>
           <v-radio-group v-model="post.category" label="#category" v-validate="'required|included:0,1,2,3'"
             data-vv-name="category" :error-messages="errors.collect('category')">
             <v-radio append-icon="this" v-for="(c, i) in catOptions" :key="c" :label="c" :value="i" required></v-radio>
           </v-radio-group>
           <v-flex justify-content-center>
-            <v-btn @click="submit" round color="#18bc9c">submit</v-btn>
+            <v-btn @click="submit" round color="#3498db">submit</v-btn>
           </v-flex>
         </form>
       </v-card>
@@ -96,14 +96,23 @@ export default {
 
 <style>
 #form-title {
-  background-color: #3498db;
+  background-color: #2c3e50;
 }
 
 #form-body {
-  background-color: #7cbce8;
+  background-color: #707c87;
 }
 
 #minus-form {
   transform: rotate(45deg);
+}
+
+.v-text-field__slot textarea {
+  margin: 0 !important;
+  /* margin-top: 0 !important; */
+}
+
+.vue-form {
+  padding: 0 1rem 0 1rem;
 }
 </style>
