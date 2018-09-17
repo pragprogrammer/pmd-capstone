@@ -9,12 +9,12 @@
         <p class="distance" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
         <p class="distance" v-else>{{post.distance.toFixed(2)}} miles away</p>
       </div>
+      <div class="content-holder">
+        <div class="content">{{post.content}}</div>
+      </div>
       <div class="userName" @click="showUser(post.userId)">
         <p><strong>{{post.userName}}</strong></p>
         <p>{{post.timestamp | moment("from", "now")}}</p>
-      </div>
-      <div class="content-holder">
-        <div class="content">{{post.content}}</div>
       </div>
       <div class="votes">
         <i @click="upVote(post._id)" class="far fa-check-circle"></i>
@@ -121,8 +121,9 @@ p {
 }
 
 .category {
-  width: 50%;
+  width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   padding: 1rem;
   background-color: #76828e;
@@ -138,11 +139,10 @@ p {
 .userName {
   width: 50%;
   display: flex;
-  justify-content: flex-end;
-  background-color: #76828e;
-  margin-bottom: 1rem;
-  border-top-right-radius: 1rem;
-  border-bottom: 1px solid black;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1rem;
 }
 
 .userName p {
@@ -173,11 +173,12 @@ p {
 } */
 
 .votes {
-  width: 100%;
+  width: 50%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 0.5rem;
+  padding: 1rem;
+  font-size: 1rem;
 }
 
 .votes i {
