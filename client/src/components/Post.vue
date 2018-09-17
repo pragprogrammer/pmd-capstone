@@ -140,11 +140,12 @@
     padding-left: 1rem;
   }
 
-  .userName {
+  .username {
     width: 50%;
     display: flex;
+    flex-flow: wrap column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     padding: 1rem;
     font-size: 1rem;
     color: white;

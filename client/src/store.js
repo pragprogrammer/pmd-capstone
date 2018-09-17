@@ -37,7 +37,6 @@ export default new Vuex.Store({
       state.user = user;
     },
     logout(state, disabled) {
-      console.log(disabled)
       state.user = {}
       state.coords = {}
       state.posts = []

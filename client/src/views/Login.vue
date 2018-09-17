@@ -36,9 +36,9 @@
     </div>
   </div>
   <div v-else>
-    <h1>bullUtin only works with location access</h1>
+    <h1 class="pt-5">bullUtin only works with location access</h1>
     <h3>press the button to grant bullUtin permission to access your location</h3>
-    <button @click="permission = !permission" class="btn btn-info">allow geolocation access</button>
+    <button @click="permission = !permission" class="btn btn-info mt-3">allow geolocation access</button>
   </div>
 </div>
 </template>
@@ -47,7 +47,6 @@
 export default {
   name: "login",
   mounted() {
-    console.log(this.disabled)
     if(this.disabled == 'disable'){
       this.permission = false
     }
