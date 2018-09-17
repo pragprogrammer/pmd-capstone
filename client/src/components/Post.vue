@@ -12,7 +12,7 @@
       <div class="content-holder">
         <div class="content">{{post.content}}</div>
       <div class="userName" @click="showUser(post.userId)">
-        <p><strong>{{post.userName}}</strong></p>
+        <p class="u-nme"><strong>{{post.userName}}</strong></p>
         <p>{{post.timestamp | moment("from", "now")}}</p>
       </div>
       <div class="votes">
@@ -150,6 +150,10 @@ p {
   padding: 1rem;
   font-size: 1rem;
   color: white;
+}
+
+.u-nme:hover {
+  text-decoration: underline;
 }
 
 .userName p {
