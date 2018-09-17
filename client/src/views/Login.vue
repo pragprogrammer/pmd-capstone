@@ -1,12 +1,12 @@
 <template>
-<div class="login container-fluid">
-  <div v-if="permission">
-    <div class="row">
+  <div class="login container-fluid">
+    <!-- <div v-if="permission"> -->
+    <div v-if="permission" class="row">
       <div class="col-12 text-center">
         <div id="nav" class="text-success">
           <router-link to="/about"> About </router-link>
         </div>
-        <h1 class="title">bullUtin</h1>
+        <h1 id="title">bullUtin</h1>
       </div>
       <div class="user-input col-sm-8 offset-sm-2 col-md-4 offset-md-4">
         <div class="form-group" v-if="prevUser">
@@ -34,100 +34,102 @@
         <img src="../assets/Bulletin-Boards.png" width="100%" height="auto" alt="Bulletin Board">
       </div>
     </div>
+    <!-- </div> -->
+    <div v-else class="row">
+      <div class="col-12">
+        <h1 class="pt-5">bullUtin only works with location access</h1>
+        <h3>press the button to grant bullUtin permission to access your location</h3>
+        <button @click="permission = !permission" class="btn btn-info mt-3">allow geolocation access</button>
+      </div>
+    </div>
   </div>
-  <div v-else>
-    <h1 class="pt-5">bullUtin only works with location access</h1>
-    <h3>press the button to grant bullUtin permission to access your location</h3>
-    <button @click="permission = !permission" class="btn btn-info mt-3">allow geolocation access</button>
-  </div>
-</div>
 </template>
 
 <script>
-export default {
-  name: "login",
-  mounted() {
-    if(this.disabled == 'disable'){
-      this.permission = false
-    }
-    else if (navigator.geolocation) {
-       console.log("welcome to bullUtin");
-    } 
-    else {
-      this.permission = false;
-    }
-    this.$store.dispatch("authenticate");
-  },
-  props: ['disabled'],
-  data() {
-    return {
-      prevUser: true,
-      newUser: {
-        username: "",
-        password: "",
-        password2: "",
-        email: ""
-      },
-      creds: {
-        username: "",
-        password: ""
-      },
-      permission: true
-    };
-  },
-
-  methods: {
-    loginUser() {
-      this.$store.dispatch("loginUser", this.creds);
-      this.creds = { username: "", password: "" };
-    },
-
-    registerUser() {
-      if (this.newUser.password.length < 5) {
-        return alert("longer password required")
+  export default {
+    name: "login",
+    mounted() {
+      if (this.disabled == 'disable') {
+        this.permission = false
       }
-      if (this.newUser.password === this.newUser.password2) {
-        this.$store.dispatch("registerUser", this.newUser);
-        this.geolocation(); //what is this line doing?? -porter
-        this.newUser = {
+      else if (navigator.geolocation) {
+        console.log("welcome to bullUtin");
+      }
+      else {
+        this.permission = false;
+      }
+      this.$store.dispatch("authenticate");
+    },
+    props: ['disabled'],
+    data() {
+      return {
+        prevUser: true,
+        newUser: {
           username: "",
           password: "",
           password2: "",
           email: ""
-        };
-      } else {
-        alert("Passwords do not match");
-      }
+        },
+        creds: {
+          username: "",
+          password: ""
+        },
+        permission: true
+      };
     },
 
-    userExists() {
-      this.$store.dispatch("userExists", this.newUser.username);
+    methods: {
+      loginUser() {
+        this.$store.dispatch("loginUser", this.creds);
+        this.creds = { username: "", password: "" };
+      },
+
+      registerUser() {
+        if (this.newUser.password.length < 5) {
+          return alert("longer password required")
+        }
+        if (this.newUser.password === this.newUser.password2) {
+          this.$store.dispatch("registerUser", this.newUser);
+          this.geolocation(); //what is this line doing?? -porter
+          this.newUser = {
+            username: "",
+            password: "",
+            password2: "",
+            email: ""
+          };
+        } else {
+          alert("Passwords do not match");
+        }
+      },
+
+      userExists() {
+        this.$store.dispatch("userExists", this.newUser.username);
+      }
     }
-  }
-};
+  };
 </script>
 
 <style>
-.clickable:hover {
-  cursor: pointer;
-}
-
-.login {
-  min-height: 100vh;
-}
-
-.title {
-  color: #2c3e50;
-  font-family: "Lobster", cursive;
-}
-
-.user-input {
-  margin-bottom: -10;
-}
-
-@media only screen and (min-width: 768px) {
-  h1 {
-    font-size: 5rem;
+  .clickable:hover {
+    cursor: pointer;
   }
-}
+
+  .login {
+    min-height: 100vh;
+  }
+
+  #title {
+    color: #2c3e50;
+    font-family: 'Lobster', cursive;
+  }
+
+  .user-input {
+    margin-bottom: -10;
+  }
+
+  @media only screen and (min-width: 768px) {
+    h1 {
+      font-size: 5rem;
+    }
+  }
 </style>

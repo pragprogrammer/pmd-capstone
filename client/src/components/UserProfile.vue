@@ -39,7 +39,7 @@ export default {
   props: ["post"],
   data() {
     return {
-      showUserProfile: false,
+      showUserProfile: false
     };
   },
   computed: {
@@ -53,9 +53,9 @@ export default {
     }
   },
   filters: {
-      daysOld(date){
-          return moment(date).fromNow(true)
-      }
+    daysOld(date) {
+      return moment(date).fromNow(true);
+    }
   }
 };
 </script>
@@ -66,25 +66,29 @@ export default {
   cursor: pointer;
 }
 .profile-content {
-    text-align: left;
-    margin-left: 5%;
+  text-align: left;
+  margin-left: 5%;
 }
 .profile-content hr {
-    margin-left: -5%;
+  margin-left: -5%;
 }
 .days-old {
-    display: flex;
-    height: fit-content;
+  display: flex;
+  height: fit-content;
 }
 .days-old i {
-    font-size: 5rem;
+  font-size: 5rem;
 }
 .days-old p {
-    font-size: 5rem;
-    margin-left: 5%;
+  font-size: 5rem;
+  margin-left: 5%;
 }
 .created {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: 0;
 }
 .progresses {
     width: 100%;
