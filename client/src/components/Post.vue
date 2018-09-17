@@ -3,7 +3,7 @@
     <div class="post" v-for="post in posts" :key="post._id">
       <div class="category">
         <p>
-          <strong>{{post.title}}</strong>
+          <strong class="p-title">{{post.title}}</strong>
           </p>
         <p class="distance" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
         <p class="distance" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
@@ -11,7 +11,6 @@
       </div>
       <div class="content-holder">
         <div class="content">{{post.content}}</div>
-      </div>
       <div class="userName" @click="showUser(post.userId)">
         <p><strong>{{post.userName}}</strong></p>
         <p>{{post.timestamp | moment("from", "now")}}</p>
@@ -20,6 +19,7 @@
         <i @click="upVote(post._id)" class="far fa-check-circle"></i>
         <i @click="downVote(post._id)" class="far fa-times-circle"></i>
         <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
+      </div>
       </div>
     </div>
     <div class="spacer">spacer</div>
@@ -103,16 +103,20 @@ p {
   margin-bottom: 0;
 }
 
+.p-title {
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
 .post {
   width: 100%;
   display: flex;
   height: auto;
-  border: 1px solid black;
   border-radius: 1rem;
   flex-wrap: wrap;
   flex-direction: row;
   margin: 0.5rem;
-  background-color: #18bc9c;
+  /* background-color: #18bc9c; */
   transition: 0.2s;
 }
 
@@ -125,11 +129,12 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  /* padding: 1rem; */
   background-color: #76828e;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   border-top-left-radius: 1rem;
-  border-bottom: 1px solid black;
+  border-top-right-radius: 1rem;
+  /* border-bottom: 1px solid black; */
 }
 
 .distance {
@@ -143,6 +148,7 @@ p {
   align-items: center;
   padding: 1rem;
   font-size: 1rem;
+  color: white;
 }
 
 .userName p {
@@ -155,6 +161,12 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #18bc9c;
+  padding-top: 1rem;
+  flex-wrap: wrap;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  border-top: none;
 }
 
 .content {
@@ -163,7 +175,6 @@ p {
   text-align: left;
   padding: 0.5rem;
   border: 1px solid grey;
-  text-transform: uppercase;
   /* border-radius: 0.5rem; */
   background-color: #ecf0f1;
 }
@@ -179,6 +190,7 @@ p {
   align-items: center;
   padding: 1rem;
   font-size: 1rem;
+  color: white;
 }
 
 .votes i {
