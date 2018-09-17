@@ -1,38 +1,40 @@
 <template>
   <div class="home container-fluid">
     <div class="row underline header">
-      <div class="col-6">
-        <h4 class="text-primary mt-4">{{activePosts.length}} bullUtins nearby</h4>
+      <div class="col-8">
+        <h4 class="text-white mt-2 mb-2">{{activePosts.length}} bullUtins nearby</h4>
       </div>
-      <FilterModal :postCategory="postCategory" :searchRadius="searchRadius">
-        <form @submit.prevent="filterPosts" class="form-group">
-          <label for="search-radius">Search Radius(mi)</label>
-          <select name="search-radius" v-model="searchRadius" class="mr-2 ml-1">
-            <option value=5>5</option>
-            <option value=10>10</option>
-            <option value=15>15</option>
-            <option value=20>20</option>
-            <option value=25 selected>25</option>
-          </select><br>
-          <label for="category">Post Category</label>
-          <select name="category" v-model="postCategory" class="ml-1">
-            <option value='All'>All</option>
-            <option value='event'>event</option>
-            <option value='lost and found'>lost and found</option>
-            <option value='traffic update'>traffic update</option>
-            <option value='neighborhood watch'>neighborhood watch</option>
-          </select><br>
-          <button type="button" class="btn btn-secondary mt-3 mr-3" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary mt-3">Apply Filters</button>
-        </form>
-      </FilterModal>
+      <div class="col-sm-4 modal-filter-btn">
+        <FilterModal :postCategory="postCategory" :searchRadius="searchRadius">
+          <form @submit.prevent="filterPosts" class="form-group">
+            <label for="search-radius">Search Radius(mi)</label>
+            <select name="search-radius" v-model="searchRadius" class="mr-2 ml-1">
+              <option value=5>5</option>
+              <option value=10>10</option>
+              <option value=15>15</option>
+              <option value=20>20</option>
+              <option value=25 selected>25</option>
+            </select><br>
+            <label for="category">Post Category</label>
+            <select name="category" v-model="postCategory" class="ml-1">
+              <option value='All'>All</option>
+              <option value='event'>event</option>
+              <option value='lost and found'>lost and found</option>
+              <option value='traffic update'>traffic update</option>
+              <option value='neighborhood watch'>neighborhood watch</option>
+            </select><br>
+            <button type="button" class="btn btn-secondary mt-3 mr-3" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary mt-3">Apply Filters</button>
+          </form>
+        </FilterModal>
+      </div>
     </div>
     <div class="row display-flex post-bod">
       <div class="col-sm-12 center-post">
         <Post />
       </div>
     </div>
-    <v-footer fixed color="#7cbce8" height="5vh" dark>
+    <v-footer fixed color="#2c3e50" height="5vh" dark>
       <v-layout flex justify-content-start>
         <div v-if="showSettings" class="settings card">
           <button class="btn btn-outline-secondary" @click="logout('disable')">disable location sharing</button>
@@ -121,15 +123,25 @@
 </script>
 
 <style>
+  .modal-filter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
   .header {
-    background-color: #7cbce8;
+    background-color: #2c3e50;
+  }
+
+  .header h4 {
+    font-size: 2rem;
   }
 
   .post-bod {
     height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    background-color: #2c3e50;
+    background-color: #ecf0f1;
   }
 
   .center-post {

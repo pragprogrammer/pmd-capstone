@@ -93,6 +93,22 @@ export default new Vuex.Store({
       // let target = state.activePosts.find(p => p._id == post._id)
       // let index = state.activePosts.indexOf(target)
       state.activePosts.splice(i, 1, post)
+    },
+
+    deletePost(state, postId) {
+      for (let i = 0; i < state.activePosts.length; i++) {
+        if (state.activePosts[i]._id == postId) {
+          state.activePosts.splice(i, 1)
+          break;
+        }
+      }
+      for (let i = 0; i < state.posts.length; i++) {
+        if (state.posts[i]._id == postId) {
+          state.posts.splice(i, 1)
+          break;
+        }
+      }
+
     }
 
   },
@@ -211,6 +227,15 @@ export default new Vuex.Store({
       api.post('posts/' + payload.postId + '/vote', payload.vote)
         .then(res => {
           commit('updateVotes', res.data)
+        })
+        .catch(err => console.log(err))
+    },
+
+    //DELETE A POST
+    deletePost({ commit, dispatch }, postId) {
+      api.delete(`posts/${postId}`)
+        .then(res => {
+          commit('deletePost', postId)
         })
         .catch(err => console.log(err))
     }

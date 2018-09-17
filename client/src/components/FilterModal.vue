@@ -1,10 +1,10 @@
 <template>
   <div class="filter-modal">
-    <div class="col-6 offset-6">
-      <button class="btn btn-primary filter-btn" data-toggle="modal" data-target="#filterMenuModal">
+    <!-- <div class="col-6 offset-6"> -->
+      <button class="btn btn-info filter-btn text-primary" data-toggle="modal" data-target="#filterMenuModal">
         {{searchRadius}}mi | #{{postCategory}}
       </button>
-    </div>
+    <!-- </div> -->
     <div id="filterMenuModal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -26,22 +26,18 @@
   </div>
 </template>
 <script>
-  export default {
+export default {
+  name: "FilterModal",
 
-    name: "FilterModal",
-
-    props: ['postCategory', 'searchRadius']
-
-
-  };
-
+  props: ["postCategory", "searchRadius"]
+};
 </script>
 <style>
-  .filter-modal {
-    width: 100%;
-  }
+/* .filter-modal {
+  width: 100%;
+} */
 
-  .filter-btn {
-    margin-top: -55px;
-  }
+/* .filter-btn {
+  margin-top: -55px;
+} */
 </style>

@@ -25,7 +25,6 @@
    <div class="spacer">spacer</div>
  </div>
 </template>
-
 <script>
   let moment = require("moment");
   import UserProfile from '@/components/UserProfile'
@@ -71,11 +70,19 @@
         } else if (totalVotes >= 2) {
           return (out = "VERIFIED");
         } else return (out = "UNVERIFIED");
+      },
+
+      deletePost(postId) {
+        this.$store.dispatch('deletePost', postId)
       }
     },
     computed: {
       posts() {
         return this.$store.state.activePosts;
+      },
+
+      userId() {
+        return this.$store.state.user._id
       }
     },
     components: {
@@ -111,6 +118,16 @@
     font-size: 2rem;
   }
 
+
+
+  .inline {
+    display: inline;
+  }
+
+  .deleted {
+    display: inline-block;
+  }
+
   .post {
     width: 100%;
     display: flex;
@@ -130,7 +147,7 @@
   .category {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     /* padding: 1rem; */
     background-color: #76828e;
@@ -144,15 +161,14 @@
     padding-left: 1rem;
   }
 
-  .username {
+  .userName {
     width: 50%;
     display: flex;
-    flex-flow: wrap column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     padding: 1rem;
     font-size: 1rem;
-    color: white;
+    color: #2C3E50;
   }
 
   .userName p {
@@ -194,12 +210,17 @@
     align-items: center;
     padding: 1rem;
     font-size: 1rem;
-    color: white;
+    color: #2C3E50;
   }
 
   .votes i {
     padding: 0 0.5rem 0 0;
     cursor: pointer;
+  }
+
+  .clickable:hover {
+    cursor: pointer;
+    color: white;
   }
 
   /* .time {
