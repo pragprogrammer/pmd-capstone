@@ -67,7 +67,6 @@ export default new Vuex.Store({
       //state.searchRadius = filters.radius
       if (filters.category == 'All') {
         postArr = state.posts.filter(post => {
-          console.log(post.distance, filters.radius)
           return (post.distance <= filters.radius)
         })
       }
