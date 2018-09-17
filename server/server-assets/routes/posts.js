@@ -66,18 +66,20 @@ router.post('/', (req, res, next) => {
 
 //delete a specific post
 router.delete('/:postId', (req, res, next) => {
+  console.log("here")
   Post.findByIdAndRemove(req.params.postId)
-    .then(() => res.send({
-      message: 'Deleted'
-    }))
-}),
+    .then(() => {
+      res.status(200).send("Post Deleted")
+    })
+    .catch(next)
+})
 
-  //delete all posts from a specified user
-  router.delete('/by-user/:userId', (req, res, next) => {
-    Post.deleteMany({ userId: req.params.userId }, function (err) { })
-      .then(() => res.send({ message: 'user posts deleted!' }))
-      .catch(next)
-  })
+//delete all posts from a specified user
+router.delete('/by-user/:userId', (req, res, next) => {
+  Post.deleteMany({ userId: req.params.userId }, function (err) { })
+    .then(() => res.send({ message: 'user posts deleted!' }))
+    .catch(next)
+})
 
 //put specific vote?????
 
