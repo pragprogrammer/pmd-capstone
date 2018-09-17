@@ -164,10 +164,10 @@ export default {
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   justify-content: center;
-  background-color: black;
+  /* background-color: black; */
   font-size: 2rem;
 }
 
