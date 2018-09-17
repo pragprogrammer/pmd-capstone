@@ -15,7 +15,7 @@ let schema = new Schema({
   email: { type: String, required: true, unique: true },
   troll: { type: Boolean, default: false },
   created: { type: Number, required: true },
-  reliability: ['reliabilitySchema']
+  reliability: [reliabilitySchema]
 })
 
 //statics are used to create Model methods
