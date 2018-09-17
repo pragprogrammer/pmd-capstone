@@ -54,7 +54,7 @@ export default new Vuex.Store({
     },
 
     addPost(state, post) {
-      state.posts.push(post)
+      state.posts.unshift(post)
     },
 
     filterPosts(state, filters) {
