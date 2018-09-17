@@ -182,6 +182,7 @@ p {
 
 .votes i {
   padding: 0 0.5rem 0 0;
+  cursor: pointer;
 }
 
 /* .time {
