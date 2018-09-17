@@ -1,7 +1,7 @@
 <template>
   <div class="filter-modal">
     <div class="col-6 offset-6">
-      <button class="btn btn-info filter-btn" data-toggle="modal" data-target="#filterMenuModal">
+      <button class="btn btn-primary filter-btn" data-toggle="modal" data-target="#filterMenuModal">
         {{searchRadius}}mi | #{{postCategory}}
       </button>
     </div>

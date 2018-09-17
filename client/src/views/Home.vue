@@ -1,6 +1,6 @@
 <template>
   <div class="home container-fluid">
-    <div class="row underline">
+    <div class="row underline header">
       <div class="col-6">
         <h4 class="text-primary mt-4">{{activePosts.length}} bullUtins nearby</h4>
       </div>
@@ -47,145 +47,151 @@
 </template>
 
 <script>
-import Post from "@/components/Post";
-import PostForm from "@/components/PostForm";
-import FilterModal from "@/components/FilterModal";
-export default {
-  name: "home",
-  created() {
-    //block users not logged in
-    if (!this.$store.state.user._id) {
-      this.$router.push({ name: "login" });
-    } else {
-      navigator.geolocation.getCurrentPosition(this.captureCoords);
-    }
-  },
-  data() {
-    return {
-      postCategory: "All",
-      searchRadius: 25,
-      showSettings: false
-    };
-  },
-  components: {
-    FilterModal,
-    Post,
-    PostForm
-  },
-
-  methods: {
-    captureCoords(here) {
-      let obj = {
-        lat: here.coords.latitude,
-        lng: here.coords.longitude
-      };
-      this.$store.dispatch("captureCoords", obj);
-    },
-    logout(disabled) {
-      this.$store.dispatch("logout", disabled);
-    },
-    filterPosts() {
-      let filters = {
-        radius: this.searchRadius,
-        category: this.postCategory
-      };
-      this.$store.dispatch("filterPosts", filters);
-      $("#filterMenuModal").modal("hide");
-    },
-
-    deleteAccount() {
-      if (window.confirm("Do you really want to delete your account?")) {
-        this.$store.dispatch("deleteUser");
+  import Post from "@/components/Post";
+  import PostForm from "@/components/PostForm";
+  import FilterModal from "@/components/FilterModal";
+  export default {
+    name: "home",
+    created() {
+      //block users not logged in
+      if (!this.$store.state.user._id) {
+        this.$router.push({ name: "login" });
+      } else {
+        navigator.geolocation.getCurrentPosition(this.captureCoords);
       }
-      this.showSettings = false;
+    },
+    data() {
+      return {
+        postCategory: "All",
+        searchRadius: 25,
+        showSettings: false
+      };
+    },
+    components: {
+      FilterModal,
+      Post,
+      PostForm
     },
 
-    filterPosts() {
-      let filters = {
-        radius: this.searchRadius,
-        category: this.postCategory
-      };
-      this.$store.dispatch("filterPosts", filters);
-      $("#filterMenuModal").modal("hide");
-    }
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
+    methods: {
+      captureCoords(here) {
+        let obj = {
+          lat: here.coords.latitude,
+          lng: here.coords.longitude
+        };
+        this.$store.dispatch("captureCoords", obj);
+      },
+      logout(disabled) {
+        this.$store.dispatch("logout", disabled);
+      },
+      filterPosts() {
+        let filters = {
+          radius: this.searchRadius,
+          category: this.postCategory
+        };
+        this.$store.dispatch("filterPosts", filters);
+        $("#filterMenuModal").modal("hide");
+      },
+
+      deleteAccount() {
+        if (window.confirm("Do you really want to delete your account?")) {
+          this.$store.dispatch("deleteUser");
+        }
+        this.showSettings = false;
+      },
+
+      filterPosts() {
+        let filters = {
+          radius: this.searchRadius,
+          category: this.postCategory
+        };
+        this.$store.dispatch("filterPosts", filters);
+        $("#filterMenuModal").modal("hide");
+      }
     },
-    activePosts() {
-      return this.$store.state.activePosts;
+    computed: {
+      user() {
+        return this.$store.state.user;
+      },
+      activePosts() {
+        return this.$store.state.activePosts;
+      }
     }
-  }
-};
+  };
 </script>
 
 <style>
-.post-bod {
-  height: 90vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  background-color: #2c3e50;
-}
+  .header {
+    background-color: #7cbce8;
+  }
 
-.center-post {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .post-bod {
+    height: 90vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #2c3e50;
+  }
 
-.underline {
-  border-bottom: 2px solid #2c3e50;
-}
+  .center-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.underline {
-  border-bottom: 2px solid #2c3e50;
-}
+  .underline {
+    border-bottom: 2px solid #2c3e50;
+  }
 
-.form-group select {
-  border: 1px solid #2c3e50;
-  min-width: 2rem;
-  text-align-last: center;
-}
+  .underline {
+    border-bottom: 2px solid #2c3e50;
+  }
 
-.settings {
-  display: flex;
-  width: fit-content;
-  position: absolute;
-  bottom: 5vh;
-}
+  .form-group select {
+    border: 1px solid #2c3e50;
+    min-width: 2rem;
+    text-align-last: center;
+  }
 
-.add-post-btn {
-  position: fixed;
-  right: 5vw;
-  bottom: 2vh;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  /* border: 1px solid black; */
-  display: flex;
-  justify-content: center;
-  /* background-color: black; */
-  font-size: 2rem;
-}
+  .settings {
+    display: flex;
+    width: fit-content;
+    position: absolute;
+    bottom: 5vh;
+  }
 
-.add-post-btn i {
-  display: flex;
-  justify-content: center;
-  align-self: center;
-}
+  .add-post-btn {
+    position: fixed;
+    right: 5vw;
+    bottom: 2vh;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: center;
+    /* background-color: black; */
+    font-size: 2rem;
+  }
 
-.post-bod::-webkit-scrollbar {
-  width: 0.5rem;
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: grey;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
+  .add-post-btn i {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+  }
+
+  .post-bod::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: grey;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
 </style>
