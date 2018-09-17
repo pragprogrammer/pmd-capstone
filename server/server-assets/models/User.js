@@ -6,16 +6,13 @@ let schemaName = 'User'
 let bcrypt = require('bcryptjs')
 const SALT = 10
 
-let reliabilitySchema = new Schema({
-  reliability: { type: Number, min: 0, max: 100, default: 20 }
-})
 let schema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   troll: { type: Boolean, default: false },
   created: { type: Number, required: true },
-  reliability: ['reliabilitySchema']
+  reliability: { type: Number, min: 0, max: 100, default: 20 }  
 })
 
 //statics are used to create Model methods

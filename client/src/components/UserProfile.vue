@@ -9,8 +9,16 @@
                     </v-btn>
                 <v-toolbar-title>{{post.userName}}</v-toolbar-title>
                 </v-toolbar>
-                <div class="profile-content">
-                    <p class="created">Member since: {{user.created}}</p>
+                <div v-if="user.username" class="profile-content">
+                    <h2 class="mt-1">AGE</h2>
+                    <span class="days-old">
+                        <v-icon>fa-birthday-cake</v-icon>
+                        <p>{{user.created | daysOld}}</p>
+                    </span>
+                    <p class="created">Member since: {{user.created | moment("MMMM Do, YYYY")}}</p>
+                    <hr>
+                    <h2>RELIABILITY</h2>
+                    <v-progress-linear color="#4caf50" height="15" :value="user.reliability"></v-progress-linear>
                 </div>
             </v-card>
         </v-dialog>
@@ -25,7 +33,7 @@ export default {
   props: ["post"],
   data() {
     return {
-      showUserProfile: false
+      showUserProfile: false,
     };
   },
   computed: {
@@ -37,6 +45,11 @@ export default {
     getTargetUser() {
       this.$store.dispatch("getTargetUser", this.post.userId);
     }
+  },
+  filters: {
+      daysOld(date){
+          return moment(date).fromNow(true)
+      }
   }
 };
 </script>
@@ -45,5 +58,26 @@ export default {
 .u-nme:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+.profile-content {
+    text-align: left;
+    margin-left: 5%;
+}
+.profile-content hr {
+    margin-left: -5%;
+}
+.days-old {
+    display: flex;
+    height: fit-content;
+}
+.days-old i {
+    font-size: 5rem;
+}
+.days-old p {
+    font-size: 5rem;
+    margin-left: 5%;
+}
+.created {
+    font-size: 1.5rem;
 }
 </style>

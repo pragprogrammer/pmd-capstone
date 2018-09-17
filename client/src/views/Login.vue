@@ -83,6 +83,9 @@ export default {
     },
 
     registerUser() {
+      if (this.newUser.password.length < 5) {
+        return alert("longer password required")
+      }
       if (this.newUser.password === this.newUser.password2) {
         this.$store.dispatch("registerUser", this.newUser);
         this.geolocation(); //what is this line doing?? -porter
