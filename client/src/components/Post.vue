@@ -11,8 +11,8 @@
      </div>
      <div class="content-holder">
        <div class="content">{{post.content}}</div>
-     <div class="username" @click="showUser(post.userId)">
-       <p class="u-nme"><strong>{{post.userName}}</strong></p>
+     <div class="username">
+       <user-profile v-bind:post="post" />
        <p>{{post.timestamp | moment("from", "now")}}</p>
      </div>
      <div class="votes">
@@ -28,6 +28,7 @@
 
 <script>
   let moment = require("moment");
+  import UserProfile from '@/components/UserProfile'
 
   export default {
     name: "post",
@@ -72,11 +73,13 @@
         } else return (out = "UNVERIFIED");
       }
     },
-
     computed: {
       posts() {
         return this.$store.state.activePosts;
       }
+    },
+    components: {
+      UserProfile
     }
   };
 </script>
@@ -150,11 +153,6 @@
     padding: 1rem;
     font-size: 1rem;
     color: white;
-  }
-
-  .u-nme:hover {
-    text-decoration: underline;
-    cursor: pointer;
   }
 
   .userName p {

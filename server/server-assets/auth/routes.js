@@ -101,6 +101,23 @@ router.get('/auth/authenticate', (req, res) => {
     })
 })
 
+//Retrieve other user info to view their profile
+router.get('/auth/find/byUserId/:userId', (req, res, next) => {
+  Users.findById(req.params.userId)
+    .then(user => {
+      let obj = {
+        username: user.username,
+        troll: user.troll,
+        created: user.created,
+        reliability: user.reliability
+      }
+      res.send(obj)
+    })
+    .catch(err => {
+      console.log(err)
+      next()
+    })
+})
 
 module.exports = {
   router,
