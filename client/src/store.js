@@ -44,10 +44,10 @@ export default new Vuex.Store({
       state.activePosts = []
       //state.category = 'All'
       //state.searchRadius = 25
-      if(disabled == 'disable'){
-        return router.push({ name: 'login', params: {disabled: 'disable'} })
+      if (disabled == 'disable') {
+        return router.push({ name: 'login', params: { disabled: 'disable' } })
       }
-      router.push({ name: 'login'})
+      router.push({ name: 'login' })
     },
     //
     //POST MUTATIONS
@@ -77,6 +77,7 @@ export default new Vuex.Store({
       }
       state.activePosts = postArr
     },
+
     updateVotes(state, post) {
       let i = 0
       for (i; i < state.activePosts.length; i++) {
