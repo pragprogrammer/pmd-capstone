@@ -119,6 +119,7 @@
 </script>
 
 <style>
+<<<<<<< HEAD
   .home {
     min-height: 100vh;
   }
@@ -147,6 +148,24 @@
     justify-content: center;
     align-items: center;
   }
+=======
+.post-bod {
+  height: 90vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #2c3e50;
+}
+
+.center-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.underline {
+  border-bottom: 2px solid #2c3e50;
+}
+>>>>>>> a012e119a91ee6137fc63c5d84256ea4adab0cc7
 
   .underline {
     border-bottom: 2px solid #2c3e50;
@@ -172,6 +191,7 @@
     font-size: 2rem;
   }
 
+<<<<<<< HEAD
   .add-post-btn {
     position: fixed;
     right: 5vw;
@@ -181,4 +201,25 @@
     border-radius: 50%;
     box-shadow: 1px 0 3px #ecf0f1;
   }
+=======
+.add-post-btn i {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.post-bod::-webkit-scrollbar {
+  width: 0.5rem;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: grey;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+>>>>>>> a012e119a91ee6137fc63c5d84256ea4adab0cc7
 </style>
