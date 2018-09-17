@@ -2,7 +2,7 @@
   <div class="home container-fluid">
     <div class="row underline">
       <div class="col-6">
-        <h4 class="text-primary mt-4">Welcome {{user.username}}!</h4>
+        <h4 class="text-primary mt-4">{{activePosts.length}} bullUtins nearby</h4>
       </div>
       <FilterModal :postCategory="postCategory" :searchRadius="searchRadius">
         <form @submit.prevent="filterPosts" class="form-group">
@@ -109,10 +109,12 @@ export default {
       $("#filterMenuModal").modal("hide");
     }
   },
-
   computed: {
     user() {
       return this.$store.state.user;
+    },
+    activePosts() {
+      return this.$store.state.activePosts;
     }
   }
 };
@@ -136,6 +138,10 @@ export default {
   border-bottom: 2px solid #2c3e50;
 }
 
+.underline {
+  border-bottom: 2px solid #2c3e50;
+}
+
 .form-group select {
   border: 1px solid #2c3e50;
   min-width: 2rem;
@@ -146,7 +152,7 @@ export default {
   display: flex;
   width: fit-content;
   position: absolute;
-  bottom: 6vh;
+  bottom: 5vh;
 }
 
 .add-post-btn {

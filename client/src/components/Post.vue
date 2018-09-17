@@ -65,8 +65,9 @@ export default {
       let postVotes = Object.values(obj);
       const getSum = (sum, value) => sum + value;
       let totalVotes = postVotes.reduce(getSum);
-      if (totalVotes < 1) {
-        return (out = "TROLL");
+      console.log("total votes score ", totalVotes);
+      if (totalVotes < 0) {
+        return (out = "SUSPECT");
       } else if (totalVotes >= 2) {
         return (out = "VERIFIED");
       } else return (out = "UNVERIFIED");
