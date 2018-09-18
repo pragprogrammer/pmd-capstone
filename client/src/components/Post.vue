@@ -1,7 +1,7 @@
 <template>
   <div class="posts">
     <div class="post" v-for="post in posts" :key="post._id">
-      <div class="category">
+      <div class="category" v-bind:class="[{eventbg:post.category=='event'},{lostbg:post.category=='lost and found'},{trafficbg:post.category=='traffic update'},{neighborbg:post.category=='neighborhood watch'}]">
         <div class="inline">
           <p class="inline">
             <strong class="p-title ml-3">{{post.title}}</strong>
@@ -14,7 +14,7 @@
           <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt mr-3 clickable"></i>
         </div>
       </div>
-      <div class="content-holder">
+      <div class="content-holder" v-bind:class="[{event:post.category=='event'},{lost:post.category=='lost and found'},{traffic:post.category=='traffic update'},{neighbor:post.category=='neighborhood watch'}]">
         <div class="content">{{post.content}}</div>
         <div class="userName">
           <user-profile v-bind:post="post" />
@@ -109,6 +109,42 @@ export default {
   padding: 0 0.5rem 0 0.5rem;
 }
 
+.event {
+  border: 1px solid purple;
+}
+
+.lost {
+  border: 1px solid orange;
+}
+
+.traffic {
+  border: 1px solid green;
+}
+
+.neighbor {
+  border: 1px solid indianred;
+}
+
+.eventbg {
+  background-color: purple;
+  color: white;
+}
+
+.lostbg {
+  background-color: orange;
+  color: white;
+}
+
+.trafficbg {
+  background-color: green;
+  color: white;
+}
+
+.neighborbg {
+  background-color: indianred;
+  color: white;
+}
+
 .userName {
   width: 50%;
   display: flex;
@@ -176,7 +212,7 @@ p {
   justify-content: space-between;
   align-items: center;
   /* padding: 1rem; */
-  background-color: #76828e;
+  /* background-color: #76828e; */
   /* margin-bottom: 1rem; */
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
@@ -193,7 +229,6 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #18bc9c;
   padding-top: 1rem;
   flex-wrap: wrap;
   border-bottom-left-radius: 1rem;
