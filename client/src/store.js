@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
 import router from './router'
+import { Stats } from 'fs';
 
 Vue.use(Vuex)
 
@@ -69,10 +70,14 @@ export default new Vuex.Store({
     setPosts(state, postArr) {
       postArr.sort((a, b) => { return b.timestamp - a.timestamp })
       state.posts = postArr
-      state.activePosts = state.posts
-      // .filter(post => {
-      //   return !state.user.blockedUsers[post.userId]
-      // })
+      if(state.user.blockedUsers){
+        state.activePosts = state.posts.filter(post => {
+          return !state.user.blockedUsers[post.userId]
+        })
+      }
+      else{
+        state.activePosts = postArr;
+      }
     },
 
     addPost(state, post) {
