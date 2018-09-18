@@ -195,6 +195,7 @@ p {
 
 .left-side {
   width: 50%;
+  text-align: left;
 }
 
 .right-side {
@@ -240,8 +241,8 @@ p {
 .category {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* justify-content: space-between;
+  align-items: center; */
   padding: 0 1rem 0 1rem;
   /* background-color: #76828e; */
   /* margin-bottom: 1rem; */
