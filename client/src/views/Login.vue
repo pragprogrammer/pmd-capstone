@@ -30,8 +30,8 @@
           <h5><span @click="prevUser = !prevUser" class="clickable">Login to existing account</span></h5>
         </div>
       </div>
-      <div class="image col-12 no">
-        <img src="../assets/Bulletin-Boards.png" width="100%" height="auto" alt="Bulletin Board">
+      <div class="col-12">
+        <img src="../assets/Bulletin-Boards.png" width="100%" height="auto" class="pic" alt="Bulletin Board">
       </div>
     </div>
     <!-- </div> -->
@@ -115,7 +115,8 @@
   }
 
   .login {
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
   }
 
   #title {
@@ -126,6 +127,12 @@
   .user-input {
     margin-bottom: -10;
   }
+
+  .pic {
+    border: 10px solid brown;
+  }
+
+
 
   @media only screen and (min-width: 768px) {
     h1 {
