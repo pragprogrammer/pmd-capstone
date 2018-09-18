@@ -41,7 +41,7 @@
           <button class="btn btn-outline-danger mt-2" @click="deleteAccount">delete account</button>
           <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
         </div>
-        <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1"></i>
+        <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1 clickable"></i>
         <post-form />
       </v-layout>
     </v-footer>
@@ -209,5 +209,9 @@
     border-radius: 10px;
     background-color: white;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .clickable {
+    cursor: pointer;
   }
 </style>
