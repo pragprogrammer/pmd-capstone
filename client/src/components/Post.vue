@@ -1,16 +1,16 @@
 <template>
   <div class="posts">
-    <div class="post" v-for="post in posts" :key="post._id">
+    <div class="post" v-for="post in posts" :key="post._id" v-bind:class="[{eventsd:post.category=='event'},{lostsd:post.category=='lost and found'},{trafficsd:post.category=='traffic update'},{neighborsd:post.category=='neighborhood watch'}]">
       <div class="category" v-bind:class="[{eventbg:post.category=='event'},{lostbg:post.category=='lost and found'},{trafficbg:post.category=='traffic update'},{neighborbg:post.category=='neighborhood watch'}]">
-        <div class="inline">
-          <p class="inline">
-            <strong class="p-title ml-3">{{post.title}}</strong>
+        <div class="left-side">
+          <p>
+            <strong class="p-title d-inline-block text-truncate">{{post.title}}</strong>
           </p>
+        </div>
+        <div class="right-side">
           <p class="distance inline" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
           <p class="distance inline" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
           <p class="distance inline" v-else>{{post.distance.toFixed(2)}} miles away</p>
-        </div>
-        <div class="inline">
           <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt mr-3 clickable"></i>
         </div>
       </div>
@@ -125,24 +125,40 @@ export default {
   border: 1px solid indianred;
 }
 
+.eventsd:hover {
+  box-shadow: -4px 5px 24px 1px purple;
+}
+
+.lostsd:hover {
+  box-shadow: -4px 5px 24px 1px orange;
+}
+
+.trafficsd:hover {
+  box-shadow: -4px 5px 24px 1px green;
+}
+
+.neighborsd:hover {
+  box-shadow: -4px 5px 24px 1px indianred;
+}
+
 .eventbg {
   background-color: purple;
-  color: white;
+  color: black;
 }
 
 .lostbg {
   background-color: orange;
-  color: white;
+  color: black;
 }
 
 .trafficbg {
   background-color: green;
-  color: white;
+  color: black;
 }
 
 .neighborbg {
   background-color: indianred;
-  color: white;
+  color: black;
 }
 
 .userName {
@@ -177,9 +193,26 @@ p {
   margin-bottom: 0;
 }
 
+.left-side {
+  width: 50%;
+}
+
+.right-side {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.right-side i {
+  font-size: 2rem;
+}
+
 .p-title {
   text-transform: uppercase;
   font-size: 2rem;
+  max-width: 100%;
+  /* display: inline-block; */
 }
 
 .inline {
@@ -194,16 +227,14 @@ p {
   width: 100%;
   display: flex;
   height: auto;
-  border-radius: 1rem;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
   flex-wrap: wrap;
   flex-direction: row;
   margin: 0.5rem;
-  /* background-color: #18bc9c; */
+  /* background-color: #2c3e50; */
   transition: 0.2s;
-}
-
-.post:hover {
-  box-shadow: -4px 5px 24px 1px white;
+  box-shadow: -4px 5px 24px 1px black;
 }
 
 .category {
@@ -211,7 +242,7 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* padding: 1rem; */
+  padding: 0 1rem 0 1rem;
   /* background-color: #76828e; */
   /* margin-bottom: 1rem; */
   border-top-left-radius: 1rem;
@@ -231,8 +262,8 @@ p {
   align-items: center;
   padding-top: 1rem;
   flex-wrap: wrap;
-  border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+  /* border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem; */
   border-top: none;
 }
 
