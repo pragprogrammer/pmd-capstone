@@ -146,7 +146,7 @@ col {
   height: 90vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  z-index: -1;
+  /* z-index: -1; */
   /* background: url("../assets/cork-board.jpg"); */
 }
 
