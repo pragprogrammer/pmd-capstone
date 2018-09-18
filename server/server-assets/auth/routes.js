@@ -106,6 +106,7 @@ router.get('/auth/find/byUserId/:userId', (req, res, next) => {
   Users.findById(req.params.userId)
     .then(user => {
       let obj = {
+        userId: user._id,
         username: user.username,
         troll: user.troll,
         created: user.created,
@@ -118,7 +119,24 @@ router.get('/auth/find/byUserId/:userId', (req, res, next) => {
       console.log(err)
       next()
     })
-})
+}),
+
+  //Add a userId to the blockedUsers dictionary
+  router.post('/auth/block', (req, res, next) => {
+    Users.findById(req.session.uid)
+      .then(user => {
+        if (!user.blockedUsers) { user.blockedUsers = {} }
+        user.blockedUsers[req.body.userId] = req.body.userId
+        user.markModified('blockedUsers')
+        user.save((err) => {
+          if (err) {
+            return res.status(500).send(err)
+          }
+          delete user._doc.password
+          return res.send(user)
+        })
+      })
+  })
 
 module.exports = {
   router,

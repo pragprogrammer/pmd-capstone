@@ -42,8 +42,8 @@ export default new Vuex.Store({
       state.coords = {}
       state.posts = []
       state.activePosts = []
-      //state.category = 'All'
-      //state.searchRadius = 25
+      state.category = 'All'
+      state.searchRadius = 25
       if (disabled == 'disable') {
         return router.push({ name: 'login', params: { disabled: 'disable' } })
       }
@@ -52,13 +52,27 @@ export default new Vuex.Store({
     setTargetUser(state, targetUser) {
       state.targetUser = targetUser
     },
+
+    updateBlockedUsers(state, user) {
+      if (!state.user.blockedUsers) { state.user.blockedUsers = {} }
+      state.user.blockedUsers = user.blockedUsers
+      for (let i = 0; i < state.activePosts.length; i++) {
+        let postUserId = state.activePosts[i].userId
+        if (user.blockedUsers[postUserId]) {
+          state.activePosts.splice(i, 1)
+        }
+      }
+    },
     //
     //POST MUTATIONS
     //
     setPosts(state, postArr) {
       postArr.sort((a, b) => { return b.timestamp - a.timestamp })
       state.posts = postArr
-      state.activePosts = postArr
+      state.activePosts = state.posts
+      // .filter(post => {
+      //   return !state.user.blockedUsers[post.userId]
+      //})
     },
 
     addPost(state, post) {
@@ -191,6 +205,15 @@ export default new Vuex.Store({
       auth.get(`find/byUserId/${userId}`)
         .then(res => {
           commit('setTargetUser', res.data)
+        })
+        .catch(err => console.error(err))
+    },
+
+    blockUser({ commit, dispatch, state }, userId) {
+      auth.post('block', { 'userId': userId })
+        .then(res => {
+          console.log("updated user from blockeUser ", res.data)
+          commit('updateBlockedUsers', res.data)
         })
         .catch(err => console.error(err))
     },

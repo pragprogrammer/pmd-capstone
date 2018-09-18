@@ -12,7 +12,9 @@ let schema = new Schema({
   email: { type: String, required: true, unique: true },
   troll: { type: Boolean, default: false },
   created: { type: Number, required: true },
-  reliability: { type: Number, min: 0, max: 100, default: 20 }  
+  reliability: { type: Number, min: 0, max: 100, default: 50 },
+  posts: {},
+  blockedUsers: {}
 })
 
 //statics are used to create Model methods
