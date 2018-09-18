@@ -26,7 +26,7 @@ export default {
     props: ['email', 'post'],
     data() {
         return {
-            formSpreeTarget: "https://formspree.io/"+this.email+".com"
+            formSpreeTarget: "https://formspree.io/"+this.email
         }
     },
     computed: {
