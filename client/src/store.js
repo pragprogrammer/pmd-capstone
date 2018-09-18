@@ -69,9 +69,10 @@ export default new Vuex.Store({
     setPosts(state, postArr) {
       postArr.sort((a, b) => { return b.timestamp - a.timestamp })
       state.posts = postArr
-      state.activePosts = state.posts.filter(post => {
-        return !state.user.blockedUsers[post.userId]
-      })
+      state.activePosts = state.posts
+      // .filter(post => {
+      //   return !state.user.blockedUsers[post.userId]
+      // })
     },
 
     addPost(state, post) {
