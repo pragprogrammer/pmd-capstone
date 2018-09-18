@@ -18,7 +18,22 @@
                     <p class="created">Member since: {{user.created | moment("MMMM Do, YYYY")}}</p>
                     <hr>
                     <h2>RELIABILITY</h2>
-                    <v-progress-linear color="#4caf50" height="15" :value="user.reliability"></v-progress-linear>
+                    <div class="progresses">
+                        <v-progress-circular v-if="user.reliability <= 10" color="#ff5252" size="150" :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
+                        <v-progress-circular v-if="user.reliability <= 25 && user.reliability > 10" color="#ffc107" size="150" :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
+                        <v-progress-circular v-if="user.reliability <= 60 && user.reliability > 25" color="#2196f3" size="150" :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
+                        <v-progress-circular v-if="user.reliability <= 100 && user.reliability > 60" color="#4caf50" size="150" :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
+                    </div>
+                    <hr>
+                    <div class="user-action">
+                      <h2>DIRECT MESSAGE</h2>
+                      <v-icon>fa-envelope</v-icon>
+                    </div>
+                    <hr>
+                    <div class="user-action">
+                      <h2>BLOCK USER</h2>
+                      <v-icon>fa-ban</v-icon>
+                    </div>
                 </div>
             </v-card>
         </v-dialog>
@@ -62,9 +77,11 @@ export default {
 .profile-content {
   text-align: left;
   margin-left: 5%;
+  overflow-y: scroll; 
 }
 .profile-content hr {
-  margin-left: -5%;
+  position: relative;
+  left: -5%;
 }
 .days-old {
   display: flex;
@@ -83,5 +100,20 @@ export default {
 
 p {
   margin-bottom: 0;
+}
+.progresses {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-left: -5%;
+}
+.user-action {
+  display: flex;
+  justify-content: space-between;
+}
+.user-action i {
+  font-size: 3rem;
+  /* margin-left: 10%; */
+  margin-right: 5%;
 }
 </style>
