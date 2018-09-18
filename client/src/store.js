@@ -49,19 +49,21 @@ export default new Vuex.Store({
       }
       router.push({ name: 'login' })
     },
-    setTargetUser(state, targetUser){
+    setTargetUser(state, targetUser) {
       state.targetUser = targetUser
     },
     //
     //POST MUTATIONS
     //
     setPosts(state, postArr) {
+      postArr.sort((a, b) => { return b.timestamp - a.timestamp })
       state.posts = postArr
-      state.activePosts = postArr.reverse()
+      state.activePosts = postArr
     },
 
     addPost(state, post) {
       state.posts.unshift(post)
+      state.activePosts.unshift(post)
     },
 
     filterPosts(state, filters) {
@@ -185,7 +187,7 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err))
     },
-    getTargetUser({dispatch, commit}, userId){
+    getTargetUser({ dispatch, commit }, userId) {
       auth.get(`find/byUserId/${userId}`)
         .then(res => {
           commit('setTargetUser', res.data)

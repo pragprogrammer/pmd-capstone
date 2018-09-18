@@ -90,7 +90,6 @@
         }
         if (this.newUser.password === this.newUser.password2) {
           this.$store.dispatch("registerUser", this.newUser);
-          this.geolocation(); //what is this line doing?? -porter
           this.newUser = {
             username: "",
             password: "",
