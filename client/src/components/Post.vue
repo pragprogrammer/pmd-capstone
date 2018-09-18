@@ -4,7 +4,7 @@
       <div class="category" v-bind:class="[{eventbg:post.category=='event'},{lostbg:post.category=='lost and found'},{trafficbg:post.category=='traffic update'},{neighborbg:post.category=='neighborhood watch'}]">
         <div class="left-side">
           <p>
-            <strong class="p-title d-inline-block text-truncate">{{post.title}}</strong>
+            <strong class="p-title">{{post.title}}</strong>
           </p>
         </div>
         <div class="right-side">
@@ -195,7 +195,10 @@ p {
 
 .left-side {
   width: 50%;
+  flex-wrap: wrap;
   text-align: left;
+  display: flex;
+  align-items: center;
 }
 
 .right-side {
@@ -211,7 +214,7 @@ p {
 
 .p-title {
   text-transform: uppercase;
-  font-size: 2rem;
+  font-size: 1rem;
   max-width: 100%;
   /* display: inline-block; */
 }
@@ -243,7 +246,8 @@ p {
   display: flex;
   /* justify-content: space-between;
   align-items: center; */
-  padding: 0 1rem 0 1rem;
+  /* padding: 0 1rem 0 1rem; */
+  padding: 1rem;
   /* background-color: #76828e; */
   /* margin-bottom: 1rem; */
   border-top-left-radius: 1rem;
