@@ -27,7 +27,7 @@
                     <hr>
                     <div class="user-action">
                       <h2>DIRECT MESSAGE</h2>
-                      <contact-user :email="user.email" />
+                      <v-icon>fa-envelope</v-icon>
                     </div>
                     <hr>
                     <div class="user-action">
@@ -42,7 +42,6 @@
 
 <script>
 let moment = require("moment");
-import ContactUser from '@/components/ContactUser'
 
 export default {
   name: "userProfile",
@@ -66,9 +65,6 @@ export default {
     daysOld(date) {
       return moment(date).fromNow(true);
     }
-  },
-  components: {
-    ContactUser
   }
 };
 </script>
