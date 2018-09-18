@@ -113,7 +113,6 @@ p {
 }
 .user-action i {
   font-size: 3rem;
-  /* margin-left: 10%; */
   margin-right: 5%;
 }
 </style>
