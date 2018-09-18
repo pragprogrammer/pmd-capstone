@@ -111,18 +111,42 @@ export default {
 
 .event {
   border: 1px solid purple;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
 }
 
 .lost {
   border: 1px solid orange;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
 }
 
 .traffic {
   border: 1px solid green;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
 }
 
 .neighbor {
   border: 1px solid indianred;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+.eventsd{
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+.lostsd{
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+.trafficsd{
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+.neighborsd{
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
 }
 
 .eventsd:hover {
@@ -267,8 +291,6 @@ p {
   align-items: center;
   padding-top: 1rem;
   flex-wrap: wrap;
-  /* border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 1rem; */
   border-top: none;
 }
 
@@ -278,7 +300,6 @@ p {
   text-align: left;
   padding: 0.5rem;
   border: 1px solid grey;
-  /* border-radius: 0.5rem; */
   background-color: #ecf0f1;
 }
 
