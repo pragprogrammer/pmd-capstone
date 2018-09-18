@@ -5,12 +5,13 @@
             <v-card>
                 <form v-if="email" class="contact-form" :action="formSpreeTarget" method="POST">
                     <hr>
-                    <input type="text" placeholder=" title" name="title" required />
-                    <textarea type="text" placeholder=" content" name="content" required></textarea>
                     <div class="under-the-hood">
+                        <input type="text" name="bullUtin" value="This email is from bullUtin. Accept formspree's conditions in order to receive emails from other bullUtin users." />
                         <input type="text" name="post-reference" :value="post.title" />
                         <input type="text" name="_replyto" :value="user.email" />
                     </div>
+                    <input type="text" placeholder=" title" name="title" required />
+                    <textarea type="text" placeholder=" content" name="content" required></textarea>
                     <button type="submit" class="btn btn-info">send</button>
                 </form>
             </v-card>
