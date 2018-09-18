@@ -76,7 +76,7 @@ export default new Vuex.Store({
 
     addPost(state, post) {
       state.posts.unshift(post)
-      state.activePosts.unshift(post)
+      // state.activePosts.unshift(post)  pw - I had to comment this out because it caused a duplicate render when user first posts
     },
 
     filterPosts(state, filters) {
