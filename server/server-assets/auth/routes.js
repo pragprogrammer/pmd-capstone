@@ -109,7 +109,8 @@ router.get('/auth/find/byUserId/:userId', (req, res, next) => {
         username: user.username,
         troll: user.troll,
         created: user.created,
-        reliability: user.reliability
+        reliability: user.reliability,
+        email: user.email
       }
       res.send(obj)
     })
