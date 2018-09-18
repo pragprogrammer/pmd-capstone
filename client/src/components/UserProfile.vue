@@ -25,10 +25,7 @@
                         <v-progress-circular v-if="user.reliability <= 100 && user.reliability > 60" color="#4caf50" size="150" :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
                     </div>
                     <hr>
-                    <div class="user-action">
-                      <h2>DIRECT MESSAGE</h2>
-                      <v-icon>fa-envelope</v-icon>
-                    </div>
+                    <contact-user :email="user.email" :post="post" />
                     <hr>
                     <div class="user-action">
                       <h2>BLOCK USER</h2>
@@ -42,6 +39,7 @@
 
 <script>
 let moment = require("moment");
+import ContactUser from '@/components/ContactUser'
 
 export default {
   name: "userProfile",
@@ -65,6 +63,9 @@ export default {
     daysOld(date) {
       return moment(date).fromNow(true);
     }
+  },
+  components: {
+    ContactUser
   }
 };
 </script>
