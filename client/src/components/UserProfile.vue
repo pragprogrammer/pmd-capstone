@@ -33,7 +33,7 @@
           <hr>
           <div class="user-action">
             <h2>BLOCK USER</h2>
-            <v-icon class="clickable" @click="blockUser(user)">fa-ban</v-icon>
+            <v-icon class="clickable" @click="blockUser()">fa-ban</v-icon>
           </div>
         </div>
       </v-card>
@@ -64,11 +64,11 @@
         this.$store.dispatch("getTargetUser", this.post.userName);
       },
 
-      blockUser(user) {
-        console.log("target user ", user.userId, user.username)
-        this.$store.dispatch('blockUser', { 'userId': user.userId, 'username': user.username })
+      blockUser() {
+        console.log("target user ", this.user.userId, this.user.username)
+        this.$store.dispatch('blockUser', { 'userId': this.user.userId, 'username': this.user.username })
       },
-      clearTargetUser(){
+      clearTargetUser() {
         this.$store.dispatch('getTargetUser', {})
       }
     },

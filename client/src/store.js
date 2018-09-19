@@ -24,10 +24,13 @@ export default new Vuex.Store({
     user: {},
     posts: [],
     activePosts: [],
-    category: 'All',
-    searchRadius: 25,
+    filters: {
+      radius: 25,
+      category: 'All'
+    },
     targetUser: {}
   },
+
   mutations: {
     //
     //USER MUTATIONS
@@ -46,8 +49,10 @@ export default new Vuex.Store({
       state.coords = {}
       state.posts = []
       state.activePosts = []
-      state.category = 'All'
-      state.searchRadius = 25
+      state.filters = {
+        radius: 25,
+        category: 'All'
+      }
       if (disabled == 'disable') {
         return router.push({ name: 'login', params: { disabled: 'disable' } })
       }
@@ -60,9 +65,6 @@ export default new Vuex.Store({
     updateBlockedUsers(state, user) {
       if (!state.user.blockedUsers) { state.user.blockedUsers = {} }
       state.user.blockedUsers = user.blockedUsers
-      state.activePosts = state.activePosts.filter(post => {
-        return !state.user.blockedUsers[post.userId]
-      })
     },
     //
     //POST MUTATIONS
@@ -95,22 +97,27 @@ export default new Vuex.Store({
     },
 
     filterPosts(state, filters) {
+      state.filters = filters
       let postArr = []
-      //state.category = filters.catagory
-      //state.searchRadius = filters.radius
-      if (filters.category == 'All') {
+
+      //filter by distance    
+      if (state.filters.category == 'All') {
         postArr = state.posts.filter(post => {
-          return (post.distance <= filters.radius)
+          return (post.distance <= state.filters.radius)
         })
       }
+      //filter by distance and category
       else {
         postArr = state.posts.filter(post => {
-          return (post.category == filters.category && post.distance <= filters.radius)
+          return (post.category == state.filters.category && post.distance <= state.filters.radius)
         })
       }
-      state.activePosts = postArr.filter(post => {
+      //filter out blocked users
+      postArr = postArr.filter(post => {
         return !state.user.blockedUsers[post.userId]
       })
+      //return updated activePost array
+      state.activePosts = postArr
     },
 
     updateVotes(state, post) {
@@ -232,14 +239,16 @@ export default new Vuex.Store({
       auth.post('block', user)
         .then(res => {
           commit('updateBlockedUsers', res.data)
+          commit('filterPosts', state.filters)
         })
         .catch(err => console.error(err))
     },
 
-    unblockUser({ commit, dispatch }, userId) {
+    unblockUser({ commit, dispatch, state }, userId) {
       auth.post('unblock', { 'userId': userId })
         .then(res => {
           commit('updateBlockedUsers', res.data)
+          commit('filterPosts', state.filters)
         })
         .catch(err => console.error(err))
     },
