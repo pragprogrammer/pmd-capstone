@@ -67,9 +67,14 @@ router.post('/', (req, res, next) => {
 //delete a specific post
 router.delete('/:postId', (req, res, next) => {
   console.log("here")
-  Post.findByIdAndRemove(req.params.postId)
-    .then(() => {
-      res.status(200).send("Post Deleted")
+  Post.findById(req.params.postId)
+    .then(post => {
+      if (!post.userId.toString() == req.session.uid) {
+        return res.status(401).send("You cannot delete another user's post!")
+      }
+      post.remove(() => {
+        res.status(200).send("Post Deleted")
+      })
     })
     .catch(next)
 })

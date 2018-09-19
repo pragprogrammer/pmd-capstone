@@ -43,7 +43,7 @@
           <div v-if="showSettings" class="settings card">
             <button class="btn btn-outline-secondary" @click="logout('disable')">disable location sharing</button>
             <button class="btn btn-outline-danger mt-2" @click="deleteAccount">delete account</button>
-            <BlockedUsers />
+            <BlockedUsers @click="showSettings=!showSettings" />
             <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
           </div>
           <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
@@ -97,7 +97,6 @@
       BlockedUsers,
       UserProfileFromSearch
     },
-<<<<<<< HEAD
 
     methods: {
       captureCoords(here) {
@@ -133,19 +132,6 @@
       searchConfig() {
         this.showSearch = !this.showSearch;
         this.targetExists = false;
-=======
-    filterPosts() {
-      let filters = {
-        radius: this.searchRadius,
-        category: this.postCategory
-      };
-      this.$store.dispatch("filterPosts", filters);
-      $("#filterMenuModal").modal("hide");
-    },
-    deleteAccount() {
-      if (window.confirm("Do you really want to delete your account?")) {
-        this.$store.dispatch("deleteUser");
->>>>>>> efd30781ee4fc9c179b132d2755896429e1e0029
       }
     },
 
