@@ -126,7 +126,7 @@ router.get('/auth/find/byUserId/:userId', (req, res, next) => {
     Users.findById(req.session.uid)
       .then(user => {
         if (!user.blockedUsers) { user.blockedUsers = {} }
-        user.blockedUsers[req.body.userId] = req.body.userId
+        user.blockedUsers[req.body.userId] = req.body.username
         user.markModified('blockedUsers')
         user.save((err) => {
           if (err) {

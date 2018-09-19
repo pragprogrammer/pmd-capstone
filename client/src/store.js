@@ -73,12 +73,12 @@ export default new Vuex.Store({
     setPosts(state, postArr) {
       postArr.sort((a, b) => { return b.timestamp - a.timestamp })
       state.posts = postArr
-      if(state.user.blockedUsers){
+      if (state.user.blockedUsers) {
         state.activePosts = state.posts.filter(post => {
           return !state.user.blockedUsers[post.userId]
         })
       }
-      else{
+      else {
         state.activePosts = postArr;
       }
     },
@@ -217,9 +217,10 @@ export default new Vuex.Store({
         .catch(err => console.error(err))
     },
 
-    blockUser({ commit, dispatch, state }, userId) {
-      auth.post('block', { userId: userId })
+    blockUser({ commit, dispatch, state }, user) {
+      auth.post('block', user)
         .then(res => {
+          console.log("blocked: ", res.data)
           commit('updateBlockedUsers', res.data)
         })
         .catch(err => console.error(err))

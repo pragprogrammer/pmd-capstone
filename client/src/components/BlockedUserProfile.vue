@@ -1,13 +1,13 @@
 <template>
   <v-layout class="user-profile">
     <v-dialog v-model="showUserProfile" fullscreen transition="scale-transition">
-      <p @click="getTargetUser" class="u-nme" slot="activator"><strong>{{post.userName}}</strong></p>
+      <p @click="getTargetUser" class="u-nme" slot="activator"><strong>{{blockedUser.username}}</strong></p>
       <v-card>
         <v-toolbar>
           <v-btn @click.native="showUserProfile = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>{{post.userName}}</v-toolbar-title>
+          <v-toolbar-title>{{user.username}}</v-toolbar-title>
         </v-toolbar>
         <div v-if="user.username" class="profile-content">
           <h2 class="mt-1">AGE</h2>
@@ -29,11 +29,9 @@
               :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
           </div>
           <hr>
-          <contact-user :email="user.email" :post="post" />
-          <hr>
           <div class="user-action">
-            <h2>BLOCK USER</h2>
-            <v-icon class="clickable" @click="blockUser(user)">fa-ban</v-icon>
+            <h2>UNBLOCK USER</h2>
+            <v-icon class="clickable" @click="unblockUser(user)">fa-ban</v-icon>
           </div>
         </div>
       </v-card>
@@ -46,8 +44,8 @@
   import ContactUser from '@/components/ContactUser'
 
   export default {
-    name: "userProfile",
-    props: ["post"],
+    name: "BlockedUserProfile",
+    props: ["blockedUser"],
     data() {
       return {
         showUserProfile: false
@@ -60,13 +58,13 @@
     },
     methods: {
       getTargetUser() {
-        this.$store.dispatch("getTargetUser", this.post.userId);
-      },
-
-      blockUser(user) {
-        console.log("target user ", user.userId, user.username)
-        this.$store.dispatch('blockUser', { 'userId': user.userId, 'username': user.username })
+        this.$store.dispatch("getTargetUser", this.blockedUser.userId);
       }
+
+      // blockUser(user) {
+      //   console.log("target user ", user.userId, user.username)
+      //   this.$store.dispatch('blockUser', { 'userId': user.userId, 'username': user.username })
+      // }
     },
     filters: {
       daysOld(date) {
