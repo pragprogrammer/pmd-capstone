@@ -206,8 +206,8 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err))
     },
-    getTargetUser({ dispatch, commit }, userId) {
-      auth.get(`find/byUserId/${userId}`)
+    getTargetUser({ dispatch, commit }, username) {
+      auth.get(`find/byUsername/${username}`)
         .then(res => {
           commit('setTargetUser', res.data)
         })

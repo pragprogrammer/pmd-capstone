@@ -41,7 +41,11 @@
           <button class="btn btn-outline-danger mt-2" @click="deleteAccount">delete account</button>
           <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
         </div>
-        <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1 clickable"></i>
+        <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
+        <v-icon @click="showSearch = !showSearch" class="ml-3 clickable">fa-search</v-icon>
+        <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
+          <input class="user-search-input" type="text" placeholder="search by username" autofocus>
+        </form>
         <post-form />
       </v-layout>
     </v-footer>
@@ -52,6 +56,7 @@
 import Post from "@/components/Post";
 import PostForm from "@/components/PostForm";
 import FilterModal from "@/components/FilterModal";
+import UserProfile from '@/components/UserProfile'
 export default {
   name: "home",
   created() {
@@ -66,13 +71,16 @@ export default {
     return {
       postCategory: "All",
       searchRadius: 25,
-      showSettings: false
+      showSettings: false,
+      showSearch: false,
+      targetExists: false
     };
   },
   components: {
     FilterModal,
     Post,
-    PostForm
+    PostForm,
+    UserProfile
   },
 
   methods: {
@@ -109,6 +117,11 @@ export default {
       };
       this.$store.dispatch("filterPosts", filters);
       $("#filterMenuModal").modal("hide");
+    },
+    findUserProfile(e){
+      this.targetExists = false
+      let username = e.target[0].value
+      this.$store.dispatch('getTargetUser', username)
     }
   },
   computed: {
@@ -117,6 +130,10 @@ export default {
     },
     activePosts() {
       return this.$store.state.activePosts;
+    },
+    targetUser(){
+      this.targetExists = true
+      return this.$store.state.targetUser
     }
   }
 };
@@ -215,5 +232,12 @@ col {
 
 .clickable {
   cursor: pointer;
+}
+.search-card {
+  margin-left: 3%;
+}
+.search-card input {
+  color: black;
+  margin-left: 1%;
 }
 </style>

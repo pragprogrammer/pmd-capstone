@@ -60,7 +60,7 @@
     },
     methods: {
       getTargetUser() {
-        this.$store.dispatch("getTargetUser", this.post.userId);
+        this.$store.dispatch("getTargetUser", this.post.userName);
       },
 
       blockUser(userId) {
