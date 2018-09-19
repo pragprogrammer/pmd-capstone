@@ -110,7 +110,7 @@ export default new Vuex.Store({
       for (i; i < state.activePosts.length; i++) {
         let p = state.activePosts[i];
         if (p._id == post._id) {
-          p = post
+          post.distance = p.distance
           break
         }
       }
