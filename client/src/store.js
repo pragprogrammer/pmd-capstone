@@ -258,8 +258,10 @@ export default new Vuex.Store({
               voteValueArr.push(vote[key])  //parseFloat was here
             }
           }
-          const getSum = (sum, value) => sum + value;
-          let reliabliltyValue = voteValueArr.reduce(getSum)
+          if(!voteValueArr.length){
+            return
+          }
+          let reliabliltyValue = voteValueArr.reduce((sum, value) => sum + value)
           // debugger
           dispatch("calculateReliability", { userId: state.targetUser.userId, reliabliltyValue })
         })
