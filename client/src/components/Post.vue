@@ -21,8 +21,8 @@
           <p>{{post.timestamp | moment("from", "now")}}</p>
         </div>
         <div class="votes">
-          <i @click="upVote(post._id)" class="far fa-check-circle"></i>
-          <i @click="downVote(post._id)" class="far fa-times-circle"></i>
+          <i @click="upVote(post)" class="far fa-check-circle"></i>
+          <i @click="downVote(post)" class="far fa-times-circle"></i>
           <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
         </div>
       </div>
@@ -43,24 +43,39 @@ export default {
         downvoted: false
       },
       voted: {
-        vote: 1
-      },
-      dVoted: {
-        vote: -1
+        vote: 0
       }
+      // superVoter: {
+      //   verify: 2,
+      //   refute: -2
+      // }
     };
   },
   methods: {
-    showUser() {
-      //some stuff
-    },
-    upVote(id) {
+    upVote(post) {
       // debugger;
-      this.$store.dispatch("vote", { postId: id, vote: this.voted });
-      // debugger;
+      if (this.userId == post.userId) {
+        this.voted.vote = 0;
+      } else if (this.user.reliability > 75) {
+        this.voted.vote = 2;
+      } else if (this.user.reliability > 25) {
+        this.voted.vote = 1;
+        this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
+        this.voted = { vote: 0 };
+        // debugger;
+      }
     },
-    downVote(id) {
-      this.$store.dispatch("vote", { postId: id, vote: this.dVoted });
+    downVote(post) {
+      if (this.userId == post.userId) {
+        this.voted.vote = 0;
+      } else if (this.user.reliability > 75) {
+        this.voted.vote = -2;
+      } else if (this.user.reliability > 25) {
+        this.voted.vote = -1;
+        this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
+        this.voted = { vote: 0 };
+        // debugger;
+      }
     },
     calculateVotes(obj) {
       if (!obj) {
@@ -74,7 +89,7 @@ export default {
         return (out = "SUSPECT");
       } else if (totalVotes >= 2) {
         return (out = "VERIFIED");
-      } else return (out = "UNVERIFIED");
+      }
     },
 
     deletePost(postId) {
@@ -85,9 +100,11 @@ export default {
     posts() {
       return this.$store.state.activePosts;
     },
-
     userId() {
       return this.$store.state.user._id;
+    },
+    user() {
+      return this.$store.state.user;
     }
   },
   components: {
@@ -132,19 +149,19 @@ export default {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-.eventsd{
+.eventsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-.lostsd{
+.lostsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-.trafficsd{
+.trafficsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-.neighborsd{
+.neighborsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
