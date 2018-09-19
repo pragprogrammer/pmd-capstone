@@ -127,25 +127,25 @@ export default {
 }
 
 .event {
-  border: 1px solid purple;
+  border: 1px solid #18bc9c;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
 
 .lost {
-  border: 1px solid orange;
+  border: 1px solid #3498db;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
 
 .traffic {
-  border: 1px solid green;
+  border: 1px solid #2c3e50;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
 
 .neighbor {
-  border: 1px solid indianred;
+  border: 1px solid #e74c3c;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
@@ -167,39 +167,43 @@ export default {
 }
 
 .eventsd:hover {
-  box-shadow: -4px 5px 24px 1px purple;
+  box-shadow: -4px 5px 24px 1px #18bc9c;
 }
 
 .lostsd:hover {
-  box-shadow: -4px 5px 24px 1px orange;
+  box-shadow: -4px 5px 24px 1px #3498db;
 }
 
 .trafficsd:hover {
-  box-shadow: -4px 5px 24px 1px green;
+  box-shadow: -4px 5px 24px 1px #2c3e50;
 }
 
 .neighborsd:hover {
-  box-shadow: -4px 5px 24px 1px indianred;
+  box-shadow: -4px 5px 24px 1px #e74c3c;
 }
 
 .eventbg {
-  background-color: purple;
-  color: black;
+  border: 1px solid #18bc9c;
+  border-bottom: none;
+  color: #18bc9c;
 }
 
 .lostbg {
-  background-color: orange;
-  color: black;
+  border: 1px solid #3498db;
+  border-bottom: none;
+  color: #3498db;
 }
 
 .trafficbg {
-  background-color: green;
-  color: black;
+  border: 1px solid #2c3e50;
+  border-bottom: none;
+  color: #2c3e50;
 }
 
 .neighborbg {
-  background-color: indianred;
-  color: black;
+  border: 1px solid #e74c3c;
+  border-bottom: none;
+  color: #e74c3c;
 }
 
 .userName {
