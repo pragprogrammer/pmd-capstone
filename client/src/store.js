@@ -243,10 +243,31 @@ export default new Vuex.Store({
     },
 
     userReliability({ commit, dispatch, state }, payload) {
-      auth.post('reliabilty', payload)
+      auth.post('post', payload)
+        .then(res => {
+          let stuff = res.data.posts
+          let postVotes = Object.values(stuff);
+          let sendit = []
+          for (let i = 0; i < postVotes.length; i++) {
+            let single = stuff[i]
+            for (var el in single) {
+              if (single.hasOwnProperty(el)) {
+                sendit.push(parseFloat(single[el]))
+              }
+            }
+          }
+          const getSum = (sum, value) => sum + value;
+          let reliabliltyValue = sendit.reduce(getSum)
+          // debugger
+          dispatch("calculateReliability", { userId: res.data._id, reliabliltyValue })
+        })
+    },
+
+    calculateReliability({ commit, dispatch, state }, payload) {
+      auth.post('reliability', payload)
         .then(res => {
           debugger
-          console.log("reliability", res)
+          commit('doesTheThing', res.data)
         })
     },
     //POST ACTIONS
