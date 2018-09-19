@@ -21,8 +21,8 @@
           <p>{{post.timestamp | moment("from", "now")}}</p>
         </div>
         <div class="votes">
-          <i @click="upVote(post._id)" class="far fa-check-circle"></i>
-          <i @click="downVote(post._id)" class="far fa-times-circle"></i>
+          <i @click="upVote(post)" class="far fa-check-circle"></i>
+          <i @click="downVote(post)" class="far fa-times-circle"></i>
           <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
         </div>
       </div>
@@ -43,24 +43,39 @@ export default {
         downvoted: false
       },
       voted: {
-        vote: 1
-      },
-      dVoted: {
-        vote: -1
+        vote: 0
       }
+      // superVoter: {
+      //   verify: 2,
+      //   refute: -2
+      // }
     };
   },
   methods: {
-    showUser() {
-      //some stuff
-    },
-    upVote(id) {
+    upVote(post) {
       // debugger;
-      this.$store.dispatch("vote", { postId: id, vote: this.voted });
-      // debugger;
+      if (this.userId == post.userId) {
+        this.voted.vote = 0;
+      } else if (this.user.reliability > 75) {
+        this.voted.vote = 2;
+      } else if (this.user.reliability > 25) {
+        this.voted.vote = 1;
+        // debugger;
+      }
+      this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
+      this.voted = { vote: 0 };
     },
-    downVote(id) {
-      this.$store.dispatch("vote", { postId: id, vote: this.dVoted });
+    downVote(post) {
+      if (this.userId == post.userId) {
+        this.voted.vote = 0;
+      } else if (this.user.reliability > 75) {
+        this.voted.vote = -2;
+      } else if (this.user.reliability > 25) {
+        this.voted.vote = -1;
+        // debugger;
+      }
+      this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
+      this.voted = { vote: 0 };
     },
     calculateVotes(obj) {
       if (!obj) {
@@ -74,7 +89,7 @@ export default {
         return (out = "SUSPECT");
       } else if (totalVotes >= 2) {
         return (out = "VERIFIED");
-      } else return (out = "UNVERIFIED");
+      }
     },
 
     deletePost(postId) {
@@ -85,9 +100,11 @@ export default {
     posts() {
       return this.$store.state.activePosts;
     },
-
     userId() {
       return this.$store.state.user._id;
+    },
+    user() {
+      return this.$store.state.user;
     }
   },
   components: {
@@ -110,79 +127,83 @@ export default {
 }
 
 .event {
-  border: 1px solid purple;
+  border: 1px solid #18bc9c;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
 
 .lost {
-  border: 1px solid orange;
+  border: 1px solid #3498db;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
 
 .traffic {
-  border: 1px solid green;
+  border: 1px solid #2c3e50;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
 
 .neighbor {
-  border: 1px solid indianred;
+  border: 1px solid #e74c3c;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-.eventsd{
+.eventsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-.lostsd{
+.lostsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-.trafficsd{
+.trafficsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-.neighborsd{
+.neighborsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
 
 .eventsd:hover {
-  box-shadow: -4px 5px 24px 1px purple;
+  box-shadow: -4px 5px 24px 1px #18bc9c;
 }
 
 .lostsd:hover {
-  box-shadow: -4px 5px 24px 1px orange;
+  box-shadow: -4px 5px 24px 1px #3498db;
 }
 
 .trafficsd:hover {
-  box-shadow: -4px 5px 24px 1px green;
+  box-shadow: -4px 5px 24px 1px #2c3e50;
 }
 
 .neighborsd:hover {
-  box-shadow: -4px 5px 24px 1px indianred;
+  box-shadow: -4px 5px 24px 1px #e74c3c;
 }
 
 .eventbg {
-  background-color: purple;
-  color: black;
+  border: 1px solid #18bc9c;
+  border-bottom: none;
+  color: #18bc9c;
 }
 
 .lostbg {
-  background-color: orange;
-  color: black;
+  border: 1px solid #3498db;
+  border-bottom: none;
+  color: #3498db;
 }
 
 .trafficbg {
-  background-color: green;
-  color: black;
+  border: 1px solid #2c3e50;
+  border-bottom: none;
+  color: #2c3e50;
 }
 
 .neighborbg {
-  background-color: indianred;
-  color: black;
+  border: 1px solid #e74c3c;
+  border-bottom: none;
+  color: #e74c3c;
 }
 
 .userName {
@@ -251,6 +272,12 @@ p {
   display: inline-block;
 }
 
+@media (hover: hover){
+  .post {
+  max-height: 20%;
+  min-height: 20%;
+  }
+}
 .post {
   width: 100%;
   display: flex;
