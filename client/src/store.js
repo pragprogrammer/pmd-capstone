@@ -232,45 +232,43 @@ export default new Vuex.Store({
     userPosts({ commit, dispatch, state }, userId) {
       api.get('posts/' + userId)
         .then(res => {
-          let posts = res.data
-          let sending = []
-          for (let i = 0; i < posts.length; i++) {
-            let post = posts[i]
-            if (!post.votes) { post.votes = {} }
-            let gimme = post.votes
-            sending.push(gimme)
+          let postArr = res.data
+          let voteArr = []
+          for (let i = 0; i < postArr.length; i++) {
+            let post = postArr[i]
+            if (!post.votes) {
+               continue 
+              }
+            let vote = post.votes
+            voteArr.push(vote)
           }
-          // console.log(sending)
-          dispatch("userReliability", { userId: userId, sending })
+          dispatch("userReliability", { userId, voteArr })
         })
     },
 
     userReliability({ commit, dispatch, state }, payload) {
       auth.post('post', payload)
         .then(res => {
-          let stuff = res.data.posts
-          let postVotes = Object.values(stuff);
-          let sendit = []
+          let voteObj = res.data
+          let postVotes = Object.values(voteObj);
+          let voteValueArr = []
           for (let i = 0; i < postVotes.length; i++) {
-            let single = stuff[i]
-            for (var el in single) {
-              if (single.hasOwnProperty(el)) {
-                sendit.push(parseFloat(single[el]))
-              }
+            let vote = voteObj[i]
+            for (var key in vote) {
+              voteValueArr.push(vote[key])  //parseFloat was here
             }
           }
           const getSum = (sum, value) => sum + value;
-          let reliabliltyValue = sendit.reduce(getSum)
+          let reliabliltyValue = voteValueArr.reduce(getSum)
           // debugger
-          dispatch("calculateReliability", { userId: res.data._id, reliabliltyValue })
+          dispatch("calculateReliability", { userId: state.targetUser.userId, reliabliltyValue })
         })
     },
 
     calculateReliability({ commit, dispatch, state }, payload) {
       auth.post('reliability', payload)
         .then(res => {
-          // debugger
-          commit('doesTheThing', res.data)
+          commit('setTargetUser', res.data)
         })
     },
     //POST ACTIONS

@@ -141,8 +141,8 @@ router.get('/auth/find/byUsername/:username', (req, res, next) => {
 //strickly updates users posts with their current posts hopefully this hasnt been done anywhere else lol
 router.post('/auth/post', (req, res, next) => {
   let toObj = {}
-  for (let i = 0; i < req.body.sending.length; i++) {
-    toObj[i] = req.body.sending[i]
+  for (let i = 0; i < req.body.voteArr.length; i++) {
+    toObj[i] = req.body.voteArr[i]
   }
   Users.findById(req.body.userId)
     .then(user => {
@@ -154,7 +154,7 @@ router.post('/auth/post', (req, res, next) => {
           console.log(err)
           return res.status(401).send(err)
         }
-        return res.send(user)
+        return res.send(toObj)
       })
     })
     .catch(err => {
