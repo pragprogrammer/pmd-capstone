@@ -46,14 +46,14 @@
             <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
           </div>
           <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
-        <v-icon @click="searchConfig" class="ml-3 clickable">fa-search</v-icon>
-        <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
-          <input class="user-search-input" type="text" placeholder="search by username" autofocus>
-        </form>
-        <div class="search-results" v-if="showSearch">
-          <user-profile-from-search v-if="targetExists" />
-          <div style="display: none">{{targetUser}}</div>
-        </div>
+          <v-icon @click="searchConfig" class="ml-3 clickable">fa-search</v-icon>
+          <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
+            <input class="user-search-input" type="text" placeholder="search by username" autofocus>
+          </form>
+          <div class="search-results" v-if="showSearch">
+            <user-profile-from-search v-if="targetExists" />
+            <div style="display: none">{{targetUser}}</div>
+          </div>
           <post-form />
         </v-layout>
       </v-footer>
@@ -105,6 +105,7 @@
         };
         this.$store.dispatch("captureCoords", obj);
       },
+
       logout(disabled) {
         this.$store.dispatch("logout", disabled);
       },
