@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
 import router from './router'
+import { Stats } from 'fs';
 
 Vue.use(Vuex)
 
@@ -72,15 +73,19 @@ export default new Vuex.Store({
     setPosts(state, postArr) {
       postArr.sort((a, b) => { return b.timestamp - a.timestamp })
       state.posts = postArr
-      state.activePosts = state.posts
-      // .filter(post => {
-      //   return !state.user.blockedUsers[post.userId]
-      //})
+      if(state.user.blockedUsers){
+        state.activePosts = state.posts.filter(post => {
+          return !state.user.blockedUsers[post.userId]
+        })
+      }
+      else{
+        state.activePosts = postArr;
+      }
     },
 
     addPost(state, post) {
       state.posts.unshift(post)
-      state.activePosts.unshift(post)
+      // state.activePosts.unshift(post)  pw - I had to comment this out because it caused a duplicate render when user first posts
     },
 
     filterPosts(state, filters) {
@@ -213,9 +218,8 @@ export default new Vuex.Store({
     },
 
     blockUser({ commit, dispatch, state }, userId) {
-      auth.post('block', { 'userId': userId })
+      auth.post('block', { userId: userId })
         .then(res => {
-          console.log("updated user from blockeUser ", res.data)
           commit('updateBlockedUsers', res.data)
         })
         .catch(err => console.error(err))
