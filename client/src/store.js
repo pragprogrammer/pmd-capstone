@@ -220,9 +220,34 @@ export default new Vuex.Store({
     blockUser({ commit, dispatch, state }, userId) {
       auth.post('block', { userId: userId })
         .then(res => {
+          debugger
           commit('updateBlockedUsers', res.data)
         })
         .catch(err => console.error(err))
+    },
+
+    userPosts({ commit, dispatch, state }, userId) {
+      api.get('posts/' + userId)
+        .then(res => {
+          let posts = res.data
+          let sending = []
+          for (let i = 0; i < posts.length; i++) {
+            let post = posts[i]
+            if (!post.votes) { post.votes = {} }
+            let gimme = post.votes
+            sending.push(gimme)
+          }
+          // console.log(sending)
+          dispatch("userReliability", { userId: userId, sending })
+        })
+    },
+
+    userReliability({ commit, dispatch, state }, payload) {
+      auth.post('reliabilty', payload)
+        .then(res => {
+          debugger
+          console.log("reliability", res)
+        })
     },
     //POST ACTIONS
     //

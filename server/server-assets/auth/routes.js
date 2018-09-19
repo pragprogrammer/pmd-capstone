@@ -139,11 +139,15 @@ router.get('/auth/find/byUsername/:username', (req, res, next) => {
   })
 
 router.post('/auth/reliabilty', (req, res, next) => {
-  Users.findById(req.session.uid)
+  let toObj = {}
+  for (let i = 0; i < req.body.sending.length; i++) {
+    toObj[i] = req.body.sending[i]
+  }
+  Users.findById(req.body.userId)
     .then(user => {
-      if (!user.reliability) { user.reliability = {} }
-      user.reliability[req.session.uid] = req.body
-      user.markModified('reliability')
+      if (!user.posts) { user.posts = {} }
+      user.posts = toObj
+      user.markModified('posts')
       user.save((err) => {
         if (err) {
           console.log(err)

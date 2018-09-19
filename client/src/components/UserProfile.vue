@@ -60,6 +60,7 @@ export default {
   },
   methods: {
     getTargetUser() {
+      this.$store.dispatch("userPosts", this.post.userId);
       this.$store.dispatch("getTargetUser", this.post.userName);
     },
 
