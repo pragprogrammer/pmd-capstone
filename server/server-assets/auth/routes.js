@@ -102,8 +102,8 @@ router.get('/auth/authenticate', (req, res) => {
 })
 
 //Retrieve other user info to view their profile
-router.get('/auth/find/byUserId/:userId', (req, res, next) => {
-  Users.findById(req.params.userId)
+router.get('/auth/find/byUsername/:username', (req, res, next) => {
+  Users.findOne({ username: req.params.username })
     .then(user => {
       let obj = {
         userId: user._id,
@@ -138,11 +138,36 @@ router.get('/auth/find/byUserId/:userId', (req, res, next) => {
       })
   })
 
-router.post('/auth/reliabilty', (req, res, next) => {
-  Users.findById(req.session.uid)
+//strickly updates users posts with their current posts hopefully this hasnt been done anywhere else lol
+router.post('/auth/post', (req, res, next) => {
+  let toObj = {}
+  for (let i = 0; i < req.body.sending.length; i++) {
+    toObj[i] = req.body.sending[i]
+  }
+  Users.findById(req.body.userId)
     .then(user => {
-      if (!user.reliability) { user.reliability = {} }
-      user.reliability[req.session.uid] = req.body
+      if (!user.posts) { user.posts = {} }
+      user.posts = toObj
+      user.markModified('posts')
+      user.save((err) => {
+        if (err) {
+          console.log(err)
+          return res.status(401).send(err)
+        }
+        return res.send(user)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      next()
+    })
+})
+
+//this one just updates the users reliabiliy based on about 200 other lines of code xD
+router.post('/auth/reliability', (req, res, next) => {
+  Users.findById(req.body.userId)
+    .then(user => {
+      user.reliability += req.body.reliabliltyValue
       user.markModified('reliability')
       user.save((err) => {
         if (err) {
@@ -157,6 +182,9 @@ router.post('/auth/reliabilty', (req, res, next) => {
       next()
     })
 })
+
+
+
 
 module.exports = {
   router,

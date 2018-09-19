@@ -38,7 +38,7 @@ router.get('/:lat/:lng/:radius', (req, res, next) => {
     })
 })
 
-//get all posts for specific posts
+//get all posts for specific user
 router.get('/:userId', (req, res, next) => {
   Post.find({ userId: req.params.userId })
     .then(posts => {

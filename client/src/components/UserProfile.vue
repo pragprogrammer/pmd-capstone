@@ -42,27 +42,29 @@
 </template>
 
 <script>
-  let moment = require("moment");
-  import ContactUser from '@/components/ContactUser'
+let moment = require("moment");
+import ContactUser from "@/components/ContactUser";
 
-  export default {
-    name: "userProfile",
-    props: ["post"],
-    data() {
-      return {
-        showUserProfile: false
-      };
+export default {
+  name: "userProfile",
+  props: ["post"],
+  data() {
+    return {
+      showUserProfile: false
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.state.targetUser;
+    }
+  },
+  methods: {
+    getTargetUser() {
+      this.$store.dispatch("userPosts", this.post.userId);
+      this.$store.dispatch("getTargetUser", this.post.userName);
     },
-    computed: {
-      user() {
-        return this.$store.state.targetUser;
-      }
-    },
-    methods: {
-      getTargetUser() {
-        this.$store.dispatch("getTargetUser", this.post.userId);
-      },
 
+<<<<<<< HEAD
       blockUser(user) {
         console.log("target user ", user.userId, user.username)
         this.$store.dispatch('blockUser', { 'userId': user.userId, 'username': user.username })
@@ -75,67 +77,81 @@
     },
     components: {
       ContactUser
+=======
+    blockUser(userId) {
+      console.log("target user ", userId);
+      this.$store.dispatch("blockUser", userId);
     }
-  };
+  },
+  filters: {
+    daysOld(date) {
+      return moment(date).fromNow(true);
+>>>>>>> 92f2168d3948521620a70f65e7d0cb7d0ec17141
+    }
+  },
+  components: {
+    ContactUser
+  }
+};
 </script>
 
 <style scoped>
-  .u-nme:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
+.u-nme:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
-  .profile-content {
-    text-align: left;
-    margin-left: 5%;
-    overflow-y: scroll;
-  }
+.profile-content {
+  text-align: left;
+  margin-left: 5%;
+  overflow-y: scroll;
+}
 
-  .profile-content hr {
-    position: relative;
-    left: -5%;
-  }
+.profile-content hr {
+  position: relative;
+  left: -5%;
+}
 
-  .days-old {
-    display: flex;
-    height: fit-content;
-  }
+.days-old {
+  display: flex;
+  height: fit-content;
+}
 
-  .days-old i {
-    font-size: 5rem;
-  }
+.days-old i {
+  font-size: 5rem;
+}
 
-  .days-old p {
-    font-size: 5rem;
-    margin-left: 5%;
-  }
+.days-old p {
+  font-size: 5rem;
+  margin-left: 5%;
+}
 
-  .created {
-    font-size: 1.5rem;
-  }
+.created {
+  font-size: 1.5rem;
+}
 
-  p {
-    margin-bottom: 0;
-  }
+p {
+  margin-bottom: 0;
+}
 
-  .progresses {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-left: -5%;
-  }
+.progresses {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-left: -5%;
+}
 
-  .user-action {
-    display: flex;
-    justify-content: space-between;
-  }
+.user-action {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .user-action i {
-    font-size: 3rem;
-    margin-right: 5%;
-  }
+.user-action i {
+  font-size: 3rem;
+  margin-right: 5%;
+}
 
-  .clickable {
-    cursor: pointer;
-  }
+.clickable {
+  cursor: pointer;
+}
 </style>
