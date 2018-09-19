@@ -108,40 +108,6 @@ export default {
     logout(disabled) {
       this.$store.dispatch("logout", disabled);
     },
-
-<<<<<<< HEAD
-    methods: {
-      captureCoords(here) {
-        let obj = {
-          lat: here.coords.latitude,
-          lng: here.coords.longitude
-        };
-        this.$store.dispatch("captureCoords", obj);
-      },
-
-      logout(disabled) {
-        this.$store.dispatch("logout", disabled);
-      },
-
-      filterPosts() {
-        let filters = {
-          radius: this.searchRadius,
-          category: this.postCategory
-        };
-        this.$store.dispatch("filterPosts", filters);
-        $("#filterMenuModal").modal("hide");
-      },
-
-      findUserProfile(e) {
-        this.targetExists = false
-        let username = e.target[0].value
-        this.$store.dispatch('getTargetUser', username)
-      },
-
-      searchConfig() {
-        this.showSearch = !this.showSearch
-        this.targetExists = false
-=======
     filterPosts() {
       let filters = {
         radius: this.searchRadius,
@@ -153,7 +119,6 @@ export default {
     deleteAccount() {
       if (window.confirm("Do you really want to delete your account?")) {
         this.$store.dispatch("deleteUser");
->>>>>>> 6b44b98655ba11cbf987fd82c82673c975314ee2
       }
       this.showSettings = false;
     },
