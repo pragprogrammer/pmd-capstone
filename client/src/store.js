@@ -220,7 +220,6 @@ export default new Vuex.Store({
     blockUser({ commit, dispatch, state }, userId) {
       auth.post('block', { userId: userId })
         .then(res => {
-          debugger
           commit('updateBlockedUsers', res.data)
         })
         .catch(err => console.error(err))
@@ -266,8 +265,12 @@ export default new Vuex.Store({
     calculateReliability({ commit, dispatch, state }, payload) {
       auth.post('reliability', payload)
         .then(res => {
+<<<<<<< HEAD
           debugger
           commit('doesTheThing', res.data)
+=======
+          console.log("reliability", res)
+>>>>>>> ac68e2fb5a5fdb5ee11cced0797aa10729dce140
         })
     },
     //POST ACTIONS

@@ -42,10 +42,14 @@
           <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
         </div>
         <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
-        <v-icon @click="showSearch = !showSearch" class="ml-3 clickable">fa-search</v-icon>
+        <v-icon @click="searchConfig" class="ml-3 clickable">fa-search</v-icon>
         <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
           <input class="user-search-input" type="text" placeholder="search by username" autofocus>
         </form>
+        <div class="search-results" v-if="showSearch">
+          <user-profile-from-search v-if="targetExists" />
+          <div style="display: none">{{targetUser}}</div>
+        </div>
         <post-form />
       </v-layout>
     </v-footer>
@@ -56,7 +60,8 @@
 import Post from "@/components/Post";
 import PostForm from "@/components/PostForm";
 import FilterModal from "@/components/FilterModal";
-import UserProfile from '@/components/UserProfile'
+import UserProfileFromSearch from "@/components/UserProfileFromSearch";
+
 export default {
   name: "home",
   created() {
@@ -80,7 +85,7 @@ export default {
     FilterModal,
     Post,
     PostForm,
-    UserProfile
+    UserProfileFromSearch
   },
 
   methods: {
@@ -122,6 +127,10 @@ export default {
       this.targetExists = false
       let username = e.target[0].value
       this.$store.dispatch('getTargetUser', username)
+    },
+    searchConfig(){
+      this.showSearch = !this.showSearch
+      this.targetExists = false
     }
   },
   computed: {
