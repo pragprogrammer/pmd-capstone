@@ -167,7 +167,8 @@ router.post('/auth/post', (req, res, next) => {
 router.post('/auth/reliability', (req, res, next) => {
   Users.findById(req.body.userId)
     .then(user => {
-      user.reliability += req.body.reliabliltyValue
+      let r = 50 + req.body.reliabliltyValue
+      user.reliability = r
       user.markModified('reliability')
       user.save((err) => {
         if (err) {
