@@ -62,7 +62,7 @@
       },
 
       unblockUser(userId) {
-        console.log("target user ", user.userId, user.username)
+        console.log("target user ", this.user.userId, this.user.username)
         this.$store.dispatch('unblockUser', userId)
       }
     },
