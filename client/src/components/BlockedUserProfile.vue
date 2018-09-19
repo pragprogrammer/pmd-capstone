@@ -58,7 +58,7 @@
     },
     methods: {
       getTargetUser() {
-        this.$store.dispatch("getTargetUser", this.blockedUser.userId);
+        this.$store.dispatch("getTargetUser", this.blockedUser.username);
       }
 
       // blockUser(user) {

@@ -1,6 +1,5 @@
 <template>
   <v-app>
-
     <v-container fluid class="home">
       <v-layout class="row underline header">
         <v-flex class="col-4">
@@ -33,8 +32,6 @@
             </form>
           </FilterModal>
         </div>
-<<<<<<< HEAD
-=======
         <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
         <v-icon @click="searchConfig" class="ml-3 clickable">fa-search</v-icon>
         <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
@@ -45,7 +42,6 @@
           <div style="display: none">{{targetUser}}</div>
         </div>
         <post-form />
->>>>>>> 92f2168d3948521620a70f65e7d0cb7d0ec17141
       </v-layout>
       <div class="row display-flex post-bod">
         <div class="col-sm-12 center-post">
@@ -68,11 +64,12 @@
 </template>
 
 <script>
-<<<<<<< HEAD
   import Post from "@/components/Post";
   import PostForm from "@/components/PostForm";
   import FilterModal from "@/components/FilterModal";
   import BlockedUsers from "@/components/BlockedUsers";
+  import UserProfileFromSearch from "@/components/UserProfileFromSearch";
+
   export default {
     name: "home",
     created() {
@@ -82,66 +79,26 @@
       } else {
         navigator.geolocation.getCurrentPosition(this.captureCoords);
       }
-=======
-import Post from "@/components/Post";
-import PostForm from "@/components/PostForm";
-import FilterModal from "@/components/FilterModal";
-import UserProfileFromSearch from "@/components/UserProfileFromSearch";
-
-export default {
-  name: "home",
-  created() {
-    //block users not logged in
-    if (!this.$store.state.user._id) {
-      this.$router.push({ name: "login" });
-    } else {
-      navigator.geolocation.getCurrentPosition(this.captureCoords);
-    }
-  },
-  data() {
-    return {
-      postCategory: "All",
-      searchRadius: 25,
-      showSettings: false,
-      showSearch: false,
-      targetExists: false
-    };
-  },
-  components: {
-    FilterModal,
-    Post,
-    PostForm,
-    UserProfileFromSearch
-  },
-
-  methods: {
-    captureCoords(here) {
-      let obj = {
-        lat: here.coords.latitude,
-        lng: here.coords.longitude
-      };
-      this.$store.dispatch("captureCoords", obj);
     },
-    logout(disabled) {
-      this.$store.dispatch("logout", disabled);
->>>>>>> 92f2168d3948521620a70f65e7d0cb7d0ec17141
-    },
+
     data() {
       return {
         postCategory: "All",
         searchRadius: 25,
         showSettings: false,
-        //showBlockedUsers: false
+        showSearch: false,
+        targetExists: false
       };
     },
+
     components: {
       FilterModal,
       Post,
       PostForm,
-      BlockedUsers
+      BlockedUsers,
+      UserProfileFromSearch
     },
 
-<<<<<<< HEAD
     methods: {
       captureCoords(here) {
         let obj = {
@@ -153,6 +110,7 @@ export default {
       logout(disabled) {
         this.$store.dispatch("logout", disabled);
       },
+
       filterPosts() {
         let filters = {
           radius: this.searchRadius,
@@ -162,65 +120,34 @@ export default {
         $("#filterMenuModal").modal("hide");
       },
 
-      deleteAccount() {
-        if (window.confirm("Do you really want to delete your account?")) {
-          this.$store.dispatch("deleteUser");
-        }
-        this.showSettings = false;
+      findUserProfile(e) {
+        this.targetExists = false
+        let username = e.target[0].value
+        this.$store.dispatch('getTargetUser', username)
       },
 
-      filterPosts() {
-        let filters = {
-          radius: this.searchRadius,
-          category: this.postCategory
-        };
-        this.$store.dispatch("filterPosts", filters);
-        $("#filterMenuModal").modal("hide");
+      searchConfig() {
+        this.showSearch = !this.showSearch
+        this.targetExists = false
       }
     },
+
     computed: {
       user() {
         return this.$store.state.user;
       },
       activePosts() {
         return this.$store.state.activePosts;
+      },
+      targetUser() {
+        this.targetExists = true
+        return this.$store.state.targetUser
       }
-=======
-    filterPosts() {
-      let filters = {
-        radius: this.searchRadius,
-        category: this.postCategory
-      };
-      this.$store.dispatch("filterPosts", filters);
-      $("#filterMenuModal").modal("hide");
-    },
-    findUserProfile(e){
-      this.targetExists = false
-      let username = e.target[0].value
-      this.$store.dispatch('getTargetUser', username)
-    },
-    searchConfig(){
-      this.showSearch = !this.showSearch
-      this.targetExists = false
-    }
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
-    },
-    activePosts() {
-      return this.$store.state.activePosts;
-    },
-    targetUser(){
-      this.targetExists = true
-      return this.$store.state.targetUser
->>>>>>> 92f2168d3948521620a70f65e7d0cb7d0ec17141
     }
   };
 </script>
 
 <style>
-<<<<<<< HEAD
   col {
     padding: 0;
   }
@@ -289,10 +216,6 @@ export default {
     font-size: 2rem;
   }
 
-  .fa-ban {
-    font-size: 2rem;
-  }
-
   .add-post-btn i {
     display: flex;
     justify-content: center;
@@ -315,113 +238,16 @@ export default {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   }
 
-  .inline {
-    display: inline;
-  }
-
   .clickable {
     cursor: pointer;
   }
-=======
-col {
-  padding: 0;
-}
 
-.modal-filter-btn {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
+  .search-card {
+    margin-left: 3%;
+  }
 
-.header {
-  background-color: #2c3e50;
-  box-shadow: -5px 2px 5px 1px black;
-}
-
-.header h4 {
-  font-size: 2rem;
-}
-
-.post-bod {
-  height: 90vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  /* z-index: -1; */
-  /* background: url("../assets/cork-board.jpg"); */
-}
-
-.center-post {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.underline {
-  border-bottom: 2px solid #2c3e50;
-}
-
-.underline {
-  border-bottom: 2px solid #2c3e50;
-}
-
-.form-group select {
-  border: 1px solid #2c3e50;
-  min-width: 2rem;
-  text-align-last: center;
-}
-
-.settings {
-  display: flex;
-  width: fit-content;
-  position: absolute;
-  bottom: 5vh;
-}
-
-.add-post-btn {
-  position: fixed;
-  right: 5vw;
-  bottom: 2vh;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  /* border: 1px solid black; */
-  display: flex;
-  justify-content: center;
-  /* background-color: black; */
-  font-size: 2rem;
-}
-
-.add-post-btn i {
-  display: flex;
-  justify-content: center;
-  align-self: center;
-}
-
-.post-bod::-webkit-scrollbar {
-  width: 0.5rem;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: grey;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-.clickable {
-  cursor: pointer;
-}
-.search-card {
-  margin-left: 3%;
-}
-.search-card input {
-  color: black;
-  margin-left: 1%;
-}
->>>>>>> 92f2168d3948521620a70f65e7d0cb7d0ec17141
+  .search-card input {
+    color: black;
+    margin-left: 1%;
+  }
 </style>
