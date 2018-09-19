@@ -42,100 +42,116 @@
 </template>
 
 <script>
-  let moment = require("moment");
-  import ContactUser from '@/components/ContactUser'
+let moment = require("moment");
+import ContactUser from "@/components/ContactUser";
 
-  export default {
-    name: "userProfile",
-    props: ["post"],
-    data() {
-      return {
-        showUserProfile: false
-      };
+export default {
+  name: "userProfile",
+  props: ["post"],
+  data() {
+    return {
+      showUserProfile: false
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.state.targetUser;
     },
-    computed: {
-      user() {
-        return this.$store.state.targetUser;
-      }
-    },
-    methods: {
-      getTargetUser() {
-        this.$store.dispatch("getTargetUser", this.post.userId);
-      },
-
-      blockUser(userId) {
-        console.log("target user ", userId)
-        this.$store.dispatch('blockUser', userId)
-      }
-    },
-    filters: {
-      daysOld(date) {
-        return moment(date).fromNow(true);
-      }
-    },
-    components: {
-      ContactUser
+    posts() {
+      return this.$store.state.posts;
     }
-  };
+  },
+  methods: {
+    getTargetUser() {
+      // let allposts = posts;
+      // this.calculateReliability(allposts);
+      this.$store.dispatch("userPosts", this.post.userId);
+      this.$store.dispatch("getTargetUser", this.post.userId);
+    },
+
+    blockUser(userId) {
+      console.log("target user ", userId);
+      this.$store.dispatch("blockUser", userId);
+    }
+
+    // calculateReliability(posts) {
+    //   let allPosts = posts;
+    //   // debugger;
+    //   //returns object of posts
+    //   //trying to return all posts belonging to user
+    //   let x = allPosts.find(ps => ps.userId == this.user.userId);
+
+    //   return console.log(x);
+    // }
+  },
+  filters: {
+    daysOld(date) {
+      return moment(date).fromNow(true);
+    }
+  },
+  components: {
+    ContactUser
+  }
+};
 </script>
 
 <style scoped>
-  .u-nme:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
+.u-nme:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
-  .profile-content {
-    text-align: left;
-    margin-left: 5%;
-    overflow-y: scroll;
-  }
+.profile-content {
+  text-align: left;
+  margin-left: 5%;
+  overflow-y: scroll;
+}
 
-  .profile-content hr {
-    position: relative;
-    left: -5%;
-  }
+.profile-content hr {
+  position: relative;
+  left: -5%;
+}
 
-  .days-old {
-    display: flex;
-    height: fit-content;
-  }
+.days-old {
+  display: flex;
+  height: fit-content;
+}
 
-  .days-old i {
-    font-size: 5rem;
-  }
+.days-old i {
+  font-size: 5rem;
+}
 
-  .days-old p {
-    font-size: 5rem;
-    margin-left: 5%;
-  }
+.days-old p {
+  font-size: 5rem;
+  margin-left: 5%;
+}
 
-  .created {
-    font-size: 1.5rem;
-  }
+.created {
+  font-size: 1.5rem;
+}
 
-  p {
-    margin-bottom: 0;
-  }
+p {
+  margin-bottom: 0;
+}
 
-  .progresses {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-left: -5%;
-  }
+.progresses {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-left: -5%;
+}
 
-  .user-action {
-    display: flex;
-    justify-content: space-between;
-  }
+.user-action {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .user-action i {
-    font-size: 3rem;
-    margin-right: 5%;
-  }
+.user-action i {
+  font-size: 3rem;
+  margin-right: 5%;
+}
 
-  .clickable {
-    cursor: pointer;
-  }
+.clickable {
+  cursor: pointer;
+}
 </style>

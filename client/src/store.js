@@ -73,12 +73,12 @@ export default new Vuex.Store({
     setPosts(state, postArr) {
       postArr.sort((a, b) => { return b.timestamp - a.timestamp })
       state.posts = postArr
-      if(state.user.blockedUsers){
+      if (state.user.blockedUsers) {
         state.activePosts = state.posts.filter(post => {
           return !state.user.blockedUsers[post.userId]
         })
       }
-      else{
+      else {
         state.activePosts = postArr;
       }
     },
@@ -225,18 +225,29 @@ export default new Vuex.Store({
         .catch(err => console.error(err))
     },
 
-    userPostReliablity({ commit, dispatch, state }, str) {
-      let value = {
-        SUSPECT: -1,
-        VERIFIED: 1
-      }
-      let sent = value[str]
-      auth.post('reliabilty', sent)
-        .then(res => {
-          commit('updateReliabilty', res.data)
-        })
-        .catch(err => console.log(err))
-    },
+    // userPosts({ commit, dispatch, state }, userId) {
+    //   api.get('posts/' + userId)
+    //     .then(res => {
+    //       let votesObj = res.data.votes
+    //       debugger
+    //       let daVotes = Object.values(votesObj)
+    //       console.log(daVotes)
+    //       dispatch("userPostReliability", res.data)
+    //     })
+    //   },
+    // let value = {
+    //   SUSPECT: -1,
+    //   VERIFIED: 1
+    // }
+    // let sent = value[str]
+    // auth.post('reliabilty', sent)
+    //   .then(res => {
+    //     commit('updateReliabilty', res.data)
+    //   })
+    //   .catch(err => console.log(err))
+    // userPostReliability({ commit, dispatch, state }, postsArr) {
+    //   auth.post('reliability')
+    // },
 
     //
     //POST ACTIONS
