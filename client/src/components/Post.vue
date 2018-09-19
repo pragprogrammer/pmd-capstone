@@ -273,6 +273,8 @@ p {
 }
 
 .post {
+  min-height: 20%;
+  max-height: 20%;
   width: 100%;
   display: flex;
   height: auto;
