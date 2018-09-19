@@ -108,7 +108,10 @@ export default {
     logout(disabled) {
       this.$store.dispatch("logout", disabled);
     },
+<<<<<<< HEAD
 
+=======
+>>>>>>> d906fde4da61bbcade509e8bd9e7b48db1f8f248
     filterPosts() {
       let filters = {
         radius: this.searchRadius,
