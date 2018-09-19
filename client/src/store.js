@@ -84,8 +84,10 @@ export default new Vuex.Store({
     },
 
     addPost(state, post) {
-      if(state.user.blockedUsers){
+      if(Object.keys(state.user.blockedUsers).length){
+      // if(state.user.blockedUsers){
         state.activePosts.unshift(post)  
+        state.posts.unshift(post)
       }
       else{
         state.posts.unshift(post)
