@@ -31,6 +31,9 @@ export default new Vuex.Store({
   mutations: {
     //
     //USER MUTATIONS
+    updateReliabilty(state, user) {
+      console.log('reliablilty console in store')
+    },
     //
     captureCoords(state, coords) {
       state.coords = coords
@@ -220,6 +223,19 @@ export default new Vuex.Store({
           commit('updateBlockedUsers', res.data)
         })
         .catch(err => console.error(err))
+    },
+
+    userPostReliablity({ commit, dispatch, state }, str) {
+      let value = {
+        SUSPECT: -1,
+        VERIFIED: 1
+      }
+      let sent = value[str]
+      auth.post('reliabilty', sent)
+        .then(res => {
+          commit('updateReliabilty', res.data)
+        })
+        .catch(err => console.log(err))
     },
 
     //

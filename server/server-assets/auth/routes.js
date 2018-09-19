@@ -138,6 +138,26 @@ router.get('/auth/find/byUsername/:username', (req, res, next) => {
       })
   })
 
+router.post('/auth/reliabilty', (req, res, next) => {
+  Users.findById(req.session.uid)
+    .then(user => {
+      if (!user.reliability) { user.reliability = {} }
+      user.reliability[req.session.uid] = req.body
+      user.markModified('reliability')
+      user.save((err) => {
+        if (err) {
+          console.log(err)
+          return res.status(401).send(err)
+        }
+        return res.send(user)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      next()
+    })
+})
+
 module.exports = {
   router,
   session

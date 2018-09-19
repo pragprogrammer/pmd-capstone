@@ -71,10 +71,15 @@ export default {
       const getSum = (sum, value) => sum + value;
       let totalVotes = postVotes.reduce(getSum);
       if (totalVotes < 0) {
-        return (out = "SUSPECT");
+        out = "SUSPECT";
       } else if (totalVotes >= 2) {
-        return (out = "VERIFIED");
-      } else return (out = "UNVERIFIED");
+        out = "VERIFIED";
+      } else out = "UNVERIFIED";
+
+      this.$store.dispatch("userPostReliablity", out);
+
+      return out;
+      console.log(out);
     },
 
     deletePost(postId) {
