@@ -62,7 +62,8 @@
       },
 
       unblockUser() {
-        this.$store.dispatch('unblockUser', this.user.userId)
+        console.log("unblock user: ", this.blockedUser.userId, this.blockedUser.username)
+        this.$store.dispatch('unblockUser', this.blockedUser.userId)
       }
     },
     filters: {

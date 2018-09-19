@@ -63,8 +63,13 @@ export default new Vuex.Store({
     },
 
     updateBlockedUsers(state, user) {
-      if (!state.user.blockedUsers) { state.user.blockedUsers = {} }
-      state.user.blockedUsers = user.blockedUsers
+      if (user.blockedUsers) {
+        state.user.blockedUsers = user.blockedUsers
+      }
+      else {
+        Vue.delete(state.user, 'blockedUsers')
+      }
+
     },
     //
     //POST MUTATIONS
@@ -83,10 +88,6 @@ export default new Vuex.Store({
     },
 
     addPost(state, post) {
-<<<<<<< HEAD
-=======
-      // if (Object.keys(state.user.blockedUsers).length) {
->>>>>>> ea69827695262bcd3e3109363fe02ceef257b903
       if (state.user.blockedUsers) {
         state.activePosts.unshift(post)
         state.posts.unshift(post)
@@ -116,9 +117,11 @@ export default new Vuex.Store({
         })
       }
       //filter out blocked users
-      postArr = postArr.filter(post => {
-        return !state.user.blockedUsers[post.userId]
-      })
+      if (state.user.blockedUsers) {
+        postArr = postArr.filter(post => {
+          return !state.user.blockedUsers[post.userId]
+        })
+      }
       //return updated activePost array
       state.activePosts = postArr
     },
@@ -250,6 +253,7 @@ export default new Vuex.Store({
     unblockUser({ commit, dispatch, state }, userId) {
       auth.post('unblock', { 'userId': userId })
         .then(res => {
+          console.log("unblock user data", res.data)
           commit('updateBlockedUsers', res.data)
           commit('filterPosts', state.filters)
         })

@@ -65,8 +65,8 @@
       },
 
       blockUser() {
-        console.log("target user ", this.user.userId, this.user.username)
-        this.$store.dispatch('blockUser', { 'userId': this.user.userId, 'username': this.user.username })
+        console.log("block user ", this.post.userId, this.post.userName)
+        this.$store.dispatch('blockUser', { 'userId': this.post.userId, 'username': this.post.userName })
       },
       clearTargetUser() {
         this.$store.dispatch('getTargetUser', {})
