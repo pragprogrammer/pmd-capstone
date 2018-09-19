@@ -210,7 +210,7 @@ export default new Vuex.Store({
         .catch(err => console.log(err))
     },
     getTargetUser({ dispatch, commit }, username) {
-      if(typeof username == 'object'){
+      if (typeof username == 'object') {
         return commit('setTargetUser', {})
       }
       auth.get(`find/byUsername/${username}`)
@@ -223,7 +223,14 @@ export default new Vuex.Store({
     blockUser({ commit, dispatch, state }, user) {
       auth.post('block', user)
         .then(res => {
-          console.log("blocked: ", res.data)
+          commit('updateBlockedUsers', res.data)
+        })
+        .catch(err => console.error(err))
+    },
+
+    unblockUser({ commit, dispatch }, userId) {
+      auth.post('unblock', { 'userId': userId })
+        .then(res => {
           commit('updateBlockedUsers', res.data)
         })
         .catch(err => console.error(err))
@@ -237,8 +244,8 @@ export default new Vuex.Store({
           for (let i = 0; i < postArr.length; i++) {
             let post = postArr[i]
             if (!post.votes) {
-               continue 
-              }
+              continue
+            }
             let vote = post.votes
             voteArr.push(vote)
           }
