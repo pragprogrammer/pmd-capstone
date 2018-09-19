@@ -46,14 +46,14 @@
             <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
           </div>
           <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
-        <v-icon @click="searchConfig" class="ml-3 clickable">fa-search</v-icon>
-        <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
-          <input class="user-search-input" type="text" placeholder="search by username" autofocus>
-        </form>
-        <div class="search-results" v-if="showSearch">
-          <user-profile-from-search v-if="targetExists" />
-          <div style="display: none">{{targetUser}}</div>
-        </div>
+          <v-icon @click="searchConfig" class="ml-3 clickable">fa-search</v-icon>
+          <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
+            <input class="user-search-input" type="text" placeholder="search by username" autofocus>
+          </form>
+          <div class="search-results" v-if="showSearch">
+            <user-profile-from-search v-if="targetExists" />
+            <div style="display: none">{{targetUser}}</div>
+          </div>
           <post-form />
         </v-layout>
       </v-footer>
@@ -109,6 +109,39 @@ export default {
       this.$store.dispatch("logout", disabled);
     },
 
+<<<<<<< HEAD
+    methods: {
+      captureCoords(here) {
+        let obj = {
+          lat: here.coords.latitude,
+          lng: here.coords.longitude
+        };
+        this.$store.dispatch("captureCoords", obj);
+      },
+
+      logout(disabled) {
+        this.$store.dispatch("logout", disabled);
+      },
+
+      filterPosts() {
+        let filters = {
+          radius: this.searchRadius,
+          category: this.postCategory
+        };
+        this.$store.dispatch("filterPosts", filters);
+        $("#filterMenuModal").modal("hide");
+      },
+
+      findUserProfile(e) {
+        this.targetExists = false
+        let username = e.target[0].value
+        this.$store.dispatch('getTargetUser', username)
+      },
+
+      searchConfig() {
+        this.showSearch = !this.showSearch
+        this.targetExists = false
+=======
     filterPosts() {
       let filters = {
         radius: this.searchRadius,
@@ -120,6 +153,7 @@ export default {
     deleteAccount() {
       if (window.confirm("Do you really want to delete your account?")) {
         this.$store.dispatch("deleteUser");
+>>>>>>> 6b44b98655ba11cbf987fd82c82673c975314ee2
       }
       this.showSettings = false;
     },
