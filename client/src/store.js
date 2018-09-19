@@ -265,7 +265,7 @@ export default new Vuex.Store({
     calculateReliability({ commit, dispatch, state }, payload) {
       auth.post('reliability', payload)
         .then(res => {
-          debugger
+          // debugger
           commit('doesTheThing', res.data)
         })
     },
