@@ -60,26 +60,13 @@ export default {
   },
   methods: {
     getTargetUser() {
-      // let allposts = posts;
-      // this.calculateReliability(allposts);
-      this.$store.dispatch("userPosts", this.post.userId);
-      this.$store.dispatch("getTargetUser", this.post.userId);
+      this.$store.dispatch("getTargetUser", this.post.userName);
     },
 
     blockUser(userId) {
       console.log("target user ", userId);
       this.$store.dispatch("blockUser", userId);
     }
-
-    // calculateReliability(posts) {
-    //   let allPosts = posts;
-    //   // debugger;
-    //   //returns object of posts
-    //   //trying to return all posts belonging to user
-    //   let x = allPosts.find(ps => ps.userId == this.user.userId);
-
-    //   return console.log(x);
-    // }
   },
   filters: {
     daysOld(date) {

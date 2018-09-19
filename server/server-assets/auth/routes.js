@@ -103,7 +103,7 @@ router.get('/auth/authenticate', (req, res) => {
 
 //Retrieve other user info to view their profile
 router.get('/auth/find/byUsername/:username', (req, res, next) => {
-  Users.findOne({username: req.params.username})
+  Users.findOne({ username: req.params.username })
     .then(user => {
       let obj = {
         userId: user._id,
