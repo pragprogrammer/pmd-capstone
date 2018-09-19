@@ -60,12 +60,9 @@ export default new Vuex.Store({
     updateBlockedUsers(state, user) {
       if (!state.user.blockedUsers) { state.user.blockedUsers = {} }
       state.user.blockedUsers = user.blockedUsers
-      for (let i = 0; i < state.activePosts.length; i++) {
-        let postUserId = state.activePosts[i].userId
-        if (user.blockedUsers[postUserId]) {
-          state.activePosts.splice(i, 1)
-        }
-      }
+      state.activePosts = state.activePosts.filter(post => {
+        return !state.user.blockedUsers[post.userId]
+      })
     },
     //
     //POST MUTATIONS
@@ -85,7 +82,7 @@ export default new Vuex.Store({
 
     addPost(state, post) {
       state.posts.unshift(post)
-      // state.activePosts.unshift(post)  pw - I had to comment this out because it caused a duplicate render when user first posts
+      state.activePosts.unshift(post)  //pw - I had to comment this out because it caused a duplicate render when user first posts
     },
 
     filterPosts(state, filters) {
@@ -102,7 +99,9 @@ export default new Vuex.Store({
           return (post.category == filters.category && post.distance <= filters.radius)
         })
       }
-      state.activePosts = postArr
+      state.activePosts = postArr.filter(post => {
+        return !state.user.blockedUsers[post.userId]
+      })
     },
 
     updateVotes(state, post) {
@@ -265,7 +264,7 @@ export default new Vuex.Store({
               voteValueArr.push(vote[key])  //parseFloat was here
             }
           }
-          if(!voteValueArr.length){
+          if (!voteValueArr.length) {
             return
           }
           let reliabliltyValue = voteValueArr.reduce((sum, value) => sum + value)
