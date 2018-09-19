@@ -272,9 +272,13 @@ p {
   display: inline-block;
 }
 
-.post {
-  min-height: 20%;
+@media (hover: hover){
+  .post {
   max-height: 20%;
+  min-height: 20%;
+  }
+}
+.post {
   width: 100%;
   display: flex;
   height: auto;
