@@ -84,8 +84,14 @@ export default new Vuex.Store({
     },
 
     addPost(state, post) {
-      state.posts.unshift(post)
-      // state.activePosts.unshift(post)  pw - I had to comment this out because it caused a duplicate render when user first posts
+      if(state.user.blockedUsers){
+        state.activePosts.unshift(post)  
+      }
+      else{
+        state.posts.unshift(post)
+      }
+      // pw - I had to comment this out because it caused a duplicate render when user first posts
+      //now its not duplicating and fixed issue with blockedUsers and post render on close modal
     },
 
     filterPosts(state, filters) {
