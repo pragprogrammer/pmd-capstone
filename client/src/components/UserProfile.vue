@@ -56,9 +56,6 @@ export default {
   computed: {
     user() {
       return this.$store.state.targetUser;
-    },
-    posts() {
-      return this.$store.state.posts;
     }
   },
   methods: {
