@@ -32,16 +32,6 @@
             </form>
           </FilterModal>
         </div>
-        <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
-        <v-icon @click="searchConfig" class="ml-3 clickable">fa-search</v-icon>
-        <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
-          <input class="user-search-input" type="text" placeholder="search by username" autofocus>
-        </form>
-        <div class="search-results" v-if="showSearch">
-          <user-profile-from-search v-if="targetExists" />
-          <div style="display: none">{{targetUser}}</div>
-        </div>
-        <post-form />
       </v-layout>
       <div class="row display-flex post-bod">
         <div class="col-sm-12 center-post">
@@ -55,7 +45,15 @@
             <button class="btn btn-outline-danger mt-2" @click="deleteAccount">delete account</button>
             <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
           </div>
-          <i @click="showSettings = !showSettings" class="fas fa-ellipsis-v pl-3 pr-2 pt-1 clickable"></i>
+          <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
+        <v-icon @click="searchConfig" class="ml-3 clickable">fa-search</v-icon>
+        <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
+          <input class="user-search-input" type="text" placeholder="search by username" autofocus>
+        </form>
+        <div class="search-results" v-if="showSearch">
+          <user-profile-from-search v-if="targetExists" />
+          <div style="display: none">{{targetUser}}</div>
+        </div>
           <post-form />
         </v-layout>
       </v-footer>
