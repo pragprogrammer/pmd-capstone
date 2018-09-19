@@ -97,6 +97,7 @@
       BlockedUsers,
       UserProfileFromSearch
     },
+<<<<<<< HEAD
 
     methods: {
       captureCoords(here) {
@@ -132,6 +133,19 @@
       searchConfig() {
         this.showSearch = !this.showSearch;
         this.targetExists = false;
+=======
+    filterPosts() {
+      let filters = {
+        radius: this.searchRadius,
+        category: this.postCategory
+      };
+      this.$store.dispatch("filterPosts", filters);
+      $("#filterMenuModal").modal("hide");
+    },
+    deleteAccount() {
+      if (window.confirm("Do you really want to delete your account?")) {
+        this.$store.dispatch("deleteUser");
+>>>>>>> efd30781ee4fc9c179b132d2755896429e1e0029
       }
     },
 

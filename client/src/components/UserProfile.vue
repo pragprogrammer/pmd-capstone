@@ -5,7 +5,7 @@
       <v-card>
         <v-toolbar>
           <v-btn @click.native="showUserProfile = false">
-            <v-icon>close</v-icon>
+            <v-icon @click="clearTargetUser">close</v-icon>
           </v-btn>
           <v-toolbar-title>{{post.userName}}</v-toolbar-title>
         </v-toolbar>
@@ -67,6 +67,9 @@
       blockUser(user) {
         console.log("target user ", user.userId, user.username)
         this.$store.dispatch('blockUser', { 'userId': user.userId, 'username': user.username })
+      },
+      clearTargetUser(){
+        this.$store.dispatch('getTargetUser', {})
       }
     },
     filters: {
