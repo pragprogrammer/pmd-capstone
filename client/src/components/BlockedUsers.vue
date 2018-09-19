@@ -1,9 +1,9 @@
 <template>
-  <div class="text-xs-center">
+  <div class="text-xs-center block">
     <v-menu offset-y offset-overflow>
-      <v-btn slot="activator" class="btn btn-secondary">
-        Blocked
-      </v-btn>
+      <button slot="activator" class="btn btn-outline-info mt-2 blkbtn">
+        Blocked Users
+      </button>
       <v-list>
         <v-list-tile v-for="(blockedUser, index) in blockedUsers" :key="index" @click="">
           <v-list-tile-title>
@@ -47,3 +47,10 @@
     }
   };
 </script>
+
+<style>
+  .blkbtn {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+</style>

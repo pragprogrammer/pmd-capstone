@@ -1,13 +1,13 @@
 <template>
   <v-app>
-    <v-container fluid class="home">
+    <div class="home container-fluid">
       <v-layout class="row underline header">
-        <v-flex class="col-4">
+        <v-flex class="col-8">
           <h4 class="text-white mt-2">{{activePosts.length}} bullUtins nearby</h4>
         </v-flex>
-        <v-flex class="col-4">
+        <!-- <v-flex class="col-4">
           <BlockedUsers />
-        </v-flex>
+        </v-flex> -->
         <div class="col-4 modal-filter-btn">
           <FilterModal :postCategory="postCategory" :searchRadius="searchRadius">
             <form @submit.prevent="filterPosts" class="form-group">
@@ -43,6 +43,7 @@
           <div v-if="showSettings" class="settings card">
             <button class="btn btn-outline-secondary" @click="logout('disable')">disable location sharing</button>
             <button class="btn btn-outline-danger mt-2" @click="deleteAccount">delete account</button>
+            <BlockedUsers @click="showSettings=!showSettings" />
             <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
           </div>
           <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
@@ -57,7 +58,7 @@
           <post-form />
         </v-layout>
       </v-footer>
-    </v-container>
+    </div>
   </v-app>
 </template>
 
@@ -108,6 +109,7 @@ export default {
     logout(disabled) {
       this.$store.dispatch("logout", disabled);
     },
+
     filterPosts() {
       let filters = {
         radius: this.searchRadius,
@@ -180,10 +182,6 @@ col {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.underline {
-  border-bottom: 2px solid #2c3e50;
 }
 
 .underline {
