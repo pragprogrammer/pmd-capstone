@@ -31,7 +31,7 @@
           <hr>
           <div class="user-action">
             <h2>UNBLOCK USER</h2>
-            <v-icon class="clickable" @click="unblockUser(user.userId)">fa-ban</v-icon>
+            <v-icon class="clickable" @click="unblockUser()">fa-ban</v-icon>
           </div>
         </div>
       </v-card>
@@ -61,9 +61,8 @@
         this.$store.dispatch("getTargetUser", this.blockedUser.username);
       },
 
-      unblockUser(userId) {
-        console.log("target user ", this.user.userId, this.user.username)
-        this.$store.dispatch('unblockUser', userId)
+      unblockUser() {
+        this.$store.dispatch('unblockUser', this.user.userId)
       }
     },
     filters: {
