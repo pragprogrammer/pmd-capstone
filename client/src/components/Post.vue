@@ -60,10 +60,10 @@ export default {
         this.voted.vote = 2;
       } else if (this.user.reliability > 25) {
         this.voted.vote = 1;
-        this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
-        this.voted = { vote: 0 };
         // debugger;
       }
+      this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
+      this.voted = { vote: 0 };
     },
     downVote(post) {
       if (this.userId == post.userId) {
@@ -72,10 +72,10 @@ export default {
         this.voted.vote = -2;
       } else if (this.user.reliability > 25) {
         this.voted.vote = -1;
-        this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
-        this.voted = { vote: 0 };
         // debugger;
       }
+      this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
+      this.voted = { vote: 0 };
     },
     calculateVotes(obj) {
       if (!obj) {
