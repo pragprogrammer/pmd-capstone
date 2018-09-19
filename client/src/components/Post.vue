@@ -272,16 +272,18 @@ p {
   display: inline-block;
 }
 
-@media (hover: hover){
+@media (hover: hover) {
   .post {
-  max-height: 20%;
-  min-height: 20%;
+    max-height: 30%;
+    min-height: 30%;
   }
 }
 .post {
   width: 100%;
   display: flex;
   height: auto;
+  /* height: 30%;
+  max-height: 30%; */
   border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
   flex-wrap: wrap;
@@ -316,7 +318,6 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 1rem;
   flex-wrap: wrap;
   border-top: none;
 }
@@ -328,6 +329,8 @@ p {
   padding: 0.5rem;
   border: 1px solid grey;
   background-color: #ecf0f1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* .distance {
