@@ -1,11 +1,14 @@
 <template>
   <div class="text-xs-center block">
     <v-menu offset-y offset-overflow>
-      <button slot="activator" class="btn btn-outline-info mt-2 blkbtn">
+      <button v-if="blockedUsers" slot="activator" class="btn btn-outline-info mt-2 blkbtn">
         Blocked Users
       </button>
-      <v-list>
-        <v-list-tile v-for="(blockedUser, index) in blockedUsers" :key="index" @click="">
+      <button v-else disabled slot="activator" class="btn btn-outline-info mt-2 blkbtn">
+          Blocked Users
+      </button>
+      <v-list v-if="blockedUsers">
+        <v-list-tile v-for="(blockedUser, index) in blockedUsers" :key="index">
           <v-list-tile-title>
             <BlockedUserProfile v-bind:blockedUser="blockedUser" />
           </v-list-tile-title>
@@ -40,9 +43,11 @@
 
       blockedUsers() {
         let users = this.$store.state.user.blockedUsers
-        return Object.keys(users).map(function (key) {
-          return { "userId": key, "username": users[key] }
+        if(users){
+          return Object.keys(users).map(function (key) {
+            return { "userId": key, "username": users[key] }
         })
+        }
       }
     }
   };
