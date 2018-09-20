@@ -31,9 +31,13 @@
           <hr>
           <contact-user :email="target.email" :targetName="target.username" />
           <hr>
-          <div class="user-action">
+          <div v-if="!target.blocked" class="user-action">
             <h2>BLOCK USER</h2>
-            <v-icon class="clickable" @click="blockUser(target._id)">fa-ban</v-icon>
+            <v-icon class="clickable" @click="blockUser(target)">fa-ban</v-icon>
+          </div>
+          <div v-if="target.blocked" class="user-action">
+            <h2>UNBLOCK USER</h2>
+            <v-icon class="clickable" @click="unblockUser(target)">fa-ban</v-icon>
           </div>
         </div>
       </v-card>
@@ -42,106 +46,122 @@
 </template>
 
 <script>
-let moment = require("moment");
-import ContactUser from "@/components/ContactUser";
+  let moment = require("moment");
+  import ContactUser from "@/components/ContactUser";
 
-export default {
-  name: "userProfileFromSearch",
-  data() {
-    return {
-      showUserProfile: false
-    };
-  },
-  computed: {
-    target() {
-      return this.$store.state.targetUser;
-    }
-  },
-  methods: {
-    getTargetUserPosts(targetId) {
-      this.$store.dispatch("userPosts", targetId);
+  export default {
+    name: "userProfileFromSearch",
+    data() {
+      return {
+        showUserProfile: false
+      };
     },
+    computed: {
+      target() {
+        return this.$store.state.targetUser;
+      }
+    },
+    methods: {
+      getTargetUserPosts(targetId) {
+        this.$store.dispatch("userPosts", targetId);
+      },
 
-    blockUser(userId) {
-      this.$store.dispatch("blockUser", userId);
+      clearTargetUser() {
+        this.$store.dispatch('getTargetUser', {})
+      },
+
+      blockUser(target) {
+        console.log("blocking: ", target.userId, target.username)
+        this.$store.dispatch("blockUser", { 'userId': target.userId, 'username': target.username });
+        this.showUserProfile = false;
+        this.clearTargetUser()
+      },
+
+      unblockUser(target) {
+        console.log("unblocking: ", target.userId, target.username)
+        this.$store.dispatch('unblockUser', this.target.userId)
+        this.showUserProfile = false;
+        this.clearTargetUser()
+      }
+    },
+    filters: {
+      daysOld(date) {
+        return moment(date).fromNow(true);
+      }
+    },
+    components: {
+      ContactUser
     }
-  },
-  filters: {
-    daysOld(date) {
-      return moment(date).fromNow(true);
-    }
-  },
-  components: {
-    ContactUser
-  }
-};
+  };
 </script>
 
 <style scoped>
-@media (hover: none) {
-.u-nme {
-  cursor: pointer;
-  position: absolute;
-  bottom: 5vh;
-  left: 25vw;
-  font-size: 3rem;
-}
-}
-.u-nme {
-  cursor: pointer;
-  margin-left: 2vw;
-}
-.profile-content {
-  text-align: left;
-  margin-left: 5%;
-  overflow-y: scroll;
-}
+  @media (hover: none) {
+    .u-nme {
+      cursor: pointer;
+      position: absolute;
+      bottom: 5vh;
+      left: 25vw;
+      font-size: 3rem;
+    }
+  }
 
-.profile-content hr {
-  position: relative;
-  left: -5%;
-}
+  .u-nme {
+    cursor: pointer;
+    margin-left: 2vw;
+  }
 
-.days-old {
-  display: flex;
-  height: fit-content;
-}
+  .profile-content {
+    text-align: left;
+    margin-left: 5%;
+    overflow-y: scroll;
+  }
 
-.days-old i {
-  font-size: 5rem;
-}
+  .profile-content hr {
+    position: relative;
+    left: -5%;
+  }
 
-.days-old p {
-  font-size: 5rem;
-  margin-left: 5%;
-}
+  .days-old {
+    display: flex;
+    height: fit-content;
+  }
 
-.created {
-  font-size: 1.5rem;
-}
+  .days-old i {
+    font-size: 5rem;
+  }
 
-p {
-  margin-bottom: 0;
-}
+  .days-old p {
+    font-size: 5rem;
+    margin-left: 5%;
+  }
 
-.progresses {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-left: -5%;
-}
+  .created {
+    font-size: 1.5rem;
+  }
 
-.user-action {
-  display: flex;
-  justify-content: space-between;
-}
+  p {
+    margin-bottom: 0;
+  }
 
-.user-action i {
-  font-size: 3rem;
-  margin-right: 5%;
-}
+  .progresses {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-left: -5%;
+  }
 
-.clickable {
-  cursor: pointer;
-}
+  .user-action {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .user-action i {
+    font-size: 3rem;
+    margin-right: 5%;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
 </style>

@@ -43,7 +43,7 @@
           <div v-if="showSettings" class="settings card">
             <button class="btn btn-outline-secondary" @click="logout('disable')">disable location sharing</button>
             <button class="btn btn-outline-danger mt-2" @click="deleteAccount">delete account</button>
-            <BlockedUsers @click="showSettings=!showSettings" />
+            <BlockedUsers />
             <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
           </div>
           <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>

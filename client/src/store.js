@@ -42,6 +42,7 @@ export default new Vuex.Store({
       state.coords = coords
     },
     setUser(state, user) {
+      console.log("user= ", user)
       state.user = user;
     },
     logout(state, disabled) {
@@ -60,6 +61,12 @@ export default new Vuex.Store({
     },
     setTargetUser(state, targetUser) {
       state.targetUser = targetUser
+      if (state.user.blockedUsers && state.user.blockedUsers[targetUser.userId]) {
+        targetUser.blocked = true
+      }
+      else {
+        targetUser.blocked = false;
+      }
     },
 
     updateBlockedUsers(state, user) {
