@@ -183,27 +183,31 @@ export default {
 }
 
 .eventbg {
-  border: 1px solid #18bc9c;
-  border-bottom: none;
-  color: #18bc9c;
+  /* border: 1px solid #18bc9c;
+  border-bottom: none; */
+  background-color: #18bc9c;
+  color:white;
 }
 
 .lostbg {
-  border: 1px solid #3498db;
-  border-bottom: none;
-  color: #3498db;
+  /* border: 1px solid #3498db;
+  border-bottom: none; */
+  background-color: #3498db;
+  color:white;
 }
 
 .trafficbg {
-  border: 1px solid #2c3e50;
-  border-bottom: none;
-  color: #2c3e50;
+  /* border: 1px solid #2c3e50;
+  border-bottom: none; */
+  background-color: #2c3e50;
+  color:white;
 }
 
 .neighborbg {
-  border: 1px solid #e74c3c;
-  border-bottom: none;
-  color: #e74c3c;
+  /* border: 1px solid #e74c3c;
+  border-bottom: none; */
+  background-color: #e74c3c;
+  color:white;
 }
 
 .userName {
