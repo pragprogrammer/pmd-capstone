@@ -29,7 +29,7 @@
               :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
           </div>
           <hr>
-          <contact-user :email="user.email" :post="post" />
+          <contact-user :email="user.email" :post="post" :targetName="post.userName" />
           <hr>
           <div class="user-action">
             <h2>BLOCK USER</h2>
