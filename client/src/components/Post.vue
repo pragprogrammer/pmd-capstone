@@ -12,7 +12,10 @@
           <p class="distance inline" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
           <p class="distance inline" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
           <p class="distance inline" v-else>{{post.distance.toFixed(2)}} miles away</p>
-          <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt mr-3 clickable"></i>
+          <div>
+            <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt clickable mr-3"></i>
+            <i @click="addFavoritePost(post)" class="far fa-star mr-3 clickable"></i>
+          </div>
         </div>
       </div>
       <div class="content-holder" v-bind:class="[{event:post.category=='event'},{lost:post.category=='lost and found'},{traffic:post.category=='traffic update'},{neighbor:post.category=='neighborhood watch'}]">
@@ -30,344 +33,355 @@
     </div>
     <div class="spacer">
       <p>end of posts</p>
-      <a href="#top"><v-icon>fa-angle-double-up</v-icon></a>
+      <a href="#top">
+        <v-icon>fa-angle-double-up</v-icon>
+      </a>
     </div>
   </div>
 </template>
 <script>
-let moment = require("moment");
-import UserProfile from "@/components/UserProfile";
+  let moment = require("moment");
+  import UserProfile from "@/components/UserProfile";
 
-export default {
-  name: "post",
-  data() {
-    return {
-      datavote: {
-        upvoted: false,
-        downvoted: false
+  export default {
+    name: "post",
+    data() {
+      return {
+        datavote: {
+          upvoted: false,
+          downvoted: false
+        },
+        voted: {
+          vote: 0
+        }
+        // superVoter: {
+        //   verify: 2,
+        //   refute: -2
+        // }
+      };
+    },
+    methods: {
+      upVote(post) {
+        // debugger;
+        if (this.userId == post.userId) {
+          this.voted.vote = 0;
+        } else if (this.user.reliability > 75) {
+          this.voted.vote = 2;
+        } else if (this.user.reliability > 25) {
+          this.voted.vote = 1;
+          // debugger;
+        }
+        this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
+        this.voted = { vote: 0 };
       },
-      voted: {
-        vote: 0
-      }
-      // superVoter: {
-      //   verify: 2,
-      //   refute: -2
-      // }
-    };
-  },
-  methods: {
-    upVote(post) {
-      // debugger;
-      if (this.userId == post.userId) {
-        this.voted.vote = 0;
-      } else if (this.user.reliability > 75) {
-        this.voted.vote = 2;
-      } else if (this.user.reliability > 25) {
-        this.voted.vote = 1;
-        // debugger;
-      }
-      this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
-      this.voted = { vote: 0 };
-    },
-    downVote(post) {
-      if (this.userId == post.userId) {
-        this.voted.vote = 0;
-      } else if (this.user.reliability > 75) {
-        this.voted.vote = -2;
-      } else if (this.user.reliability > 25) {
-        this.voted.vote = -1;
-        // debugger;
-      }
-      this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
-      this.voted = { vote: 0 };
-    },
-    calculateVotes(obj) {
-      if (!obj) {
-        return 0;
-      }
-      let out = "";
-      let postVotes = Object.values(obj);
-      const getSum = (sum, value) => sum + value;
-      let totalVotes = postVotes.reduce(getSum);
-      if (totalVotes < 0) {
-        return (out = "SUSPECT");
-      } else if (totalVotes >= 2) {
-        return (out = "VERIFIED");
-      }
-    },
+      downVote(post) {
+        if (this.userId == post.userId) {
+          this.voted.vote = 0;
+        } else if (this.user.reliability > 75) {
+          this.voted.vote = -2;
+        } else if (this.user.reliability > 25) {
+          this.voted.vote = -1;
+          // debugger;
+        }
+        this.$store.dispatch("vote", { postId: post._id, vote: this.voted });
+        this.voted = { vote: 0 };
+      },
+      calculateVotes(obj) {
+        if (!obj) {
+          return 0;
+        }
+        let out = "";
+        let postVotes = Object.values(obj);
+        const getSum = (sum, value) => sum + value;
+        let totalVotes = postVotes.reduce(getSum);
+        if (totalVotes < 0) {
+          return (out = "SUSPECT");
+        } else if (totalVotes >= 2) {
+          return (out = "VERIFIED");
+        }
+      },
 
-    deletePost(postId) {
-      this.$store.dispatch("deletePost", postId);
-    }
-  },
-  computed: {
-    posts() {
-      return this.$store.state.activePosts;
+      deletePost(postId) {
+        this.$store.dispatch("deletePost", postId);
+      },
+
+      addFavoritePost(post) {
+        console.log("Adding to favorites, post: ", post.title)
+      }
     },
-    userId() {
-      return this.$store.state.user._id;
+    computed: {
+      posts() {
+        return this.$store.state.activePosts;
+      },
+      userId() {
+        return this.$store.state.user._id;
+      },
+      user() {
+        return this.$store.state.user;
+      }
     },
-    user() {
-      return this.$store.state.user;
+    components: {
+      UserProfile
     }
-  },
-  components: {
-    UserProfile
-  }
-};
+  };
 </script>
 
 <style scoped>
-/* * {
+  /* * {
   outline: 1px solid red;
 } */
 
-.user-profile {
-  display: flex;
-  flex: none;
-  /* margin-top: 0.5rem; */
-  align-items: center;
-  padding: 0 0.5rem 0 0.5rem;
-}
+  .user-profile {
+    display: flex;
+    flex: none;
+    /* margin-top: 0.5rem; */
+    align-items: center;
+    padding: 0 0.5rem 0 0.5rem;
+  }
 
-.event {
-  border: 1px solid #18bc9c;
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
+  .event {
+    border: 1px solid #18bc9c;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
 
-.lost {
-  border: 1px solid #3498db;
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
+  .lost {
+    border: 1px solid #3498db;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
 
-.traffic {
-  border: 1px solid #2c3e50;
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
+  .traffic {
+    border: 1px solid #2c3e50;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
 
-.neighbor {
-  border: 1px solid #e74c3c;
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
-.eventsd {
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
-.lostsd {
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
-.trafficsd {
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
-.neighborsd {
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
+  .neighbor {
+    border: 1px solid #e74c3c;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
 
-.eventsd:hover {
-  box-shadow: -4px 5px 24px 1px #18bc9c;
-}
+  .eventsd {
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
 
-.lostsd:hover {
-  box-shadow: -4px 5px 24px 1px #3498db;
-}
+  .lostsd {
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
 
-.trafficsd:hover {
-  box-shadow: -4px 5px 24px 1px #2c3e50;
-}
+  .trafficsd {
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
 
-.neighborsd:hover {
-  box-shadow: -4px 5px 24px 1px #e74c3c;
-}
+  .neighborsd {
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
 
-.eventbg {
-  /* border: 1px solid #18bc9c;
+  .eventsd:hover {
+    box-shadow: -4px 5px 24px 1px #18bc9c;
+  }
+
+  .lostsd:hover {
+    box-shadow: -4px 5px 24px 1px #3498db;
+  }
+
+  .trafficsd:hover {
+    box-shadow: -4px 5px 24px 1px #2c3e50;
+  }
+
+  .neighborsd:hover {
+    box-shadow: -4px 5px 24px 1px #e74c3c;
+  }
+
+  .eventbg {
+    /* border: 1px solid #18bc9c;
   border-bottom: none; */
-  background-color: #18bc9c;
-  color:white;
-}
+    background-color: #18bc9c;
+    color: white;
+  }
 
-.lostbg {
-  /* border: 1px solid #3498db;
+  .lostbg {
+    /* border: 1px solid #3498db;
   border-bottom: none; */
-  background-color: #3498db;
-  color:white;
-}
+    background-color: #3498db;
+    color: white;
+  }
 
-.trafficbg {
-  /* border: 1px solid #2c3e50;
+  .trafficbg {
+    /* border: 1px solid #2c3e50;
   border-bottom: none; */
-  background-color: #2c3e50;
-  color:white;
-}
+    background-color: #2c3e50;
+    color: white;
+  }
 
-.neighborbg {
-  /* border: 1px solid #e74c3c;
+  .neighborbg {
+    /* border: 1px solid #e74c3c;
   border-bottom: none; */
-  background-color: #e74c3c;
-  color:white;
-}
+    background-color: #e74c3c;
+    color: white;
+  }
 
-.userName {
-  width: 50%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  /* align-items: center; */
-  /* padding: 1rem; */
-  font-size: 1rem;
-  color: #2c3e50;
-}
+  .userName {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* align-items: center; */
+    /* padding: 1rem; */
+    font-size: 1rem;
+    color: #2c3e50;
+  }
 
-/* .userName p {
+  /* .userName p {
     padding: 0 0.5rem 0 0.5rem;
   } */
 
-.spacer {
-  height: 25vh;
-  display: flex;
-  flex-flow: wrap column;
-  justify-content: center;
-  align-items: center;
-}
-
-.posts {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-p {
-  margin-bottom: 0;
-}
-
-.left-side {
-  width: 50%;
-  flex-wrap: wrap;
-  text-align: left;
-  display: flex;
-  align-items: center;
-}
-
-.right-side {
-  width: 50%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.right-side i {
-  font-size: 2rem;
-}
-
-.p-title {
-  text-transform: uppercase;
-  font-size: 1rem;
-  max-width: 100%;
-  /* display: inline-block; */
-}
-
-.inline {
-  display: inline;
-}
-
-.deleted {
-  display: inline-block;
-}
-
-@media (hover: hover) {
-  .post {
-    max-height: 30%;
-    min-height: 30%;
+  .spacer {
+    height: 25vh;
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-items: center;
   }
-}
-.post {
-  width: 100%;
-  display: flex;
-  height: auto;
-  /* height: 30%;
+
+  .posts {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .left-side {
+    width: 50%;
+    flex-wrap: wrap;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+
+  .right-side {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .right-side i {
+    font-size: 2rem;
+  }
+
+  .p-title {
+    text-transform: uppercase;
+    font-size: 1rem;
+    max-width: 100%;
+    /* display: inline-block; */
+  }
+
+  .inline {
+    display: inline;
+  }
+
+  .deleted {
+    display: inline-block;
+  }
+
+  @media (hover: hover) {
+    .post {
+      max-height: 30%;
+      min-height: 30%;
+    }
+  }
+
+  .post {
+    width: 100%;
+    display: flex;
+    height: auto;
+    /* height: 30%;
   max-height: 30%; */
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin: 0.5rem;
-  /* background-color: #2c3e50; */
-  transition: 0.2s;
-  box-shadow: -4px 5px 24px 1px black;
-}
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 0.5rem;
+    /* background-color: #2c3e50; */
+    transition: 0.2s;
+    box-shadow: -4px 5px 24px 1px black;
+  }
 
-.category {
-  width: 100%;
-  display: flex;
-  /* justify-content: space-between;
+  .category {
+    width: 100%;
+    display: flex;
+    /* justify-content: space-between;
   align-items: center; */
-  /* padding: 0 1rem 0 1rem; */
-  padding: 1rem;
-  /* background-color: #76828e; */
-  /* margin-bottom: 1rem; */
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-  /* border-bottom: 1px solid black; */
-}
+    /* padding: 0 1rem 0 1rem; */
+    padding: 1rem;
+    /* background-color: #76828e; */
+    /* margin-bottom: 1rem; */
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    /* border-bottom: 1px solid black; */
+  }
 
-.distance {
-  padding-left: 1rem;
-}
+  .distance {
+    padding-left: 1rem;
+  }
 
-.content-holder {
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  border-top: none;
-}
+  .content-holder {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border-top: none;
+  }
 
-.content {
-  width: 95%;
-  height: auto;
-  text-align: left;
-  padding: 0.5rem;
-  border: 1px solid grey;
-  background-color: #ecf0f1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  .content {
+    width: 95%;
+    height: auto;
+    text-align: left;
+    padding: 0.5rem;
+    border: 1px solid grey;
+    background-color: #ecf0f1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-/* .distance {
+  /* .distance {
   width: 25%;
 } */
 
-.votes {
-  width: 50%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 1rem;
-  font-size: 1rem;
-  color: #2c3e50;
-}
+  .votes {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+    font-size: 1rem;
+    color: #2c3e50;
+  }
 
-.votes i {
-  padding: 0 0.5rem 0 0;
-  cursor: pointer;
-}
+  .votes i {
+    padding: 0 0.5rem 0 0;
+    cursor: pointer;
+  }
 
-.clickable:hover {
-  cursor: pointer;
-  color: white;
-}
+  .clickable:hover {
+    cursor: pointer;
+    color: white;
+  }
 
-/* .time {
+  /* .time {
   width: 50%;
 } */
 </style>
