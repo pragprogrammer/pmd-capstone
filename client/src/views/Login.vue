@@ -25,6 +25,8 @@
             <input class="form-control" type="password" name="password" placeholder="Password" required v-model="newUser.password">
             <input class="form-control" type="password" name="password2" placeholder="Re-enter Password" required
               v-model="newUser.password2">
+            <input class="form-control-inline mt-2" type="checkbox" name="terms" required /> I consent to the <a href="../assets/BullUtinT&C.pdf"
+              target="_blank">BullUtin terms and conditions</a><br>
             <button type="submit" class="btn btn-primary mt-2">Register</button>
           </form>
           <h5><span @click="prevUser = !prevUser" class="clickable">Login to existing account</span></h5>
