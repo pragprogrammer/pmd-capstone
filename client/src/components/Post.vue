@@ -12,9 +12,9 @@
           <p class="distance inline" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
           <p class="distance inline" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
           <p class="distance inline" v-else>{{post.distance.toFixed(2)}} miles away</p>
-          <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt mr-3 clickable"></i>
+          <i v-if="post.userId == userId" @click="deletePost(post._id)" class="delete far fa-trash-alt mr-3 clickable"></i>
         </div>
-      </div>
+      </div>  
       <div class="content-holder" v-bind:class="[{event:post.category=='event'},{lost:post.category=='lost and found'},{traffic:post.category=='traffic update'},{neighbor:post.category=='neighborhood watch'}]">
         <div class="content">{{post.content}}</div>
         <div class="userName">
@@ -130,7 +130,7 @@ export default {
   padding: 0 0.5rem 0 0.5rem;
 }
 
-.event {
+/* .event {
   border: 1px solid #18bc9c;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
@@ -152,8 +152,8 @@ export default {
   border: 1px solid #e74c3c;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
-}
-.eventsd {
+} */
+/* .eventsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
@@ -168,9 +168,9 @@ export default {
 .neighborsd {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
-}
+} */
 
-.eventsd:hover {
+/* .eventsd:hover {
   box-shadow: -4px 5px 24px 1px #18bc9c;
 }
 
@@ -184,34 +184,78 @@ export default {
 
 .neighborsd:hover {
   box-shadow: -4px 5px 24px 1px #e74c3c;
-}
+} */
 
 .eventbg {
-  /* border: 1px solid #18bc9c;
-  border-bottom: none; */
-  background-color: #18bc9c;
-  color:white;
+  border-top: 5px ridge #18bc9c;
+  /* box-shadow: -5px -5px 5px #18bc9c; */
+  /* background-color: #18bc9c; */
+  /* color:white; */
+  background-color: #fff; 
+  height: fit-content;
+  position: relative;
+}
+.eventbg:after {
+  content: "";
+  position: absolute;
+  bottom: .5rem;
+  width: 75%;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.336);
 }
 
 .lostbg {
-  /* border: 1px solid #3498db;
-  border-bottom: none; */
-  background-color: #3498db;
-  color:white;
+  border-top: 5px ridge #3498db;
+  /* box-shadow: -5px -5px 5px #3498db; */
+  /* background-color: #3498db; */
+  /* color:white; */
+  background-color: #fff;
+  height: fit-content;
+  position: relative;
+}
+.lostbg:after {
+  content: "";
+  position: absolute;
+  bottom: .5rem;
+  width: 75%;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.336);
 }
 
 .trafficbg {
-  /* border: 1px solid #2c3e50;
-  border-bottom: none; */
-  background-color: #2c3e50;
-  color:white;
+  border-top: 5px ridge #2c3e50;
+  /* box-shadow: -5px -5px 5px #2c3e50; */
+  /* background-color: #2c3e50; */
+  /* color:white; */
+  background-color: #fff;
+  height: fit-content;
+  position: relative;
+}
+.trafficbg:after {
+  content: "";
+  position: absolute;
+  bottom: .5rem;
+  width: 75%;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.336);
 }
 
 .neighborbg {
-  /* border: 1px solid #e74c3c;
-  border-bottom: none; */
-  background-color: #e74c3c;
-  color:white;
+  border-top: 5px ridge #e74c3c;
+  /* box-shadow: -5px -5px 5px #e74c3c; */
+  /* background-color: #e74c3c; */
+  /* color:white; */
+  background-color: #fff;
+  height: fit-content;
+  position: relative;
+}
+.neighborbg:after {
+  content: "";
+  position: absolute;
+  bottom: .5rem;
+  width: 75%;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.336);
 }
 
 .userName {
@@ -284,8 +328,9 @@ p {
 
 @media (hover: hover) {
   .post {
-    max-height: 30%;
-    min-height: 30%;
+    /* max-height: 30%;
+    min-height: 22%; */
+    max-height: fit-content;
   }
 }
 .post {
@@ -294,14 +339,15 @@ p {
   height: auto;
   /* height: 30%;
   max-height: 30%; */
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+  /* border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; */
   flex-wrap: wrap;
   flex-direction: row;
-  margin: 0.5rem;
+  margin: .25rem 0 .75rem;
   /* background-color: #2c3e50; */
   transition: 0.2s;
-  box-shadow: -4px 5px 24px 1px black;
+  /* box-shadow: -4px 5px 24px 1px black; */
+  box-shadow: 0 4px 2px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 2px 6px 0 rgba(0,0,0,.12);
 }
 
 .category {
@@ -313,8 +359,8 @@ p {
   padding: 1rem;
   /* background-color: #76828e; */
   /* margin-bottom: 1rem; */
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  /* border-top-left-radius: 1rem; */
+  /* border-top-right-radius: 1rem; */
   /* border-bottom: 1px solid black; */
 }
 
@@ -324,11 +370,12 @@ p {
 
 .content-holder {
   width: 100%;
-  height: auto;
+  /* height: auto; */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  background-color: #fff;
   border-top: none;
 }
 
@@ -337,10 +384,11 @@ p {
   height: auto;
   text-align: left;
   padding: 0.5rem;
-  border: 1px solid grey;
-  background-color: #ecf0f1;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  background-color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-top: .75rem;
 }
 
 /* .distance {
@@ -352,9 +400,9 @@ p {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 1rem;
   font-size: 1rem;
   color: #2c3e50;
+  padding: .75rem .75rem .25rem;
 }
 
 .votes i {
@@ -367,6 +415,17 @@ p {
   color: white;
 }
 
+/* this query wasn't working correctly.  Trash can was hidden when hover trash can.  Don't know why?
+/* @media (hover:hover) {
+  .delete {
+    display: none;
+  }
+
+  .post:hover .delete, .delete:hover {
+    display: block;
+  }
+
+} */
 /* .time {
   width: 50%;
 } */
