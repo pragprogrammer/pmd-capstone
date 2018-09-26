@@ -22,10 +22,10 @@
               <label for="category">Post Category</label>
               <select name="category" v-model="postCategory" class="ml-1">
                 <option value='All'>All</option>
-                <option value='event'>event</option>
-                <option value='lost and found'>lost and found</option>
-                <option value='traffic update'>traffic update</option>
                 <option value='neighborhood watch'>neighborhood watch</option>
+                <option value='traffic update'>traffic update</option>
+                <option value='lost and found'>lost and found</option>
+                <option value='event'>upcoming events</option>
               </select><br>
               <button type="button" class="btn btn-secondary mt-3 mr-3" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary mt-3">Apply Filters</button>
@@ -33,6 +33,14 @@
           </FilterModal>
         </div>
       </v-layout>
+      <div class="row">
+        <div class="cat-bar">
+          <p>neighborhood <br> watch</p>
+          <p>traffic <br> update</p>
+          <p>lost & <br> found</p>
+          <p>upcoming <br> events</p>
+        </div>
+      </div>
       <div class="row display-flex post-bod">
         <div class="col-sm-12 center-post">
           <Post />
@@ -170,8 +178,22 @@
     font-size: 2rem;
   }
 
+  .cat-bar {
+    background: linear-gradient(110deg, #e74c3c, #e74c3c 25%, #2c3e50 25%, #2c3e50 50%,
+      #3498db 50%, #3498db 75%, #18bc9c 75%);
+    display: flex;
+    align-items: flex-start;
+    color: white;
+    width: 100%;
+    height: 6.5vh;
+  }
+  .cat-bar p {
+    width: 25vw;
+    text-align: center;
+  }
+
   .post-bod {
-    height: 90vh;
+    height: 83.5vh;
     overflow-y: scroll;
     overflow-x: hidden;
     /* z-index: -1; */

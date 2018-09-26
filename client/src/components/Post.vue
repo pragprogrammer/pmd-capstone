@@ -1,5 +1,6 @@
 <template>
   <div class="posts">
+    <div id="top"></div>
     <div class="post" v-for="post in posts" :key="post._id" v-bind:class="[{eventsd:post.category=='event'},{lostsd:post.category=='lost and found'},{trafficsd:post.category=='traffic update'},{neighborsd:post.category=='neighborhood watch'}]">
       <div class="category" v-bind:class="[{eventbg:post.category=='event'},{lostbg:post.category=='lost and found'},{trafficbg:post.category=='traffic update'},{neighborbg:post.category=='neighborhood watch'}]">
         <div class="left-side">
@@ -27,7 +28,10 @@
         </div>
       </div>
     </div>
-    <div class="spacer">spacer</div>
+    <div class="spacer">
+      <p>end of posts</p>
+      <a href="#top"><v-icon>fa-angle-double-up</v-icon></a>
+    </div>
   </div>
 </template>
 <script>
@@ -227,8 +231,10 @@ export default {
 
 .spacer {
   height: 25vh;
-  color: transparent;
-  pointer-events: none;
+  display: flex;
+  flex-flow: wrap column;
+  justify-content: center;
+  align-items: center;
 }
 
 .posts {
