@@ -250,7 +250,7 @@ export default new Vuex.Store({
 
     blockUser({ commit, dispatch, state }, user) {
       if (user.userId == state.user._id) {
-        return alert("You can't block yourself!")
+        return window.alert("You can't block yourself!")
       }
       auth.post('block', user)
         .then(res => {
