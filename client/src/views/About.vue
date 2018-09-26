@@ -36,7 +36,7 @@
         </p>
         <p>
           Finally, by clicking the username associated with each post, you may view the user's profile which includes
-          their overall reliabliity rating and a link to email the user if needed. You may block users that you deem
+          their overall reliablity rating and a link to email the user if needed. You may block users that you deem
           unreliable. The displayed user reliability is based on post history to include volume and accuracy as
           determined by other users. Please note that if your reliabilty drops below 20%, your account could be
           suspended.
