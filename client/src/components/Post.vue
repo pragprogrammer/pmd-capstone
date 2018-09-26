@@ -12,14 +12,10 @@
           <p class="distance inline" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
           <p class="distance inline" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
           <p class="distance inline" v-else>{{post.distance.toFixed(2)}} miles away</p>
-<<<<<<< HEAD
           <div>
-            <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt clickable mr-3"></i>
+            <i v-if="post.userId == userId" @click="deletePost(post._id)" class="delete far fa-trash-alt clickable mr-3"></i>
             <i @click="addFavoritePost(post)" class="far fa-star mr-3 clickable"></i>
           </div>
-=======
-          <i v-if="post.userId == userId" @click="deletePost(post._id)" class="delete far fa-trash-alt mr-3 clickable"></i>
->>>>>>> 5d4091f60fd81648dff3a4a76ad9374c67919e5b
         </div>
       </div>  
       <div class="content-holder" v-bind:class="[{event:post.category=='event'},{lost:post.category=='lost and found'},{traffic:post.category=='traffic update'},{neighbor:post.category=='neighborhood watch'}]">
@@ -135,103 +131,6 @@
   outline: 1px solid red;
 } */
 
-<<<<<<< HEAD
-  .user-profile {
-    display: flex;
-    flex: none;
-    /* margin-top: 0.5rem; */
-    align-items: center;
-    padding: 0 0.5rem 0 0.5rem;
-  }
-
-  .event {
-    border: 1px solid #18bc9c;
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-  }
-
-  .lost {
-    border: 1px solid #3498db;
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-  }
-
-  .traffic {
-    border: 1px solid #2c3e50;
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-  }
-
-  .neighbor {
-    border: 1px solid #e74c3c;
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-  }
-
-  .eventsd {
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-  }
-
-  .lostsd {
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-  }
-
-  .trafficsd {
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-  }
-
-  .neighborsd {
-    border-bottom-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-  }
-
-  .eventsd:hover {
-    box-shadow: -4px 5px 24px 1px #18bc9c;
-  }
-
-  .lostsd:hover {
-    box-shadow: -4px 5px 24px 1px #3498db;
-  }
-
-  .trafficsd:hover {
-    box-shadow: -4px 5px 24px 1px #2c3e50;
-  }
-
-  .neighborsd:hover {
-    box-shadow: -4px 5px 24px 1px #e74c3c;
-  }
-
-  .eventbg {
-    /* border: 1px solid #18bc9c;
-  border-bottom: none; */
-    background-color: #18bc9c;
-    color: white;
-  }
-
-  .lostbg {
-    /* border: 1px solid #3498db;
-  border-bottom: none; */
-    background-color: #3498db;
-    color: white;
-  }
-
-  .trafficbg {
-    /* border: 1px solid #2c3e50;
-  border-bottom: none; */
-    background-color: #2c3e50;
-    color: white;
-  }
-
-  .neighborbg {
-    /* border: 1px solid #e74c3c;
-  border-bottom: none; */
-    background-color: #e74c3c;
-    color: white;
-  }
-=======
 .user-profile {
   display: flex;
   flex: none;
@@ -367,7 +266,6 @@
   text-align: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.336);
 }
->>>>>>> 5d4091f60fd81648dff3a4a76ad9374c67919e5b
 
   .userName {
     width: 50%;
@@ -439,98 +337,12 @@
 
   @media (hover: hover) {
     .post {
-      max-height: 30%;
-      min-height: 30%;
+      /* max-height: 30%;
+      min-height: 22%; */
+      max-height: fit-content;
     }
   }
 
-  .post {
-<<<<<<< HEAD
-    width: 100%;
-    display: flex;
-    height: auto;
-    /* height: 30%;
-  max-height: 30%; */
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
-    flex-wrap: wrap;
-    flex-direction: row;
-    margin: 0.5rem;
-    /* background-color: #2c3e50; */
-    transition: 0.2s;
-    box-shadow: -4px 5px 24px 1px black;
-  }
-
-  .category {
-    width: 100%;
-    display: flex;
-    /* justify-content: space-between;
-  align-items: center; */
-    /* padding: 0 1rem 0 1rem; */
-    padding: 1rem;
-    /* background-color: #76828e; */
-    /* margin-bottom: 1rem; */
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-    /* border-bottom: 1px solid black; */
-  }
-
-  .distance {
-    padding-left: 1rem;
-  }
-
-  .content-holder {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    border-top: none;
-  }
-
-  .content {
-    width: 95%;
-    height: auto;
-    text-align: left;
-    padding: 0.5rem;
-    border: 1px solid grey;
-    background-color: #ecf0f1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  /* .distance {
-  width: 25%;
-} */
-
-  .votes {
-    width: 50%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 1rem;
-    font-size: 1rem;
-    color: #2c3e50;
-  }
-
-  .votes i {
-    padding: 0 0.5rem 0 0;
-    cursor: pointer;
-  }
-
-  .clickable:hover {
-    cursor: pointer;
-    color: white;
-  }
-
-  /* .time {
-=======
-    /* max-height: 30%;
-    min-height: 22%; */
-    max-height: fit-content;
-  }
-}
 .post {
   width: 100%;
   display: flex;
@@ -610,22 +422,20 @@
 
 .clickable:hover {
   cursor: pointer;
-  color: white;
+  /* color: white; */
 }
 
-/* this query wasn't working correctly.  Trash can was hidden when hover trash can.  Don't know why?
-/* @media (hover:hover) {
+@media (hover: hover) {
   .delete {
-    display: none;
+    visibility: hidden;
+    pointer-events: none;
   }
-
   .post:hover .delete, .delete:hover {
-    display: block;
+    visibility: visible;
+    pointer-events: all;
   }
-
-} */
+}
 /* .time {
->>>>>>> 5d4091f60fd81648dff3a4a76ad9374c67919e5b
   width: 50%;
 } */
 </style>
