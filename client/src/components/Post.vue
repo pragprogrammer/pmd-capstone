@@ -13,7 +13,7 @@
           <p class="distance inline" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
           <p class="distance inline" v-else>{{post.distance.toFixed(2)}} miles away</p>
           <div>
-            <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt clickable mr-3"></i>
+            <i v-if="post.userId == userId" @click="deletePost(post._id)" class="delete far fa-trash-alt clickable mr-3"></i>
             <i @click="addFavoritePost(post)" class="far fa-star mr-3 clickable"></i>
           </div>
         </div>
@@ -131,6 +131,7 @@
   outline: 1px solid red;
 } */
 
+<<<<<<< HEAD
   .user-profile {
     display: flex;
     flex: none;
@@ -140,6 +141,17 @@
   }
 
   /* .event {
+=======
+.user-profile {
+  display: flex;
+  flex: none;
+  /* margin-top: 0.5rem; */
+  align-items: center;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+/* .event {
+>>>>>>> aed77cc81898d599be1f7fe1718275f40f4b864b
   border: 1px solid #18bc9c;
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
@@ -224,6 +236,7 @@
     position: relative;
   }
 
+<<<<<<< HEAD
   .lostbg:after {
     content: "";
     position: absolute;
@@ -270,6 +283,25 @@
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.336);
   }
+=======
+.neighborbg {
+  border-top: 5px ridge #e74c3c;
+  /* box-shadow: -5px -5px 5px #e74c3c; */
+  /* background-color: #e74c3c; */
+  /* color:white; */
+  background-color: #fff;
+  height: fit-content;
+  position: relative;
+}
+.neighborbg:after {
+  content: "";
+  position: absolute;
+  bottom: .5rem;
+  width: 75%;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.336);
+}
+>>>>>>> aed77cc81898d599be1f7fe1718275f40f4b864b
 
   .userName {
     width: 50%;
@@ -341,11 +373,13 @@
 
   @media (hover: hover) {
     .post {
-      max-height: 30%;
-      min-height: 30%;
+      /* max-height: 30%;
+      min-height: 22%; */
+      max-height: fit-content;
     }
   }
 
+<<<<<<< HEAD
   .post {
     /* max-height: 30%;
     min-height: 22%; */
@@ -437,16 +471,107 @@
 
   /* this query wasn't working correctly.  Trash can was hidden when hover trash can.  Don't know why?
 /* @media (hover:hover) {
-  .delete {
-    display: none;
-  }
+=======
+.post {
+  width: 100%;
+  display: flex;
+  height: auto;
+  /* height: 30%;
+  max-height: 30%; */
+  /* border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; */
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: .25rem 0 .75rem;
+  /* background-color: #2c3e50; */
+  transition: 0.2s;
+  /* box-shadow: -4px 5px 24px 1px black; */
+  box-shadow: 0 4px 2px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 2px 6px 0 rgba(0,0,0,.12);
+}
 
-  .post:hover .delete, .delete:hover {
-    display: block;
+.category {
+  width: 100%;
+  display: flex;
+  /* justify-content: space-between;
+  align-items: center; */
+  /* padding: 0 1rem 0 1rem; */
+  padding: 1rem;
+  /* background-color: #76828e; */
+  /* margin-bottom: 1rem; */
+  /* border-top-left-radius: 1rem; */
+  /* border-top-right-radius: 1rem; */
+  /* border-bottom: 1px solid black; */
+}
+
+.distance {
+  padding-left: 1rem;
+}
+
+.content-holder {
+  width: 100%;
+  /* height: auto; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border-top: none;
+}
+
+.content {
+  width: 95%;
+  height: auto;
+  text-align: left;
+  padding: 0.5rem;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  background-color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: .75rem;
+}
+
+/* .distance {
+  width: 25%;
+} */
+
+.votes {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1rem;
+  color: #2c3e50;
+  padding: .75rem .75rem .25rem;
+}
+
+.votes i {
+  padding: 0 0.5rem 0 0;
+  cursor: pointer;
+}
+
+.clickable:hover {
+  cursor: pointer;
+  /* color: white; */
+}
+
+@media (hover: hover) {
+>>>>>>> aed77cc81898d599be1f7fe1718275f40f4b864b
+  .delete {
+    visibility: hidden;
+    pointer-events: none;
   }
+  .post:hover .delete, .delete:hover {
+    visibility: visible;
+    pointer-events: all;
+  }
+<<<<<<< HEAD
 
 } */
   /* .time {
+=======
+}
+/* .time {
+>>>>>>> aed77cc81898d599be1f7fe1718275f40f4b864b
   width: 50%;
 } */
 </style>

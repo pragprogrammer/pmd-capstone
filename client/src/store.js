@@ -4,7 +4,11 @@ import Axios from 'axios'
 import router from './router'
 import { Stats } from 'fs';
 
+
 Vue.use(Vuex)
+
+import io from 'socket.io-client'
+let socket = {}
 
 let auth = Axios.create({
   baseURL: '//localhost:3000/auth/',
@@ -28,7 +32,11 @@ export default new Vuex.Store({
       radius: 25,
       category: 'All'
     },
-    targetUser: {}
+    targetUser: {},
+    joined: false,
+    name: '',
+    messages: [],
+    roomData: {}
   },
 
   mutations: {
@@ -161,8 +169,37 @@ export default new Vuex.Store({
         }
       }
 
-    }
+    },
+    //SOCKET STUFF
+    setJoined(state, payload) {
+      state.joined = true;
+      state.name = payload;
+    },
 
+    setRoom(state, payload) {
+      state.roomData = payload;
+    },
+
+    newUser(state, payload) {
+      Vue.set(state.roomData.connectedUsers, payload.userName, payload.userName)
+      console.log(payload.userName + " has joined the session");
+    },
+
+    userLeft(state, payload) {
+      Vue.set(state.roomData.connectedUsers, payload, undefined);
+    },
+
+    newPost(state, payload) {
+      console.log("new post received");
+      //what do we do here?
+    },
+
+    leave(state) {
+      state.joined = false;
+      state.name = '';
+      state.messages = [];//????do we need this
+      state.roomData = {};
+    }
   },
   actions: {
     //
@@ -180,6 +217,7 @@ export default new Vuex.Store({
           console.log('login user return: ', res.data)
           commit('setUser', res.data)
           router.push({ name: 'home' })
+          dispatch("join", res.data.username)
         })
 
         .catch(err => console.error(err))
@@ -190,6 +228,7 @@ export default new Vuex.Store({
         .then(res => {
           console.log("register user return: ", res.data)
           commit('setUser', res.data)
+          dispatch("join", res.data.username)
           router.push({ name: 'home' })
         })
         .catch(err => console.error(err))
@@ -198,6 +237,7 @@ export default new Vuex.Store({
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
+          dispatch("join", res.data.username) //might not need this one
           router.push({ name: 'home' })
         })
         .catch(err => console.error(err))
@@ -291,6 +331,7 @@ export default new Vuex.Store({
       auth.post('post', payload)
         .then(res => {
           let voteObj = res.data
+          //@ts-ignore          
           let postVotes = Object.values(voteObj);
           let voteValueArr = []
           for (let i = 0; i < postVotes.length; i++) {
@@ -358,6 +399,49 @@ export default new Vuex.Store({
           commit('deletePost', postId)
         })
         .catch(err => console.log(err))
+    },
+
+    //SOCKET ACTIONS
+    join({ commit, dispatch }, payload) {
+      commit('setJoined', payload);
+      dispatch('socket', payload)
+    },
+    socket({ commit, dispatch }, payload) {
+      //establish connection with socket
+      socket = io('//localhost:3000')
+
+      //register socket event listeners
+      socket.on('CONNECTED', data => {
+        console.log('Connected to socket')
+        //connect to room
+        socket.emit('join', { name: payload })
+      })
+
+      socket.on('joinedRoom', data => {
+        commit('setRoom', data)
+      })
+
+      socket.on('newUser', data => {
+        commit('newUser', data)
+      })
+
+      socket.on('left', data => {
+        console.log('user left', data)
+        commit('userLeft', data)
+      })
+
+      socket.on('newPost', data => {
+        commit('newPost', data)
+      })
+
+    },
+    sendPost({ commit, dispatch }, payload) {
+      socket.emit('message', payload)
+    },
+    leaveRoom({ commit, dispatch }, payload) {
+      socket.emit('leave')
+      socket.close()
+      commit('leave')
     }
   }
 })
