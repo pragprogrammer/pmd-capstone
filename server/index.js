@@ -78,10 +78,8 @@ io.on("connection", socket => {
     })
 
     socket.on('post', data => {
-        if (data.post && data.user) {
-            console.log('post recieved')
-            io.to('bullutin').emit('newPost', data)
-        }
+        console.log('post recieved')
+        io.to('bullutin').emit('newPost', data)
     })
 })
 // joins viewable radius of other users?

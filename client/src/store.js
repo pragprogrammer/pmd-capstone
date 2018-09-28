@@ -189,10 +189,10 @@ export default new Vuex.Store({
       Vue.set(state.roomData.connectedUsers, payload, undefined);
     },
 
-    newPost(state, payload) {
-      console.log("new post received");
-      //what do we do here?
-    },
+    // newPost(state, payload) {
+    //   console.log("new post received");
+    //   //what do we do here?
+    // },
 
     leave(state) {
       state.joined = false;
@@ -202,6 +202,28 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    //THANKS A TON https://www.movable-type.co.uk/scripts/latlong.html for the help with this math by supplying this function template!!
+    haversine({ commit, state }, obj) {
+      const earthRadius = 6371000
+      let yourLat = obj.lat1 * (Math.PI / 180)
+      let targetLat = obj.lat2 * (Math.PI / 180)
+      let latDif = (obj.lat2 - obj.lat1) * (Math.PI / 180)
+      let lngDif = (obj.lng2 - obj.lng1) * (Math.PI / 180)
+
+      let a = (Math.sin(latDif / 2) * Math.sin(latDif / 2)) +
+        (Math.cos(yourLat) * Math.cos(targetLat) *
+          Math.sin(lngDif / 2) * Math.sin(lngDif / 2))
+
+      let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+      let distanceKM = (earthRadius * c) / 1000
+      let distanceMiles = distanceKM * .6213
+      if (distanceMiles <= 25 && obj.data.userId != state.user._id) {
+        obj.data.distance = distanceMiles
+        commit('addPost', obj.data)
+        commit('filterPosts', state.filters)
+      }
+    },
     //
     //USER ACTIONS
     //
@@ -379,6 +401,7 @@ export default new Vuex.Store({
         .then(res => {
           console.log(res.data)
           commit('addPost', res.data)
+          dispatch("sendPost", res.data)
         })
         .catch(err => console.error(err))
     },
@@ -406,7 +429,7 @@ export default new Vuex.Store({
       commit('setJoined', payload);
       dispatch('socket', payload)
     },
-    socket({ commit, dispatch }, payload) {
+    socket({ commit, dispatch, state }, payload) {
       //establish connection with socket
       socket = io('//localhost:3000')
 
@@ -431,12 +454,19 @@ export default new Vuex.Store({
       })
 
       socket.on('newPost', data => {
-        commit('newPost', data)
+        let obj = {
+          lat1: state.coords.lat,
+          lng1: state.coords.lng,
+          lat2: data.coordinates.lat,
+          lng2: data.coordinates.lng,
+          data
+        }
+        dispatch("haversine", obj)
       })
 
     },
     sendPost({ commit, dispatch }, payload) {
-      socket.emit('message', payload)
+      socket.emit('post', payload)
     },
     leaveRoom({ commit, dispatch }, payload) {
       socket.emit('leave')
