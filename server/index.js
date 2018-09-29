@@ -8,7 +8,7 @@ require('./server-assets/db/db-config')
 
 //need to npm i socket.io!!!
 
-app.use(express.static(__dirname + '/../../client/dist'))
+app.use(express.static(__dirname + '/../client/dist'))
 
 app.use(bp.json())
 app.use(bp.urlencoded({

@@ -3,7 +3,7 @@ let Schema = mongoose.Schema
 let schemaName = 'User'
 
 //bcrypt uses hashing and salt to obfiscate your password 
-let bcrypt = require('bcryptjs')
+let bcrypt = require('bcrypt')
 const SALT = 10
 
 let schema = new Schema({
