@@ -306,7 +306,7 @@ export default new Vuex.Store({
           console.log("register user return: ", res.data)
           commit('setUser', res.data)
           dispatch("join", res.data.username)
-          router.push({ name: 'home' })
+          router.push({ name: 'home', params: { justRegistered: 'newbie' } })
         })
         .catch(err => console.error(err))
     },

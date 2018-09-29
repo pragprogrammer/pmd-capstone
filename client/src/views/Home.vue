@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div class="home container-fluid">
-      <v-layout class="row underline header">
+      <v-layout class="v-step-0 row underline header">
         <v-flex class="col-8">
           <h4 class="text-white mt-2">{{activePosts.length}} bullUtins nearby</h4>
         </v-flex>
@@ -55,7 +55,7 @@
             <button class="btn btn-outline-primary mt-2" @click="logout">Logout</button>
           </div>
           <v-icon @click="showSettings = !showSettings" class="pl-3 pr-2 clickable">fa-ellipsis-v</v-icon>
-          <v-icon @click="searchConfig" class="ml-3 clickable">fa-search</v-icon>
+          <v-icon @click="searchConfig" class="v-step-5 ml-3 clickable">fa-search</v-icon>
           <form v-if="showSearch" class="search-card card" v-on:submit.prevent="findUserProfile($event)">
             <input class="user-search-input" type="text" placeholder="search by username" autofocus>
           </form>
@@ -67,6 +67,7 @@
         </v-layout>
       </v-footer>
     </div>
+    <v-tour name="introTour" :steps="steps"></v-tour>
   </v-app>
 </template>
 
@@ -87,17 +88,69 @@ export default {
       navigator.geolocation.getCurrentPosition(this.captureCoords);
     }
   },
-
+  mounted() {
+    if (this.justRegistered == "newbie") {
+      this.$tours["introTour"].start();
+    }
+  },
   data() {
     return {
       searchRadius: 25,
       postCategory: "All",
       showSettings: false,
       showSearch: false,
-      targetExists: false
+      targetExists: false,
+      steps: [
+        {
+          target: ".v-step-0",
+          content:
+            "Welcome to bullUtin! Here's a quick introductory tour, or you can press skip at anytime to exit. At the least, please be sure to confirm your email through your user profile."
+        },
+        {
+          target: ".v-step-1",
+          content:
+            "Choose which posts you see based on either distance from you or post category, or both.",
+          params: {
+            placement: "right"
+          }
+        },
+        {
+          target: ".v-step-2",
+          content: "Use this button to add posts of your own.",
+          params: {
+            placement: "top-right"
+          }
+        },
+        {
+          target: ".v-step-3",
+          content:
+            "Open the post author's profile by clicking their name. In their profile you can check their stats, and contact or block them.\nYou can also access your own profile if you happen to be the author.",
+          params: {
+            placement: "left"
+          }
+        },
+        {
+          target: ".v-step-4",
+          content:
+            "Save posts to your favorites to allows have access to view them even if you happen to change your location and move out of range from receiving that post to your feed.",
+          params: {
+            placement: "right"
+          }
+        },
+        {
+          target: ".v-step-5",
+          content:
+            "Use the search bar to look up other bullUtin users by their username.\nPro tip: you can use this feature to find your own profile and confirm your email by submitting an email to yourself."
+        },
+        {
+          target: ".v-step-0",
+          content:
+            "Thanks for joining bullUtin! Enjoy."
+        }
+      ]
     };
   },
-
+  props: ["justRegistered"],
   components: {
     FilterModal,
     Post,

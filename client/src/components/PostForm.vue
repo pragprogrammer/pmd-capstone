@@ -1,7 +1,7 @@
 <template>
   <v-layout class="post-form">
     <v-dialog v-model="addPost" transition="dialog-bottom-transition">
-      <button v-if="!addPost" slot="activator" @click="addPost = !addPost" class="btn-info add-post-btn">
+      <button v-if="!addPost" slot="activator" @click="addPost = !addPost" class="v-step-2 btn-info add-post-btn">
         <i class="fas fa-plus text-primary"></i>
         </button>
         <button v-else slot="activator" @click="addPost = !addPost" id="minus-form" class="btn-danger add-post-btn">

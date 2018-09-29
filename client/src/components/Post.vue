@@ -17,7 +17,7 @@
           <div class="clickableicons">
             <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt"></i>
             <i v-if="post.favorite" @click="removeFavorite(post)" class="fas fa-star"></i>
-            <i v-else @click="addFavorite(post)" class="far fa-star"></i>
+            <i v-else @click="addFavorite(post)" class="v-step-4 far fa-star"></i>
           </div>
         </div>
       </div>
