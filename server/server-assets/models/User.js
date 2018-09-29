@@ -14,7 +14,8 @@ let schema = new Schema({
   created: { type: Number, required: true },
   reliability: { type: Number, min: 0, max: 100, default: 50 },
   posts: {},
-  blockedUsers: {}
+  blockedUsers: {},
+  favorites: {}
 })
 
 //statics are used to create Model methods

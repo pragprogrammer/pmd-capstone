@@ -154,30 +154,62 @@ router.get('/auth/find/byUsername/:username', (req, res, next) => {
       })
   }),
 
-  //strickly updates users posts with their current posts hopefully this hasnt been done anywhere else lol
-  router.post('/auth/post', (req, res, next) => {
-    let toObj = {}
-    for (let i = 0; i < req.body.voteArr.length; i++) {
-      toObj[i] = req.body.voteArr[i]
-    }
-    Users.findById(req.body.userId)
+  //add a post id/post title entry to the user's favorites
+  router.post('/auth/favorite', (req, res, next) => {
+    Users.findById(req.session.uid)
       .then(user => {
-        if (!user.posts) { user.posts = {} }
-        user.posts = toObj
-        user.markModified('posts')
+        if (!user.favorites) user.favorites = {}
+        user.favorites[req.body._id] = req.body.title
+        user.markModified('favorites')
         user.save((err) => {
           if (err) {
-            console.log(err)
-            return res.status(401).send(err)
+            return res.status(500).send(err)
           }
-          return res.send(toObj)
+          delete user._doc.password
+          return res.send(user)
         })
       })
-      .catch(err => {
-        console.log(err)
-        next()
-      })
   })
+//remove a postId from user's favorites
+router.post('/auth/unfavorite', (req, res, next) => {
+  Users.findById(req.session.uid)
+    .then(user => {
+      delete user.favorites[req.body._id]
+      user.markModified('favorites')
+      user.save((err) => {
+        if (err) {
+          return res.status(500).send(err)
+        }
+        delete user._doc.password
+        return res.send(user)
+      })
+    })
+})
+
+//strickly updates users posts with their current posts hopefully this hasnt been done anywhere else lol
+router.post('/auth/post', (req, res, next) => {
+  let toObj = {}
+  for (let i = 0; i < req.body.voteArr.length; i++) {
+    toObj[i] = req.body.voteArr[i]
+  }
+  Users.findById(req.body.userId)
+    .then(user => {
+      if (!user.posts) { user.posts = {} }
+      user.posts = toObj
+      user.markModified('posts')
+      user.save((err) => {
+        if (err) {
+          console.log(err)
+          return res.status(401).send(err)
+        }
+        return res.send(toObj)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      next()
+    })
+})
 
 //this one just updates the users reliabiliy based on about 200 other lines of code xD
 router.post('/auth/reliability', (req, res, next) => {

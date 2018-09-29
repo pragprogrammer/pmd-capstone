@@ -14,7 +14,8 @@
           <p class="distance inline" v-else>{{post.distance.toFixed(2)}} miles away</p>
           <div>
             <i v-if="post.userId == userId" @click="deletePost(post._id)" class="delete far fa-trash-alt clickable mr-3"></i>
-            <i @click="addFavoritePost(post)" class="far fa-star mr-3 clickable"></i>
+            <i v-if="post.favorite" @click="removeFavorite(post)" class="fas fa-star mr-3 clickable"></i>
+            <i v-else @click="addFavorite(post)" class="far fa-star mr-3 clickable"></i>
           </div>
         </div>
       </div>
@@ -105,10 +106,16 @@
         this.$store.dispatch("deletePost", postId);
       },
 
-      addFavoritePost(post) {
+      addFavorite(post) {
         console.log("Adding to favorites, post: ", post.title)
+        this.$store.dispatch('addFavorite', post);
+      },
+
+      removeFavorite(post) {
+        this.$store.dispatch('removeFavorite', post);
       }
     },
+
     computed: {
       posts() {
         return this.$store.state.activePosts;
@@ -433,7 +440,7 @@
 
   .clickable:hover {
     cursor: pointer;
-    color: white;
+    color: #18BC9C;
   }
 
   /* this query wasn't working correctly.  Trash can was hidden when hover trash can.  Don't know why?
