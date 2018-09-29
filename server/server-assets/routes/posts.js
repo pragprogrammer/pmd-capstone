@@ -3,6 +3,8 @@ let Post = require('../models/post')
 let User = require('../models/User')
 
 //THANKS A TON https://www.movable-type.co.uk/scripts/latlong.html for the help with this math by supplying this function template!!
+//This formula calculated the distance between two map coordinates, in this case between
+//the post location and current user location
 function haversine(lat1, lng1, lat2, lng2) {
   const earthRadius = 6371000
   let yourLat = lat1 * (Math.PI / 180)
@@ -39,13 +41,19 @@ router.get('/:lat/:lng/:radius', (req, res, next) => {
     })
 })
 
-//get favorite posts
-router.get('/favorites', (req, res, next) => {
+//get a user's favorite posts
+router.get('/user/favorites/:lat/:lng', (req, res, next) => {
   User.findById(req.session.uid)
     .then(user => {
       Post.find({})
         .then(posts => {
           let favorites = posts.filter(post => user.favorites[post._id])
+          //calculate and add distance to posts
+          favorites.forEach(post => {
+            let distanceKm = haversine(req.params.lat, req.params.lng, post.coordinates.lat, post.coordinates.lng)
+            let distanceMiles = distanceKm * .6213
+            post.distance = distanceMiles
+          })
           return res.send(favorites)
         })
     })
@@ -60,7 +68,6 @@ router.get('/:userId', (req, res, next) => {
     })
     .catch(next)
 })
-
 
 //edit a post
 router.put('/:postId', (req, res, next) => {
@@ -101,9 +108,7 @@ router.delete('/by-user/:userId', (req, res, next) => {
     .catch(next)
 })
 
-//put specific vote?????
-
-// vote on specific post
+// vote on post
 router.post('/:postId/vote', (req, res, next) => {
   if (req.body.vote >= -2 && req.body.vote <= 2) {
     Post.findById(req.params.postId)
@@ -125,29 +130,5 @@ router.post('/:postId/vote', (req, res, next) => {
       })
   }
 })
-
-// router.post('/:postId/upvote', (req, res, next) => {
-//   Post.findById(req.params.postId)
-//     .then((post) => {
-//       post.votes[0].value++
-//       return post.save()
-//     })
-//     .then(() => res.send({
-//       message: "Upvoted"
-//     }))
-//     .catch(next)
-// })
-
-// router.post('/:postId/downvote', (req, res, next) => {
-//   Post.findById(req.params.postId)
-//     .then((post) => {
-//       post.votes[0].value--
-//       return post.save()
-//     })
-//     .then(() => res.send({
-//       message: "DownVoted"
-//     }))
-//     .catch(next)
-// })
 
 module.exports = router

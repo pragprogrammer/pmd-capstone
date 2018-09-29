@@ -470,8 +470,8 @@ export default new Vuex.Store({
         .catch(err => console.error(err))
     },
 
-    getFavoritePosts({ commit, dispatch }) {
-      api.get('posts/favorites')
+    getFavoritePosts({ commit, dispatch, state }) {
+      api.get(`posts/user/favorites/${state.coords.lat}/${state.coords.lng}`)
         .then(res => {
           commit('setFavorites', res.data)
         })
