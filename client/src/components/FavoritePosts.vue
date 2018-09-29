@@ -16,14 +16,14 @@
                 <h3>{{post.title}}</h3>
               </div>
               <div class="favstar">
-                <i @click="removeFavorite(post)" class="fas fa-star"></i>
+                <i @click="removeFavorite(post)" class="fas fa-star star"></i>
               </div>
             </div>
             <div class="favcon">
               <h5>{{post.content}}</h5>
             </div>
             <div class="specs">
-              <h5>{{post.distance}}</h5>              
+              <h5>{{parseFloat(post.distance.toFixed(2))}} miles away</h5>              
             </div>
           </div>
         </div>

@@ -3,17 +3,19 @@ let bp = require('body-parser')
 // let server = express()
 let app = express()
 let cors = require('cors')
-let port = 3000
+let port = process.env.PORT || 3000
 require('./server-assets/db/db-config')
 
 //need to npm i socket.io!!!
+
+app.use(express.static(__dirname + '/../../client/dist'))
 
 app.use(bp.json())
 app.use(bp.urlencoded({
     extended: true
 }))
 
-let whitelist = ['http://localhost:8080']
+let whitelist = ['http://localhost:8080', 'https://bullutin.herokuapp.com/']
 let corsOptions = {
     origin: function (origin, callback) {
         let originIsWhitelisted = whitelist.indexOf(origin) !== -1

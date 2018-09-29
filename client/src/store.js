@@ -10,17 +10,30 @@ Vue.use(Vuex)
 import io from 'socket.io-client'
 let socket = {}
 
+var production = !window.location.host.includes('localhost');
+var baseUrl = production ? '//bullutin.herokuapp.com/' : '//localhost:3000/';
+let api = Axios.create({
+  baseURL: baseUrl + 'api/',
+  timeout: 2000,
+  withCredentials: true
+})
 let auth = Axios.create({
-  baseURL: '//localhost:3000/auth/',
-  timeout: 3000,
+  baseURL: baseUrl + 'auth/',
+  timeout: 2000,
   withCredentials: true
 })
 
-let api = Axios.create({
-  baseURL: '//localhost:3000/api/',
-  timeout: 3000,
-  withCredentials: true
-})
+// let auth = Axios.create({
+//   baseURL: '//localhost:3000/auth/',
+//   timeout: 3000,
+//   withCredentials: true
+// })
+
+// let api = Axios.create({
+//   baseURL: '//localhost:3000/api/',
+//   timeout: 3000,
+//   withCredentials: true
+// })
 
 export default new Vuex.Store({
   state: {
