@@ -9,31 +9,34 @@
           </v-btn>
           <v-toolbar-title>{{post.userName}}</v-toolbar-title>
         </v-toolbar>
-        <div v-if="user.username" class="profile-content">
+        <div v-if="target.username" class="profile-content">
           <h2 class="mt-1">AGE</h2>
           <span class="days-old">
             <v-icon>fa-birthday-cake</v-icon>
-            <p>{{user.created | daysOld}}</p>
+            <p>{{target.created | daysOld}}</p>
           </span>
-          <p class="created">Member since: {{user.created | moment("MMMM Do, YYYY")}}</p>
+          <p class="created">Member since: {{target.created | moment("MMMM Do, YYYY")}}</p>
           <hr>
           <h2>RELIABILITY</h2>
           <div class="progresses">
-            <v-progress-circular v-if="user.reliability <= 10" color="#ff5252" size="150" :width="20" :value="user.reliability"
-              :rotate="90">{{user.reliability}}</v-progress-circular>
-            <v-progress-circular v-if="user.reliability <= 25 && user.reliability > 10" color="#ffc107" size="150"
-              :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
-            <v-progress-circular v-if="user.reliability <= 60 && user.reliability > 25" color="#2196f3" size="150"
-              :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
-            <v-progress-circular v-if="user.reliability <= 100 && user.reliability > 60" color="#4caf50" size="150"
-              :width="20" :value="user.reliability" :rotate="90">{{user.reliability}}</v-progress-circular>
+            <v-progress-circular v-if="target.reliability <= 10" color="#ff5252" size="150" :width="20" :value="target.reliability"
+              :rotate="90">{{target.reliability}}</v-progress-circular>
+            <v-progress-circular v-if="target.reliability <= 25 && target.reliability > 10" color="#ffc107" size="150"
+              :width="20" :value="target.reliability" :rotate="90">{{target.reliability}}</v-progress-circular>
+            <v-progress-circular v-if="target.reliability <= 60 && target.reliability > 25" color="#2196f3" size="150"
+              :width="20" :value="target.reliability" :rotate="90">{{target.reliability}}</v-progress-circular>
+            <v-progress-circular v-if="target.reliability <= 100 && target.reliability > 60" color="#4caf50" size="150"
+              :width="20" :value="target.reliability" :rotate="90">{{target.reliability}}</v-progress-circular>
           </div>
           <hr>
-          <contact-user :email="user.email" :post="post" :targetName="post.userName" />
+          <contact-user :email="target.email" :post="post" :targetName="post.userName" />
           <hr>
-          <div class="user-action">
+          <div v-if="user._id != post.userId" class="user-action">
             <h2>BLOCK USER</h2>
             <v-icon class="clickable" @click="blockUser()">fa-ban</v-icon>
+          </div>
+          <div v-else>
+            <p>favorites style here!</p>
           </div>
         </div>
       </v-card>
@@ -54,8 +57,11 @@
       };
     },
     computed: {
-      user() {
+      target() {
         return this.$store.state.targetUser;
+      },
+      user() {
+        return this.$store.state.user
       }
     },
     methods: {

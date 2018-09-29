@@ -31,13 +31,12 @@
           <hr>
           <contact-user :email="target.email" :targetName="target.username" />
           <hr>
-          <div v-if="!target.blocked" class="user-action">
+          <div v-if="user._id != target.userId" class="user-action">
             <h2>BLOCK USER</h2>
-            <v-icon class="clickable" @click="blockUser(target)">fa-ban</v-icon>
+            <v-icon class="clickable" @click="blockUser()">fa-ban</v-icon>
           </div>
-          <div v-if="target.blocked" class="user-action">
-            <h2>UNBLOCK USER</h2>
-            <v-icon class="clickable" @click="unblockUser(target)">fa-ban</v-icon>
+          <div v-else>
+            <p>favorites style here!</p>
           </div>
         </div>
       </v-card>
@@ -59,6 +58,9 @@
     computed: {
       target() {
         return this.$store.state.targetUser;
+      },
+      user() {
+        return this.$store.state.user;        
       }
     },
     methods: {
