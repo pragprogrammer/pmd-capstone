@@ -36,7 +36,7 @@ export default new Vuex.Store({
     targetUser: {},
     joined: false,
     name: '',
-    messages: [],
+    //messages: [],
     roomData: {}
   },
 
@@ -214,8 +214,7 @@ export default new Vuex.Store({
           break
         }
       }
-      // let target = state.activePosts.find(p => p._id == post._id)
-      // let index = state.activePosts.indexOf(target)
+
       state.activePosts.splice(i, 1, post)
     },
 
@@ -253,15 +252,15 @@ export default new Vuex.Store({
       Vue.set(state.roomData.connectedUsers, payload, undefined);
     },
 
-    newPost(state, payload) {
-      console.log("new post received");
-      //what do we do here?
-    },
+    // newPost(state, payload) {
+    //   console.log("new post received");
+    //   //what do we do here?
+    // },
 
     leave(state) {
       state.joined = false;
       state.name = '';
-      state.messages = [];//????do we need this
+      //state.messages = [];//????do we need this
       state.roomData = {};
     }
   },
