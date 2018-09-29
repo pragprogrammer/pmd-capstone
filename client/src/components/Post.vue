@@ -10,9 +10,9 @@
         </div>
         <div class="right-side">
           <div class="right-left">
-          <p class="distance inline" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
-          <p class="distance inline" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
-          <p class="distance inline" v-else>{{post.distance.toFixed(2)}} miles away</p>
+            <p class="distance inline" v-if="post.distance > 5">{{Math.round(post.distance)}} miles away</p>
+            <p class="distance inline" v-else-if="post.distance <= 0.09">{{Math.round(post.distance)}} miles away</p>
+            <p class="distance inline" v-else>{{post.distance.toFixed(2)}} miles away</p>
           </div>
           <div class="clickableicons">
             <i v-if="post.userId == userId" @click="deletePost(post._id)" class="far fa-trash-alt"></i>
@@ -27,14 +27,23 @@
           <user-profile v-bind:post="post" />
           <p>{{post.timestamp | moment("from", "now")}}</p>
         </div>
-        <div class="votes">
+        <div v-if="post.votes" class="votes">
           <div>
-          <i @click="upVote(post)" class="far fa-check-circle"></i>
-          <!-- <i v-if="post.votes[userId] == 1" @click="upVote(post)" class="fas fa-check-circle"></i> -->
+            <i v-if="post.votes[userId] >= 1" @click="upVote(post)" class="fas fa-check-circle"></i>
+            <i v-else @click="upVote(post)" class="far fa-check-circle"></i>
           </div>
           <div>
-          <i @click="downVote(post)" class="far fa-times-circle"></i>
-          <!-- <i v-if="post.votes[userId] == -1" @click="downVote(post)" class="fas fa-times-circle"></i> -->
+            <i v-if="post.votes[userId] <= -1" @click="downVote(post)" class="fas fa-times-circle"></i>
+            <i v-else @click="downVote(post)" class="far fa-times-circle"></i>
+          </div>
+          <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
+        </div>
+        <div v-else class="votes">
+          <div>
+            <i @click="upVote(post)" class="far fa-check-circle"></i>
+          </div>
+          <div>
+            <i @click="downVote(post)" class="far fa-times-circle"></i>
           </div>
           <p v-if="post.votes">{{calculateVotes(post.votes)}}</p>
         </div>
@@ -484,6 +493,7 @@ p {
     cursor: pointer;
     color: #2c3e50;
   }
+
   .clickableicons i {
     font-size: 1.5rem;
   }
