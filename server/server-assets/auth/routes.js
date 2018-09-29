@@ -94,8 +94,8 @@ router.get('/auth/authenticate', (req, res) => {
           error: 'Please login to continue'
         })
       }
-      delete user._doc.password
-      res.send(user)
+      // delete user._doc.password
+      // res.send(user)
     }).catch(err => {
       res.status(500).send(err)
     })
