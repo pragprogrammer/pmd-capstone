@@ -6,8 +6,6 @@ let cors = require('cors')
 let port = 3000
 require('./server-assets/db/db-config')
 
-//need to npm i socket.io!!!
-
 app.use(bp.json())
 app.use(bp.urlencoded({
     extended: true
@@ -100,10 +98,7 @@ io.on("connection", socket => {
         io.to('bullutin').emit('newPost', data)
     })
 })
-// joins viewable radius of other users?
-// socket.on("join", data => {
 
-// })
 
 //USER AUTH
 
@@ -133,6 +128,4 @@ app.get('*', (req, res, next) => {
     })
 })
 
-// app.listen(port, () => {
-//     console.log('connected to port: ', port)
-// })
+
