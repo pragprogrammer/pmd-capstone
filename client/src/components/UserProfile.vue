@@ -1,7 +1,7 @@
 <template>
   <v-layout class="user-profile">
     <v-dialog v-model="showUserProfile" fullscreen transition="scale-transition">
-      <p @click="getTargetUser" class="u-nme" slot="activator"><strong>{{post.userName}}</strong></p>
+      <p @click="getTargetUser" class="v-step-3 u-nme" slot="activator"><strong>{{post.userName}}</strong></p>
       <v-card>
         <v-toolbar>
           <v-btn @click.native="showUserProfile = false">
