@@ -210,6 +210,7 @@ export default new Vuex.Store({
         let p = state.activePosts[i];
         if (p._id == post._id) {
           post.distance = p.distance
+          post.favorite = p.favorite
           break
         }
       }
