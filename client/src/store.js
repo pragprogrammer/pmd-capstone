@@ -541,7 +541,6 @@ export default new Vuex.Store({
     },
 
     sendPost({ commit, dispatch }, payload) {
-      debugger
       socket.emit('post', payload)
       console.log("sending new post to socket");
     },
