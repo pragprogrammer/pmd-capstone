@@ -10,6 +10,7 @@
           <v-toolbar-title>{{target.username}}</v-toolbar-title>
         </v-toolbar>
         <div v-if="target.username" class="profile-content">
+          <div class="content">
           <h2 class="mt-1">AGE</h2>
           <span class="days-old">
             <v-icon>fa-birthday-cake</v-icon>
@@ -35,8 +36,11 @@
             <h2>BLOCK USER</h2>
             <v-icon class="clickable" @click="blockUser()">fa-ban</v-icon>
           </div>
-          <div v-else>
-            <p>favorites style here!</p>
+         <div v-else>
+            <div v-if="favorites.length">
+              <favorite-posts />
+            </div>
+          </div>
           </div>
         </div>
       </v-card>
@@ -45,125 +49,132 @@
 </template>
 
 <script>
-  let moment = require("moment");
-  import ContactUser from "@/components/ContactUser";
+let moment = require("moment");
+import FavoritePosts from "@/components/FavoritePosts";
+import ContactUser from "@/components/ContactUser";
 
-  export default {
-    name: "userProfileFromSearch",
-    data() {
-      return {
-        showUserProfile: false
-      };
+export default {
+  name: "userProfileFromSearch",
+  data() {
+    return {
+      showUserProfile: false
+    };
+  },
+  computed: {
+    favorites() {
+      return this.$store.state.favoritePosts;
     },
-    computed: {
-      target() {
-        return this.$store.state.targetUser;
-      },
-      user() {
-        return this.$store.state.user;        
-      }
+    target() {
+      return this.$store.state.targetUser;
     },
-    methods: {
-      getTargetUserPosts(targetId) {
-        this.$store.dispatch("userPosts", targetId);
-      },
-
-      clearTargetUser() {
-        this.$store.dispatch('getTargetUser', {})
-      },
-
-      blockUser(target) {
-        console.log("blocking: ", target.userId, target.username)
-        this.$store.dispatch("blockUser", { 'userId': target.userId, 'username': target.username });
-        this.showUserProfile = false;
-        this.clearTargetUser()
-      },
-
-      unblockUser(target) {
-        console.log("unblocking: ", target.userId, target.username)
-        this.$store.dispatch('unblockUser', this.target.userId)
-        this.showUserProfile = false;
-        this.clearTargetUser()
-      }
-    },
-    filters: {
-      daysOld(date) {
-        return moment(date).fromNow(true);
-      }
-    },
-    components: {
-      ContactUser
+    user() {
+      return this.$store.state.user;
     }
-  };
+  },
+  methods: {
+    getTargetUserPosts(targetId) {
+      this.$store.dispatch("userPosts", targetId);
+    },
+
+    clearTargetUser() {
+      this.$store.dispatch("getTargetUser", {});
+    },
+
+    blockUser(target) {
+      console.log("blocking: ", target.userId, target.username);
+      this.$store.dispatch("blockUser", {
+        userId: target.userId,
+        username: target.username
+      });
+      this.showUserProfile = false;
+      this.clearTargetUser();
+    },
+
+    unblockUser(target) {
+      console.log("unblocking: ", target.userId, target.username);
+      this.$store.dispatch("unblockUser", this.target.userId);
+      this.showUserProfile = false;
+      this.clearTargetUser();
+    }
+  },
+  filters: {
+    daysOld(date) {
+      return moment(date).fromNow(true);
+    }
+  },
+  components: {
+    ContactUser,
+    FavoritePosts
+  }
+};
 </script>
 
 <style scoped>
-  @media (hover: none) {
-    .u-nme {
-      cursor: pointer;
-      position: absolute;
-      bottom: 5vh;
-      left: 25vw;
-      font-size: 3rem;
-    }
-  }
-
+@media (hover: none) {
   .u-nme {
     cursor: pointer;
-    margin-left: 2vw;
-  }
-
-  .profile-content {
-    text-align: left;
-    margin-left: 5%;
-    overflow-y: scroll;
-  }
-
-  .profile-content hr {
-    position: relative;
-    left: -5%;
-  }
-
-  .days-old {
-    display: flex;
-    height: fit-content;
-  }
-
-  .days-old i {
-    font-size: 5rem;
-  }
-
-  .days-old p {
-    font-size: 5rem;
-    margin-left: 5%;
-  }
-
-  .created {
-    font-size: 1.5rem;
-  }
-
-  p {
-    margin-bottom: 0;
-  }
-
-  .progresses {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-left: -5%;
-  }
-
-  .user-action {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .user-action i {
+    position: absolute;
+    bottom: 5vh;
+    left: 25vw;
     font-size: 3rem;
-    margin-right: 5%;
   }
+}
 
-  .clickable {
-    cursor: pointer;
-  }
+.u-nme {
+  cursor: pointer;
+  margin-left: 2vw;
+}
+
+.profile-content {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  text-align: left;
+  padding: 2rem;
+}
+
+.days-old {
+  display: flex;
+  height: fit-content;
+}
+
+.days-old i {
+  font-size: 5rem;
+}
+
+.days-old p {
+  font-size: 5rem;
+  margin-left: 5%;
+}
+
+.created {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.progresses {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-left: -5%;
+}
+
+.user-action {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-action i {
+  font-size: 3rem;
+  margin-right: 5%;
+}
+
+.clickable {
+  cursor: pointer;
+}
 </style>

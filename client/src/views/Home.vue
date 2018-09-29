@@ -132,7 +132,7 @@ export default {
         {
           target: ".v-step-4",
           content:
-            "Save posts to your favorites to allows have access to view them even if you happen to change your location and move out of range from receiving that post to your feed.",
+            "Saving posts to your favorites allows you to view them even if you move out of range from receiving that post to your board.",
           params: {
             placement: "right"
           }
@@ -144,8 +144,7 @@ export default {
         },
         {
           target: ".v-step-0",
-          content:
-            "Thanks for joining bullUtin! Enjoy."
+          content: "Thanks for joining bullUtin! Enjoy."
         }
       ]
     };

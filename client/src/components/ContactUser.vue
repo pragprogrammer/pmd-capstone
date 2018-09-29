@@ -27,51 +27,51 @@
 
 <script>
 export default {
-    name: 'contactUser',
-    props: ['email', 'post', 'targetName'],
-    data() {
-        return {
-            bullUtinUser: "This message is for bullUtin user " + this.targetName,
-            formSpreeTarget: "https://formspree.io/"+this.email
-        }
+  name: "contactUser",
+  props: ["email", "post", "targetName"],
+  data() {
+    return {
+      bullUtinUser: "This message is for bullUtin user " + this.targetName,
+      formSpreeTarget: "https://formspree.io/" + this.email
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
     },
-    computed: {
-        user(){
-            return this.$store.state.user
-        },
-        target(){
-            return this.$store.state.targetUser
-        }
+    target() {
+      return this.$store.state.targetUser;
     }
-}
+  }
+};
 </script>
 
 <style>
-.contact-user {
-    margin-left: -5%;
-}
 .contact-user h2 {
-    margin-left: 5%;
+  margin-left: 5%;
 }
 .contact-form {
-    display: flex;
-    flex-flow: wrap column;
+  display: flex;
+  flex-flow: wrap column;
 }
 .under-the-hood {
-    display: none;
+  display: none;
 }
-.contact-form input, .contact-form textarea, .contact-form p, .contact-form label {
-    background-color: #f5f5f5;
-    margin: 1vh 0 1vh 7.5%;
-    width: 90%;
-    color: black;
+.contact-form input,
+.contact-form textarea,
+.contact-form p,
+.contact-form label {
+  background-color: #f5f5f5;
+  margin: 1vh 0 1vh 7.5%;
+  width: 90%;
+  color: black;
 }
 .contact-form label input {
-    position: absolute;
-    left: -25vw;
+  position: absolute;
+  left: -25vw;
 }
 .contact-form button {
-    width: fit-content;
-    margin: 0 auto;
+  width: fit-content;
+  margin: 0 auto;
 }
 </style>

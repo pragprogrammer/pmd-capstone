@@ -6,7 +6,7 @@
         <div class="left-side">
           <p>
             <strong class="p-title">{{post.title}}</strong>
-          </p>
+          </p>     
         </div>
         <div class="right-side">
           <div class="right-left">
