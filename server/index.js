@@ -32,6 +32,7 @@ server.listen(port, function () {
 })
 
 let connectedUsers = {} // (probably going to be referencing our users id's)
+// @ts-ignore
 let rooms = {} // (not going to be rooms, but referencing the radius of viewable posts?)
 
 io.on("connection", socket => {
@@ -48,6 +49,7 @@ io.on("connection", socket => {
         //insures connection passed the (user.name?)
         if (data.name) {
             //this attatches the name to socket
+            // @ts-ignore
             socket.user = data.name;
 
             //adds connection to the room
@@ -68,11 +70,27 @@ io.on("connection", socket => {
     })
 
     //connection leaves room
+    // @ts-ignore
     socket.on('leave', data => {
         //confirm they were in a room
+        // @ts-ignore
         if (socket.user) {
             //remove from connected room
+            // @ts-ignore
             delete connectedUsers[socket.user]
+            // @ts-ignore
+            io.to("bullutin").emit('left', socket.user)
+        }
+    })
+
+    socket.on('disconnect', data => {
+        //confirm they were in a room
+        // @ts-ignore
+        if (socket.user) {
+            //remove from connected room
+            // @ts-ignore
+            delete connectedUsers[socket.user]
+            // @ts-ignore
             io.to("bullutin").emit('left', socket.user)
         }
     })
@@ -108,6 +126,7 @@ app.use((req, res, next) => {
 let postRoutes = require('./server-assets/routes/posts')
 app.use('/api/posts', postRoutes)
 
+// @ts-ignore
 app.get('*', (req, res, next) => {
     res.status(404).send({
         error: 'this is not the page you are looking for'

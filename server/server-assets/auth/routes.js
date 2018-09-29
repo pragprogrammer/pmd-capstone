@@ -84,8 +84,7 @@ router.delete('/auth/logout', (req, res) => {
       .catch(next)
   })
 
-
-//Validates req.session.uid
+//VERIFIES USER HAS A VALID SESSION
 router.get('/auth/authenticate', (req, res) => {
   Users.findById(req.session.uid)
     .then(user => {
@@ -101,7 +100,7 @@ router.get('/auth/authenticate', (req, res) => {
     })
 })
 
-//Retrieve other user info to view their profile
+//RETRIEVE ANOTHER USER OBJECT TO VIEW THEIR PROFILE
 router.get('/auth/find/byUsername/:username', (req, res, next) => {
   Users.findOne({ username: req.params.username })
     .then(user => {
@@ -121,7 +120,7 @@ router.get('/auth/find/byUsername/:username', (req, res, next) => {
     })
 }),
 
-  //Add a userId to the blockedUsers dictionary
+  //ADD A USER ID TO THE BLOCKED USERS DICTIONARY
   router.post('/auth/block', (req, res, next) => {
     Users.findById(req.session.uid)
       .then(user => {
@@ -138,7 +137,7 @@ router.get('/auth/find/byUsername/:username', (req, res, next) => {
       })
   }),
 
-  //Remove a userId from the blocked users dictionary
+  //REMOVE A USERID FROM THE BLOCKED USERS DICTIONARY
   router.post('/auth/unblock', (req, res, next) => {
     Users.findById(req.session.uid)
       .then(user => {
@@ -154,7 +153,7 @@ router.get('/auth/find/byUsername/:username', (req, res, next) => {
       })
   }),
 
-  //add a post id/post title entry to the user's favorites
+  //ADD A POST ID & TITLE TO THE USER'S FAVORITES DICTIONARY
   router.post('/auth/favorite', (req, res, next) => {
     Users.findById(req.session.uid)
       .then(user => {
@@ -170,7 +169,8 @@ router.get('/auth/find/byUsername/:username', (req, res, next) => {
         })
       })
   })
-//remove a postId from user's favorites
+
+//REMOVE A POST ID/TITLE FROM THE USER'S FAVORITES DICTIONARY
 router.post('/auth/unfavorite', (req, res, next) => {
   Users.findById(req.session.uid)
     .then(user => {
