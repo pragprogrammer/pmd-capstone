@@ -527,7 +527,7 @@ export default new Vuex.Store({
     },
     socket({ commit, dispatch, state }, payload) {
       //establish connection with socket
-      socket = io('//localhost:3000')
+      socket = io(baseUrl)
 
       //register socket event listeners
       socket.on('CONNECTED', data => {
