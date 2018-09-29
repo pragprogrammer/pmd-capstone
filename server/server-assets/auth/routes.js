@@ -26,6 +26,7 @@ router.post('/auth/register', (req, res, next) => {
     })
   }
   //CHANGE THE PASSWORD TO A HASHED PASSWORD
+  //@ts-ignore
   req.body.password = Users.generateHash(req.body.password)
   //CREATE THE USER
   Users.create(req.body)

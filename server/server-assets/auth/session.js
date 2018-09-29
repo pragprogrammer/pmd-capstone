@@ -2,7 +2,7 @@ var expressSession = require("express-session");
 var mongoStore = require("connect-mongodb-session")(expressSession);
 
 var store = new mongoStore({
-  uri: "mongodb://student:student1@ds028559.mlab.com:28559/pmd-capstone", //CHANGE ME!!!!!!
+  uri: "mongodb://student:student1@ds028559.mlab.com:28559/pmd-capstone",
   collection: "Sessions"
 });
 
@@ -12,7 +12,7 @@ store.on("error", function (err) {
 
 // @ts-ignore
 var session = expressSession({
-  secret: "bu11YOUtin", //CHANGE ME!!!!
+  secret: "bu11YOUtin",
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7 * 52 * 2,
   },

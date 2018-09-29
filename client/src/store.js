@@ -309,7 +309,6 @@ export default new Vuex.Store({
     loginUser({ commit, dispatch }, creds) {
       auth.post('login', creds)
         .then(res => {
-          console.log('login user return: ', res.data)
           commit('setUser', res.data)
           router.push({ name: 'home' })
           dispatch("join", res.data.username)
@@ -321,7 +320,6 @@ export default new Vuex.Store({
       newUser['created'] = Date.now()
       auth.post('register', newUser)
         .then(res => {
-          console.log("register user return: ", res.data)
           commit('setUser', res.data)
           dispatch("join", res.data.username)
           router.push({ name: 'home', params: { justRegistered: 'newbie' } })
@@ -351,18 +349,15 @@ export default new Vuex.Store({
     logout({ commit, dispatch }, disabled) {
       auth.delete('logout')
         .then(res => {
-          console.log("logging out: ", res.data)
           commit('logout', disabled)
         })
         .catch(err => console.error(err))
     },
 
     deleteUser({ commit, dispatch, state }) {
-      console.log('deleting user: ', state.user.username)
       //delete the user's posts
       api.delete(`posts/by-user/${state.user._id}`)
         .then(res => {
-          console.log(res.data)
           //delete user account
           auth.delete('delete')
             .then(res => {
@@ -398,7 +393,6 @@ export default new Vuex.Store({
     unblockUser({ commit, dispatch, state }, userId) {
       auth.post('unblock', { 'userId': userId })
         .then(res => {
-          console.log("unblock user data", res.data)
           commit('updateBlockedUsers', res.data)
           commit('filterPosts', state.filters)
         })
@@ -502,7 +496,6 @@ export default new Vuex.Store({
       post.distance = 0;
       api.post('posts', post)
         .then(res => {
-          console.log(res.data)
           dispatch('sendPost', res.data)
           commit('addPost', res.data)
         })
@@ -566,12 +559,10 @@ export default new Vuex.Store({
         }
         dispatch("haversine", obj)
       })
-
     },
 
     sendPost({ commit, dispatch }, payload) {
       socket.emit('post', payload)
-      console.log("sending new post to socket");
     },
 
     leaveRoom({ commit, dispatch }, payload) {
