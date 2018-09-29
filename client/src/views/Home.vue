@@ -33,7 +33,7 @@
           </FilterModal>
         </div>
       </v-layout>
-      <div class="cat-bar-container">
+      <div class="row cat-bar-container">
         <div class="cat-bar">
           <p>neighborhood <br> watch</p>
           <p>traffic <br> update</p>
@@ -171,7 +171,6 @@ col {
 
 .header {
   background-color: #2c3e50;
-  box-shadow: -5px 2px 5px 1px black;
 }
 
 .header h4 {
@@ -190,24 +189,27 @@ col {
     #18bc9c 75%
   );
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   color: white;
   width: 100%;
-  height: 6.5vh;
+  height: auto;
 }
 .cat-bar-container {
   width: 100vw;
+  /* padding: 0.5rem, 0, 0.5rem, 0; */
+  /* box-sizing: border-box; */
+  /* box-shadow: -5px 2px 5px 1px black; */
 }
 .cat-bar p {
   width: 25vw;
   text-align: center;
+  margin: 0;
+  padding: 0.5rem;
 }
-
 .post-bod {
   height: 83.5vh;
   overflow-y: scroll;
-  overflow-x: hidden;
-  /* z-index: -1; */ /* background: url("../assets/cork-board.jpg"); */
+  overflow-x: hidden; /* z-index: -1; */ /* background: url("../assets/cork-board.jpg"); */
 }
 .center-post {
   display: flex;
