@@ -28,7 +28,7 @@ export default new Vuex.Store({
     user: {},
     posts: [],
     activePosts: [],
-    favorites: [],
+    favoritePosts: [],
     filters: {
       radius: 25,
       category: 'All'
@@ -98,43 +98,7 @@ export default new Vuex.Store({
       }
     },
 
-    addFavorite(state, post) {
-      state.favorites.push(post);
-      for (let i = 0; i < state.posts.length; i++) {
-        if (state.posts[i]._id == post._id) {
-          state.posts[i].favorite = true;
-          break;
-        }
-      }
-      for (let i = 0; i < state.activePosts.length; i++) {
-        if (state.activePosts[i]._id == post._id) {
-          state.activePosts[i].favorite = true;
-          break;
-        }
-      }
-    },
 
-    deleteFavorite(state, post) {
-      for (let i = 0; i < state.favorites.length; i++) {
-        if (state.favorites[i]._id == post._id) {
-          state.favorites.splice(i, 1);
-          break;
-        }
-      }
-
-      for (let i = 0; i < state.posts.length; i++) {
-        if (state.posts[i]._id == post._id) {
-          state.posts[i].favorite = false;
-          break;
-        }
-      }
-      for (let i = 0; i < state.activePosts.length; i++) {
-        if (state.activePosts[i]._id == post._id) {
-          state.activePosts[i].favorite = false;
-          break;
-        }
-      }
-    },
     //
     //POST MUTATIONS
     //
@@ -157,7 +121,10 @@ export default new Vuex.Store({
       else {
         state.activePosts = postArr;
       }
-      state.favorites = state.posts.filter(post => post.favorite)
+    },
+
+    setFavorites(state, favorites) {
+      state.favoritePosts = favorites;
     },
 
     addPost(state, post) {
@@ -197,6 +164,44 @@ export default new Vuex.Store({
       }
       //return updated activePost array
       state.activePosts = postArr
+    },
+
+    addFavorite(state, post) {
+      state.favoritePosts.push(post);
+      for (let i = 0; i < state.posts.length; i++) {
+        if (state.posts[i]._id == post._id) {
+          state.posts[i].favorite = true;
+          break;
+        }
+      }
+      for (let i = 0; i < state.activePosts.length; i++) {
+        if (state.activePosts[i]._id == post._id) {
+          state.activePosts[i].favorite = true;
+          break;
+        }
+      }
+    },
+
+    deleteFavorite(state, post) {
+      for (let i = 0; i < state.favoritePosts.length; i++) {
+        if (state.favoritePosts[i]._id == post._id) {
+          state.favoritePosts.splice(i, 1);
+          break;
+        }
+      }
+
+      for (let i = 0; i < state.posts.length; i++) {
+        if (state.posts[i]._id == post._id) {
+          state.posts[i].favorite = false;
+          break;
+        }
+      }
+      for (let i = 0; i < state.activePosts.length; i++) {
+        if (state.activePosts[i]._id == post._id) {
+          state.activePosts[i].favorite = false;
+          break;
+        }
+      }
     },
 
     updateVotes(state, post) {
@@ -457,6 +462,17 @@ export default new Vuex.Store({
       api.get(`posts/${state.coords.lat}/${state.coords.lng}/${radius}`)
         .then(res => {
           commit("setPosts", res.data)
+          if (Object.keys(state.user.favorites).length > 0) {
+            dispatch('getFavoritePosts')
+          }
+        })
+        .catch(err => console.error(err))
+    },
+
+    getFavoritePosts({ commit, dispatch }) {
+      api.get('posts/favorites')
+        .then(res => {
+          commit('setFavorites', res.data)
         })
         .catch(err => console.error(err))
     },

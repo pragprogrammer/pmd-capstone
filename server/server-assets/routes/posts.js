@@ -1,5 +1,6 @@
 let router = require('express').Router()
 let Post = require('../models/post')
+let User = require('../models/User')
 
 //THANKS A TON https://www.movable-type.co.uk/scripts/latlong.html for the help with this math by supplying this function template!!
 function haversine(lat1, lng1, lat2, lng2) {
@@ -38,6 +39,19 @@ router.get('/:lat/:lng/:radius', (req, res, next) => {
     })
 })
 
+//get favorite posts
+router.get('/favorites', (req, res, next) => {
+  User.findById(req.session.uid)
+    .then(user => {
+      Post.find({})
+        .then(posts => {
+          let favorites = posts.filter(post => user.favorites[post._id])
+          return res.send(favorites)
+        })
+    })
+    .catch(next)
+})
+
 //get all posts for specific user
 router.get('/:userId', (req, res, next) => {
   Post.find({ userId: req.params.userId })
@@ -46,6 +60,7 @@ router.get('/:userId', (req, res, next) => {
     })
     .catch(next)
 })
+
 
 //edit a post
 router.put('/:postId', (req, res, next) => {
