@@ -73,9 +73,9 @@ export default {
   methods: {
     upVote(post) {
       // debugger;
-      if (post.votes[this.userId] == 1) {
+      if (this.userId == post.userId) {
         this.voted.vote = 0;
-      } else if (this.userId == post.userId) {
+      } else if (post.votes[this.userId] == 1) {
         this.voted.vote = 0;
       } else if (this.user.reliability > 75) {
         this.voted.vote = 2;
@@ -87,9 +87,9 @@ export default {
       this.voted = { vote: 0 };
     },
     downVote(post) {
-      if (post.votes[this.userId] == -1) {
+      if (this.userId == post.userId) {
         this.voted.vote = 0;
-      } else if (this.userId == post.userId) {
+      } else if (post.votes[this.userId] == -1) {
         this.voted.vote = 0;
       } else if (this.user.reliability > 75) {
         this.voted.vote = -2;
