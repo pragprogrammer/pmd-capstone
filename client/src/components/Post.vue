@@ -65,23 +65,17 @@ export default {
   name: "post",
   data() {
     return {
-      datavote: {
-        upvoted: false,
-        downvoted: false
-      },
       voted: {
         vote: 0
       }
-      // superVoter: {
-      //   verify: 2,
-      //   refute: -2
-      // }
     };
   },
   methods: {
     upVote(post) {
       // debugger;
-      if (this.userId == post.userId || post.votes[this.userId] == 1) {
+      if (post.votes[this.userId] == 1) {
+        this.voted.vote = 0;
+      } else if (this.userId == post.userId) {
         this.voted.vote = 0;
       } else if (this.user.reliability > 75) {
         this.voted.vote = 2;
@@ -93,7 +87,9 @@ export default {
       this.voted = { vote: 0 };
     },
     downVote(post) {
-      if (this.userId == post.userId || post.votes[this.userId] == -1) {
+      if (post.votes[this.userId] == -1) {
+        this.voted.vote = 0;
+      } else if (this.userId == post.userId) {
         this.voted.vote = 0;
       } else if (this.user.reliability > 75) {
         this.voted.vote = -2;
