@@ -64,7 +64,7 @@ export default new Vuex.Store({
       state.coords = coords
     },
     setUser(state, user) {
-      console.log("user= ", user)
+      // console.log("user= ", user)
       if (!user.favorites) user.favorites = {};
       state.user = user;
     },
