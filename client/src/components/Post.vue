@@ -73,10 +73,12 @@ export default {
   methods: {
     upVote(post) {
       // debugger;
-      if (this.userId == post.userId) {
+      if (post.votes && post.votes[this.userId] != undefined) {
         if (post.votes[this.userId] == 1) {
           this.voted.vote = 0;
         }
+      }
+      if (this.userId == post.userId) {
         this.voted.vote = 0;
       } else if (this.user.reliability > 75) {
         this.voted.vote = 2;
@@ -88,10 +90,12 @@ export default {
       this.voted = { vote: 0 };
     },
     downVote(post) {
-      if (this.userId == post.userId) {
-        if (post.votes[this.userId] == -1) {
+      if (post.votes && post.votes[this.userId] != undefined) {
+        if (post.votes[this.userId] == 1) {
           this.voted.vote = 0;
         }
+      }
+      if (this.userId == post.userId) {
         this.voted.vote = 0;
       } else if (this.user.reliability > 75) {
         this.voted.vote = -2;
