@@ -1,19 +1,12 @@
 let express = require("express")
 let bp = require('body-parser')
-// let server = express()
 let app = express()
 let cors = require('cors')
 let port = process.env.PORT || 3000
-require('./server-assets/db/db-config')
-
-//need to npm i socket.io!!!
-
 app.use(express.static(__dirname + '/../client/dist'))
 
-app.use(bp.json())
-app.use(bp.urlencoded({
-    extended: true
-}))
+var server = require("http").createServer(app);
+var io = require("socket.io")(server);
 
 let whitelist = ['http://localhost:8080', 'https://bullutin.herokuapp.com/']
 let corsOptions = {
@@ -25,25 +18,25 @@ let corsOptions = {
 }
 app.use(cors(corsOptions))
 
-var server = require("http").createServer(app);
-var io = require("socket.io")(server);
+require('./server-assets/db/db-config')
+
+app.use(bp.json())
+app.use(bp.urlencoded({
+    extended: true
+}))
 
 
-server.listen(port, function () {
-    console.log("Server listening at port:", port);
-})
-
-let connectedUsers = {} // (probably going to be referencing our users id's)
+let connectedUsers = {}
 // @ts-ignore
-let rooms = {} // (not going to be rooms, but referencing the radius of viewable posts?)
+let rooms = {}
 
 io.on("connection", socket => {
-    console.log("User Connected")       // (tells server when a user connects)
+    console.log("User Connected")
 
     //notify connector of successfull connection
-    socket.emit("CONNECTED", {                //    (notifys connector of successful connection)
-        socket: socket.id,                     //  (socket is a connection by individual user)
-        message: "Successfully Connected"        //    (client emits to server, server emits to app. direct communication.)
+    socket.emit("CONNECTED", {
+        socket: socket.id,
+        message: "Successfully Connected"
     })
 
     //join room
@@ -98,8 +91,11 @@ io.on("connection", socket => {
     })
 
     socket.on('post', data => {
-        console.log('post recieved')
-        io.to('bullutin').emit('newPost', data)
+        console.log('backend data variable is' + data)
+        if (data) {
+            console.log("post recieved")
+            io.to('bullutin').emit('newPost', data)
+        }
     })
 })
 
@@ -132,4 +128,7 @@ app.get('*', (req, res, next) => {
     })
 })
 
+server.listen(port, () => {
+    console.log("Server listening at port:", port);
+})
 
